@@ -1,0 +1,910 @@
+// MS Ozone Forecast — Static Web Dashboard
+// Reads pre-exported JSON from data/ directory
+
+const DATA_BASE = 'data';
+
+let sitesConfig = [];
+let currentSite = null;
+let sidebarMap = null;
+let aboutMapInstance = null;
+
+// --- Initialization ---
+document.addEventListener('DOMContentLoaded', async () => {
+  setupNavigation();
+  setupSubTabs();
+  await detectLocalServer();
+  await loadSitesConfig();
+  await loadMeta();
+});
+
+// --- Navigation ---
+function setupNavigation() {
+  document.querySelectorAll('.sidebar-nav li').forEach(li => {
+    li.addEventListener('click', () => {
+      document.querySelectorAll('.sidebar-nav li').forEach(n => n.classList.remove('active'));
+      li.classList.add('active');
+      const tab = li.dataset.tab;
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+
+      if (tab === 'about' && currentSite) {
+        setTimeout(() => renderAboutMap(), 100);
+      }
+    });
+  });
+}
+
+function setupSubTabs() {
+  document.querySelectorAll('.sub-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const parent = tab.closest('.card-body');
+      parent.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
+      parent.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('sub-' + tab.dataset.sub).classList.add('active');
+    });
+  });
+}
+
+// --- Load Sites Config ---
+async function loadSitesConfig() {
+  try {
+    const res = await fetch(`${DATA_BASE}/sites_config.json`);
+    sitesConfig = await res.json();
+    populateRegionDropdown();
+  } catch (e) {
+    console.error('Failed to load sites config:', e);
+    document.querySelector('.main-content').innerHTML =
+      '<div class="loading"><i class="fas fa-exclamation-triangle"></i> Could not load site configuration. Run <code>export_json.R</code> first.</div>';
+  }
+}
+
+async function loadMeta() {
+  try {
+    const res = await fetch(`${DATA_BASE}/meta.json`);
+    const meta = await res.json();
+    document.getElementById('exportDate').textContent = meta.exported_at || '--';
+  } catch (e) {
+    // meta is optional
+  }
+}
+
+// --- Dropdowns ---
+function populateRegionDropdown() {
+  const regions = [...new Set(sitesConfig.map(s => s.region))];
+  const sel = document.getElementById('regionSelect');
+  sel.innerHTML = regions.map(r => `<option value="${r}">${r}</option>`).join('');
+  sel.onchange = () => populateSiteDropdown();
+
+  const siteSel = document.getElementById('siteSelect');
+  siteSel.onchange = () => onSiteChange();
+
+  populateSiteDropdown();
+}
+
+function populateSiteDropdown() {
+  const region = document.getElementById('regionSelect').value;
+  const sites = sitesConfig.filter(s => s.region === region);
+  const sel = document.getElementById('siteSelect');
+  sel.innerHTML = sites.map(s => `<option value="${s.name}">${s.name}</option>`).join('');
+  onSiteChange();
+}
+
+async function onSiteChange() {
+  const name = document.getElementById('siteSelect').value;
+  currentSite = sitesConfig.find(s => s.name === name);
+  if (!currentSite) return;
+
+  document.getElementById('sidebarSiteName').textContent = name;
+  renderSidebarMap();
+
+  const safeName = name.replace(/ /g, '_');
+  const basePath = `${DATA_BASE}/${safeName}`;
+
+  // Load all data in parallel
+  const [history, dataSummary, importance, metrics] = await Promise.all([
+    fetchJSON(`${basePath}/history.json`),
+    fetchJSON(`${basePath}/data_summary.json`),
+    fetchJSON(`${basePath}/importance.json`),
+    fetchJSON(`${basePath}/metrics.json`),
+  ]);
+
+  const recent = await fetchJSON(`${basePath}/recent.json`);
+
+  // Fetch real-time O3 from local dev server (if available)
+  let realtimeO3 = null;
+  if (isLocalServer && currentSite) {
+    const rt = await fetchJSON(`/api/realtime/${currentSite.aqs_id}`);
+    if (rt && rt.value != null) realtimeO3 = rt.value;
+  }
+
+  renderSidebarStatus(dataSummary);
+  renderDashboard(history, recent, dataSummary, realtimeO3);
+  renderAnalysis(history, importance, metrics, dataSummary);
+  renderDataTab(dataSummary);
+  renderAboutTab();
+}
+
+async function fetchJSON(url) {
+  try {
+    const res = await fetch(url);
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+// --- AQI Helpers ---
+function getAqiInfo(ppm) {
+  if (ppm == null || isNaN(ppm)) return { color: 'blue', status: 'Unknown', cssClass: 'vb-blue' };
+  if (ppm <= 0.054) return { color: 'green', status: 'Good', cssClass: 'vb-green' };
+  if (ppm <= 0.070) return { color: 'yellow', status: 'Moderate', cssClass: 'vb-yellow' };
+  if (ppm <= 0.085) return { color: 'orange', status: 'Unhealthy for Sensitive Groups', cssClass: 'vb-orange' };
+  if (ppm <= 0.105) return { color: 'red', status: 'Unhealthy', cssClass: 'vb-red' };
+  if (ppm <= 0.200) return { color: 'purple', status: 'Very Unhealthy', cssClass: 'vb-purple' };
+  return { color: 'maroon', status: 'Hazardous', cssClass: 'vb-maroon' };
+}
+
+function aqiCellClass(val) {
+  if (val == null || isNaN(val)) return '';
+  if (val <= 0.054) return 'aqi-good';
+  if (val <= 0.070) return 'aqi-moderate';
+  if (val <= 0.085) return 'aqi-usg';
+  if (val <= 0.105) return 'aqi-unhealthy';
+  if (val <= 0.200) return 'aqi-very-unhealthy';
+  return 'aqi-hazardous';
+}
+
+// Inline style version for cells using style="" instead of class
+function aqiCellStyle(val) {
+  const cls = aqiCellClass(val);
+  const map = {
+    'aqi-good': 'background-color:#dff0d8;',
+    'aqi-moderate': 'background-color:#fcf8e3;',
+    'aqi-usg': 'background-color:#f2dede;',
+    'aqi-unhealthy': 'background-color:#ebcccc;',
+    'aqi-very-unhealthy': 'background-color:#f5e79e;',
+    'aqi-hazardous': 'background-color:#e0b0ff;',
+  };
+  return map[cls] || '';
+}
+
+// Temp (F) color coding — matches app.R: c(32, 50, 70, 85)
+function tempCellStyle(val) {
+  if (val <= 32) return 'background-color:rgba(0,0,255,0.2);';
+  if (val <= 50) return 'background-color:rgba(173,216,230,0.4);';
+  if (val <= 70) return '';
+  if (val <= 85) return 'background-color:rgba(255,165,0,0.4);';
+  return 'background-color:rgba(255,0,0,0.4);';
+}
+
+// Dewpoint (F) color coding — matches app.R: c(30, 45, 60)
+function dewpCellStyle(val) {
+  if (val <= 30) return 'background-color:rgba(255,255,0,0.2);';
+  if (val <= 45) return 'background-color:rgba(240,255,240,0.4);';
+  if (val <= 60) return 'background-color:rgba(144,238,144,0.4);';
+  return 'background-color:rgba(46,139,87,0.4);';
+}
+
+function fmt(val, digits = 4) {
+  if (val == null || isNaN(val)) return 'N/A';
+  return Number(val).toFixed(digits);
+}
+
+// --- Sidebar Map ---
+function renderSidebarMap() {
+  if (!currentSite) return;
+  if (sidebarMap) sidebarMap.remove();
+  sidebarMap = L.map('sidebarMap').setView([currentSite.lat, currentSite.lon], 10);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+    maxZoom: 19
+  }).addTo(sidebarMap);
+  L.marker([currentSite.lat, currentSite.lon])
+    .bindPopup(`${currentSite.name}<br>AQS: ${currentSite.aqs_id}`)
+    .addTo(sidebarMap);
+}
+
+function renderSidebarStatus(summary) {
+  const el = document.getElementById('sidebarStatus');
+  if (!summary) {
+    el.innerHTML = '<span class="status-badge danger">No Data Found</span>';
+    return;
+  }
+  if (summary.days_behind <= 1) {
+    el.innerHTML = '<span class="status-badge success">Data Up to Date</span>';
+  } else {
+    el.innerHTML = '<span class="status-badge warning">Sync Recommended</span>';
+  }
+}
+
+// --- Dashboard Tab ---
+function renderDashboard(history, recent, summary, realtimeO3) {
+  renderValueBoxes(history);
+  renderForecastTables(history, realtimeO3);
+  renderTrendPlot(recent);
+}
+
+function renderValueBoxes(history) {
+  const vbRF = document.getElementById('vbRF');
+  const vbAQM = document.getElementById('vbAQM');
+  const vbTemp = document.getElementById('vbTemp');
+
+  if (!history || history.length === 0) {
+    setValueBox(vbRF, 'N/A', "Tomorrow's RF Forecast", 'vb-blue');
+    setValueBox(vbAQM, 'N/A', "Tomorrow's AQM Bias-Corr", 'vb-blue');
+    setValueBox(vbTemp, 'N/A', "Tomorrow's Forecasted High", 'vb-orange');
+    return;
+  }
+
+  const latest = history[0];
+
+  const rfVal = latest.RF_Pred;
+  const rfInfo = getAqiInfo(rfVal);
+  setValueBox(vbRF,
+    rfVal != null ? fmt(rfVal) + ' ppm' : 'N/A',
+    `Tomorrow's RF Forecast: ${rfInfo.status}`,
+    rfInfo.cssClass
+  );
+
+  const aqmVal = latest.AQM_12_BC;
+  const aqmInfo = getAqiInfo(aqmVal);
+  setValueBox(vbAQM,
+    aqmVal != null ? fmt(aqmVal) + ' ppm' : 'N/A',
+    `Tomorrow's AQM Bias-Corr: ${aqmInfo.status}`,
+    aqmInfo.cssClass
+  );
+
+  const tempVal = latest.Met_Temp_F;
+  setValueBox(vbTemp,
+    tempVal != null ? tempVal.toFixed(1) + ' F' : 'N/A',
+    "Tomorrow's Forecasted High Temp",
+    'vb-orange'
+  );
+}
+
+function setValueBox(el, value, subtitle, cssClass) {
+  const icon = el.querySelector('.vb-icon').innerHTML;
+  el.className = 'value-box ' + cssClass;
+  el.querySelector('.vb-content').innerHTML = `<h2>${value}</h2><p>${subtitle}</p>`;
+}
+
+function renderForecastTables(history, realtimeO3) {
+  if (!history || history.length === 0) {
+    initEmptyTable('forecastTableToday');
+    initEmptyTable('forecastTableTomorrow');
+    return;
+  }
+
+  const today = new Date().toISOString().slice(0, 10);
+  const tomorrow = new Date(Date.now() + 86400000).toISOString().slice(0, 10);
+
+  // Today's table: matches app.R forecast_today reactive
+  const todayEntry = history.find(h => h.Target_Date === today);
+  renderTodayTable(todayEntry, realtimeO3);
+
+  // Tomorrow's table: matches app.R forecast_res / forecast_table
+  const tomorrowEntry = history.find(h => h.Target_Date === tomorrow) || history[0];
+  renderTomorrowTable(tomorrowEntry);
+}
+
+function renderTodayTable(entry, realtimeO3) {
+  const tableId = 'forecastTableToday';
+  const table = document.getElementById(tableId);
+  if ($.fn.DataTable.isDataTable('#' + tableId)) {
+    $('#' + tableId).DataTable().destroy();
+    table.innerHTML = '';
+  }
+
+  // Build rows matching app.R: Real-time O3, RF Prediction, AQM 12z Reg/BC, AQM 06z Reg/BC
+  const rows = [
+    ['Real-time O3 (Latest Hourly)', realtimeO3, today()],
+    ['RF Prediction (Issued Previously)', entry ? entry.RF_Pred : null, entry ? entry.Run_Date : null],
+    ['AQM 12z Reg', entry ? entry.AQM_12_Reg : null, entry ? entry.Run_Date : null],
+    ['AQM 12z BC', entry ? entry.AQM_12_BC : null, entry ? entry.Run_Date : null],
+    ['AQM 06z Reg', entry ? entry.AQM_06_Reg : null, entry ? entry.Run_Date : null],
+    ['AQM 06z BC', entry ? entry.AQM_06_BC : null, entry ? entry.Run_Date : null],
+  ];
+
+  const thead = '<thead><tr><th>Source</th><th>Value (ppm)</th><th>Issued Date</th></tr></thead>';
+  const tbody = '<tbody>' + rows.map(r =>
+    `<tr><td>${r[0]}</td><td class="${aqiCellClass(r[1])}">${fmt(r[1])}</td><td>${r[2] || 'N/A'}</td></tr>`
+  ).join('') + '</tbody>';
+
+  table.innerHTML = thead + tbody;
+  $('#' + tableId).DataTable({ paging: false, searching: false, info: false, ordering: false });
+}
+
+function renderTomorrowTable(entry) {
+  const tableId = 'forecastTableTomorrow';
+  const table = document.getElementById(tableId);
+  if ($.fn.DataTable.isDataTable('#' + tableId)) {
+    $('#' + tableId).DataTable().destroy();
+    table.innerHTML = '';
+  }
+
+  if (!entry) {
+    table.innerHTML = '<thead><tr><th>Source</th><th>Value (ppm)</th><th>Run Date</th><th>Sync Status</th></tr></thead><tbody><tr><td colspan="4">No data available</td></tr></tbody>';
+    return;
+  }
+
+  // Build rows matching app.R: RF, AQM 06z Reg/BC, AQM 12z Reg/BC
+  const rows = [
+    ['Our Random Forest', entry.RF_Pred, 'Live Prediction', 'Calculated Now'],
+    ['NOAA AQM 06z (Regular)', entry.AQM_06_Reg, entry.Run_Date, getSyncStatus(entry.Run_Date)],
+    ['NOAA AQM 06z (Bias-Corr)', entry.AQM_06_BC, entry.Run_Date, getSyncStatus(entry.Run_Date)],
+    ['NOAA AQM 12z (Regular)', entry.AQM_12_Reg, entry.Run_Date, getSyncStatus(entry.Run_Date)],
+    ['NOAA AQM 12z (Bias-Corr)', entry.AQM_12_BC, entry.Run_Date, getSyncStatus(entry.Run_Date)],
+  ];
+
+  const thead = '<thead><tr><th>Source</th><th>Value (ppm)</th><th>Run Date</th><th>Sync Status</th></tr></thead>';
+  const tbody = '<tbody>' + rows.map(r => {
+    const statusColor = r[3] === 'Calculated Now' || r[3] === 'Current Run' ? '#2ecc71'
+      : r[3] === 'Unavailable' ? '#e74c3c' : '#e67e22';
+    return `<tr><td>${r[0]}</td><td class="${aqiCellClass(r[1])}">${fmt(r[1])}</td><td>${r[2] || 'N/A'}</td><td style="color:${statusColor}; font-weight:bold;">${r[3]}</td></tr>`;
+  }).join('') + '</tbody>';
+
+  table.innerHTML = thead + tbody;
+  $('#' + tableId).DataTable({ paging: false, searching: false, info: false, ordering: false, scrollX: true });
+}
+
+function today() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function getSyncStatus(runDate) {
+  if (!runDate || runDate === 'N/A') return 'Unavailable';
+  if (runDate >= today()) return 'Current Run';
+  return 'NWS Sync Delay (Falling back to previous run)';
+}
+
+function initEmptyTable(id) {
+  const table = document.getElementById(id);
+  if ($.fn.DataTable.isDataTable('#' + id)) {
+    $('#' + id).DataTable().destroy();
+  }
+  table.innerHTML = '<thead><tr><th>Source</th><th>Value (ppm)</th></tr></thead><tbody><tr><td colspan="2">No data — run export_json.R</td></tr></tbody>';
+}
+
+// --- 7-Day Trend Plot ---
+function renderTrendPlot(recent) {
+  const el = document.getElementById('trendPlot');
+  if (!recent || recent.length === 0) {
+    Plotly.newPlot(el, [], { title: 'No recent data available', height: 320 });
+    return;
+  }
+
+  const dates = recent.map(r => r.date);
+  const o3 = recent.map(r => r.O3);
+
+  const colors = o3.map(v => {
+    if (v == null) return '#ccc';
+    if (v <= 0.054) return '#00a65a';
+    if (v <= 0.070) return '#f0ad4e';
+    if (v <= 0.085) return '#ff851b';
+    return '#dd4b39';
+  });
+
+  const trace = {
+    x: dates,
+    y: o3,
+    type: 'scatter',
+    mode: 'lines+markers',
+    line: { color: 'steelblue', width: 2 },
+    marker: { color: colors, size: 10 },
+    name: 'O3'
+  };
+
+  const layout = {
+    title: `Recent Ozone Levels for ${currentSite.name}`,
+    xaxis: { title: 'Date' },
+    yaxis: { title: 'Max 8-hr Ozone (ppm)' },
+    height: 320,
+    margin: { t: 40, b: 50, l: 60, r: 20 },
+    showlegend: false
+  };
+
+  Plotly.newPlot(el, [trace], layout, { responsive: true });
+}
+
+// --- Analysis Tab ---
+function renderAnalysis(history, importance, metrics, dataSummary) {
+  renderImportancePlot(importance);
+  renderModelStatus(dataSummary, metrics);
+  renderPerformancePlots(history);
+  renderMetricsTables(metrics);
+  renderHistoryTable(history);
+}
+
+function renderModelStatus(dataSummary, metrics) {
+  const labelEl = document.getElementById('modelStatusLabel');
+  const metricsEl = document.getElementById('modelMetricsText');
+
+  if (!dataSummary) {
+    labelEl.innerHTML = '<span class="status-badge danger" style="font-size:1.1em;">Action: Train Required</span>';
+    metricsEl.textContent = '';
+    return;
+  }
+
+  // Show retrain button only when running local dev server
+  const retrainBtn = document.getElementById('retrainBtn');
+  if (isLocalServer) retrainBtn.style.display = 'flex';
+
+  if (dataSummary.days_behind <= 1) {
+    labelEl.innerHTML = '<span class="status-badge success" style="font-size:1.1em;">Status: Model Optimized</span>';
+  } else {
+    labelEl.innerHTML = '<span class="status-badge warning" style="font-size:1.1em;">Action: Retrain Recommended (New Data)</span>';
+  }
+
+  if (metrics && metrics.overall && metrics.overall.RF) {
+    const rf = metrics.overall.RF;
+    metricsEl.innerHTML = `<strong>RF Model:</strong> RMSE = ${fmt(rf.rmse)}, R² = ${rf.r2 != null ? rf.r2.toFixed(3) : 'N/A'}, N = ${rf.n}`;
+  }
+}
+
+function renderImportancePlot(importance) {
+  const el = document.getElementById('importancePlot');
+  if (!importance || importance.length === 0) {
+    Plotly.newPlot(el, [], { title: 'No model data', height: 320 });
+    return;
+  }
+
+  const sorted = [...importance].sort((a, b) => a['%IncMSE'] - b['%IncMSE']);
+
+  const trace = {
+    y: sorted.map(d => d.Feature),
+    x: sorted.map(d => d['%IncMSE']),
+    type: 'bar',
+    orientation: 'h',
+    marker: { color: 'steelblue' }
+  };
+
+  Plotly.newPlot(el, [trace], {
+    title: 'Variable Importance (%IncMSE)',
+    height: 320,
+    margin: { l: 180, r: 20, t: 40, b: 40 },
+    xaxis: { title: '% Increase in MSE' }
+  }, { responsive: true });
+}
+
+function renderPerformancePlots(history) {
+  if (!history || history.length === 0) return;
+
+  // For seasonal sites: pad all dates in range and null out off-season (Nov 1 – Feb 14)
+  let df = history;
+  if (currentSite.seasonal && df.length > 1) {
+    const allDates = df.map(r => r.Target_Date).sort();
+    const startDate = new Date(allDates[0] + 'T00:00:00');
+    const endDate = new Date(allDates[allDates.length - 1] + 'T00:00:00');
+    const dateMap = {};
+    df.forEach(r => { dateMap[r.Target_Date] = r; });
+
+    const padded = [];
+    for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+      const key = d.toISOString().slice(0, 10);
+      const m = d.getMonth() + 1;
+      const day = d.getDate();
+      const offSeason = m >= 11 || m === 1 || (m === 2 && day < 15);
+
+      if (offSeason) {
+        padded.push({ Target_Date: key, Observed_O3: null, RF_Pred: null, AQM_06_Reg: null, AQM_06_BC: null, AQM_12_Reg: null, AQM_12_BC: null });
+      } else if (dateMap[key]) {
+        padded.push(dateMap[key]);
+      } else {
+        padded.push({ Target_Date: key, Observed_O3: null, RF_Pred: null, AQM_06_Reg: null, AQM_06_BC: null, AQM_12_Reg: null, AQM_12_BC: null });
+      }
+    }
+    df = padded;
+  }
+
+  // Time series
+  const dates = df.map(r => r.Target_Date);
+  const traces = [
+    { x: dates, y: df.map(r => r.Observed_O3), name: 'Observed', line: { color: 'black', width: 2 } },
+    { x: dates, y: df.map(r => r.RF_Pred), name: 'RF Prediction', line: { color: '#3c8dbc', dash: 'dash' } },
+  ];
+
+  if (df.some(r => r.AQM_06_Reg != null))
+    traces.push({ x: dates, y: df.map(r => r.AQM_06_Reg), name: 'AQM 06z Reg', line: { color: '#e74c3c', width: 1, dash: 'dot' } });
+  if (df.some(r => r.AQM_06_BC != null))
+    traces.push({ x: dates, y: df.map(r => r.AQM_06_BC), name: 'AQM 06z BC', line: { color: '#c0392b', width: 1.5, dash: 'dot' } });
+  if (df.some(r => r.AQM_12_Reg != null))
+    traces.push({ x: dates, y: df.map(r => r.AQM_12_Reg), name: 'AQM 12z Reg', line: { color: '#f1c40f', width: 1, dash: 'dot' } });
+  if (df.some(r => r.AQM_12_BC != null))
+    traces.push({ x: dates, y: df.map(r => r.AQM_12_BC), name: 'AQM 12z BC', line: { color: '#f39c12', width: 1.5, dash: 'dot' } });
+
+  traces.forEach(t => { t.type = 'scatter'; t.mode = 'lines'; t.connectgaps = false; });
+
+  Plotly.newPlot('perfTimeSeries', traces, {
+    title: 'Historical Comparison',
+    yaxis: { title: 'Ozone (ppm)' },
+    hovermode: 'x unified',
+    legend: { orientation: 'h', y: -0.25 },
+    height: 400,
+    margin: { t: 40, b: 80, l: 60, r: 20 }
+  }, { responsive: true });
+
+  // Scatter: RF vs Observed
+  const paired = df.filter(r => r.RF_Pred != null && r.Observed_O3 != null);
+  if (paired.length > 1) {
+    const maxVal = Math.max(...paired.map(r => Math.max(r.RF_Pred, r.Observed_O3)));
+    Plotly.newPlot('perfScatter', [
+      {
+        x: paired.map(r => r.Observed_O3),
+        y: paired.map(r => r.RF_Pred),
+        type: 'scatter', mode: 'markers',
+        marker: { opacity: 0.5, size: 8, color: '#3c8dbc' },
+        name: 'RF vs Observed'
+      },
+      {
+        x: [0, maxVal], y: [0, maxVal],
+        type: 'scatter', mode: 'lines',
+        line: { color: 'gray', dash: 'dash' },
+        showlegend: false, name: '1:1'
+      }
+    ], {
+      title: 'RF Prediction vs Observed',
+      xaxis: { title: 'Observed O3 (ppm)' },
+      yaxis: { title: 'RF Predicted O3 (ppm)' },
+      height: 350, showlegend: false,
+      margin: { t: 40, b: 50, l: 60, r: 20 }
+    }, { responsive: true });
+
+    // Error distribution
+    const errors = paired.map(r => r.RF_Pred - r.Observed_O3);
+    Plotly.newPlot('perfErrorDist', [{
+      x: errors, type: 'histogram',
+      marker: { color: '#3c8dbc', opacity: 0.7 },
+      name: 'RF Error'
+    }], {
+      title: 'Model Error Distribution (Bias)',
+      xaxis: { title: 'Prediction Error (ppm)' },
+      yaxis: { title: 'Frequency' },
+      bargap: 0.1, height: 350,
+      margin: { t: 40, b: 50, l: 60, r: 20 }
+    }, { responsive: true });
+  }
+}
+
+function renderMetricsTables(metrics) {
+  if (!metrics) {
+    document.getElementById('metricsOverall').innerHTML = '<p>No metrics available.</p>';
+    document.getElementById('metricsModerate').innerHTML = '';
+    document.getElementById('metricsUSG').innerHTML = '';
+    return;
+  }
+
+  document.getElementById('metricsOverall').innerHTML = buildMetricsTable(metrics.overall, false);
+  document.getElementById('metricsModerate').innerHTML = buildMetricsTable(metrics.moderate, true);
+  document.getElementById('metricsUSG').innerHTML = buildMetricsTable(metrics.usg, true);
+}
+
+function buildMetricsTable(data, showCategorical) {
+  if (!data) return '<p>Insufficient data.</p>';
+
+  const models = ['RF', 'AQM_06R', 'AQM_06BC', 'AQM_12R', 'AQM_12BC'];
+  const labels = ['RF', '06z Reg', '06z BC', '12z Reg', '12z BC'];
+
+  let rows = [
+    ['N', m => m.n],
+    ['RMSE (ppm)', m => fmt(m.rmse)],
+    ['Mean Bias', m => fmt(m.bias)],
+    ['MAE', m => fmt(m.mae)],
+    ['R²', m => m.r2 != null ? m.r2.toFixed(3) : 'N/A'],
+  ];
+
+  if (showCategorical) {
+    rows.push(['POD (Hit Rate)', m => m.pod != null ? m.pod.toFixed(2) : 'N/A']);
+    rows.push(['FAR', m => m.far != null ? m.far.toFixed(2) : 'N/A']);
+  }
+
+  let html = '<table class="metrics-table"><thead><tr><th>Metric</th>';
+  labels.forEach(l => { html += `<th>${l}</th>`; });
+  html += '</tr></thead><tbody>';
+
+  rows.forEach(([label, getter]) => {
+    html += `<tr><td>${label}</td>`;
+    models.forEach(m => {
+      const val = data[m] ? getter(data[m]) : 'N/A';
+      html += `<td>${val}</td>`;
+    });
+    html += '</tr>';
+  });
+
+  html += '</tbody></table>';
+  return html;
+}
+
+// --- History Table ---
+function renderHistoryTable(history) {
+  const tableId = 'historyTable';
+  if ($.fn.DataTable.isDataTable('#' + tableId)) {
+    $('#' + tableId).DataTable().destroy();
+    document.getElementById(tableId).innerHTML = '';
+  }
+
+  if (!history || history.length === 0) {
+    document.getElementById(tableId).innerHTML = '<p>No history data.</p>';
+    return;
+  }
+
+  const cols = [
+    'Run_Date', 'Target_Date', 'Observed_O3', 'RF_Pred',
+    'AQM_06_Reg', 'AQM_06_BC', 'AQM_12_Reg', 'AQM_12_BC',
+    'Met_Temp_F', 'Met_Dewp_F', 'Met_WS_kts', 'Met_WD_deg'
+  ];
+  const headers = [
+    'Run Date', 'Target Date', 'Observed O3', 'RF Prediction',
+    'AQM 06z Reg', 'AQM 06z BC', 'AQM 12z Reg', 'AQM 12z BC',
+    'Temp (F)', 'Dewp (F)', 'Wind (kts)', 'Wind Dir'
+  ];
+  const o3Cols = new Set(['Observed_O3', 'RF_Pred', 'AQM_06_Reg', 'AQM_06_BC', 'AQM_12_Reg', 'AQM_12_BC']);
+
+  let thead = '<thead><tr>' + headers.map(h => `<th>${h}</th>`).join('') + '</tr></thead>';
+  let tbody = '<tbody>';
+
+  // Filter seasonal if needed
+  let filtered = history;
+  if (currentSite.seasonal) {
+    filtered = history.filter(row => {
+      const d = new Date(row.Target_Date);
+      const m = d.getMonth() + 1;
+      const day = d.getDate();
+      return (m > 2 && m <= 10) || (m === 2 && day >= 15);
+    });
+  }
+
+  filtered.forEach(row => {
+    tbody += '<tr>';
+    cols.forEach(col => {
+      const val = row[col];
+      let style = '';
+      if (o3Cols.has(col)) {
+        style = aqiCellStyle(val);
+      } else if (col === 'Met_Temp_F' && val != null) {
+        style = tempCellStyle(val);
+      } else if (col === 'Met_Dewp_F' && val != null) {
+        style = dewpCellStyle(val);
+      }
+      const display = o3Cols.has(col) ? fmt(val) : (val != null ? val : 'N/A');
+      tbody += `<td style="${style}">${display}</td>`;
+    });
+    tbody += '</tr>';
+  });
+
+  tbody += '</tbody>';
+  document.getElementById(tableId).innerHTML = thead + tbody;
+
+  $('#' + tableId).DataTable({
+    pageLength: 25,
+    scrollX: true,
+    order: [[0, 'desc']]
+  });
+}
+
+// --- Data Management Tab ---
+function renderDataTab(summary) {
+  const row1 = document.getElementById('dataInfoBoxesRow1');
+  const row2 = document.getElementById('dataInfoBoxesRow2');
+
+  if (!summary) {
+    row1.innerHTML = '<div class="info-box red"><div class="ib-icon"><i class="fas fa-times-circle"></i></div><div class="ib-content"><h4>Status</h4><p>No Data</p></div></div>';
+    row2.innerHTML = '';
+    initEmptyTable('dataPreviewTable');
+    return;
+  }
+
+  const syncStatus = summary.days_behind <= 1
+    ? { label: 'Up to Date', icon: 'check-circle', color: 'green' }
+    : { label: `${summary.days_behind} Days Behind`, icon: 'exclamation-triangle', color: 'yellow' };
+
+  const years = summary.years_span || 0;
+
+  // Row 1: Total Records, Latest Observation, Sync Status (matches app.R)
+  row1.innerHTML = `
+    <div class="info-box light-blue">
+      <div class="ib-icon"><i class="fas fa-database"></i></div>
+      <div class="ib-content"><h4>Total Records</h4><p>${(summary.total_records || 0).toLocaleString()}</p></div>
+    </div>
+    <div class="info-box purple">
+      <div class="ib-icon"><i class="fas fa-calendar-check"></i></div>
+      <div class="ib-content"><h4>Latest Observation</h4><p>${summary.latest_date || 'N/A'}</p></div>
+    </div>
+    <div class="info-box ${syncStatus.color}">
+      <div class="ib-icon"><i class="fas fa-${syncStatus.icon}"></i></div>
+      <div class="ib-content"><h4>Sync Status</h4><p>${syncStatus.label}</p></div>
+    </div>
+  `;
+
+  // Row 2: Training Hub Since, Model Experience, Data Completeness (matches app.R)
+  row2.innerHTML = `
+    <div class="info-box navy">
+      <div class="ib-icon"><i class="fas fa-history"></i></div>
+      <div class="ib-content"><h4>Training Hub Since</h4><p>${summary.earliest_date || 'N/A'}</p></div>
+    </div>
+    <div class="info-box yellow">
+      <div class="ib-icon"><i class="fas fa-award"></i></div>
+      <div class="ib-content"><h4>Model Experience</h4><p>${years} Years</p></div>
+    </div>
+    <div class="info-box orange">
+      <div class="ib-icon"><i class="fas fa-chart-pie"></i></div>
+      <div class="ib-content"><h4>Data Completeness</h4><p>${summary.completeness_pct || 0}%</p></div>
+    </div>
+  `;
+
+  renderDataPreview(summary.last_5_rows);
+}
+
+function renderDataPreview(rows) {
+  const tableId = 'dataPreviewTable';
+  if ($.fn.DataTable.isDataTable('#' + tableId)) {
+    $('#' + tableId).DataTable().destroy();
+    document.getElementById(tableId).innerHTML = '';
+  }
+
+  if (!rows || rows.length === 0) {
+    document.getElementById(tableId).innerHTML = '<p>No data preview available.</p>';
+    return;
+  }
+
+  const keys = ['date', 'O3', 'max_temp_f', 'min_dewpoint_f', 'ws', 'wd'];
+  const labels = ['Date', 'O3 (ppm)', 'Max Temp (F)', 'Min Dewpoint (F)', 'Wind Speed', 'Wind Dir'];
+
+  let thead = '<thead><tr>' + labels.map(h => `<th>${h}</th>`).join('') + '</tr></thead>';
+  let tbody = '<tbody>';
+
+  rows.forEach(row => {
+    tbody += '<tr>';
+    keys.forEach((k, i) => {
+      const val = row[k];
+      if (i >= 1 && val != null) {
+        tbody += `<td>${Number(val).toFixed(3)}</td>`;
+      } else {
+        tbody += `<td>${val != null ? val : 'N/A'}</td>`;
+      }
+    });
+    tbody += '</tr>';
+  });
+
+  tbody += '</tbody>';
+  document.getElementById(tableId).innerHTML = thead + tbody;
+  $('#' + tableId).DataTable({ paging: false, searching: false, info: false, scrollX: true });
+}
+
+// --- About Tab ---
+function renderAboutTab() {
+  if (!currentSite) return;
+
+  const table = document.getElementById('aboutSiteTable');
+  table.innerHTML = `
+    <tr><td><strong>Station Name:</strong></td><td>${currentSite.name}</td></tr>
+    <tr><td><strong>Network Region:</strong></td><td>${currentSite.region}</td></tr>
+    <tr><td><strong>System AQS ID:</strong></td><td>${currentSite.aqs_id}</td></tr>
+    <tr><td><strong>Monitor Schedule:</strong></td><td>${currentSite.seasonal ? 'Seasonal (Mar-Oct)' : 'Year-Round'}</td></tr>
+    <tr><td><strong>Latitude:</strong></td><td>${currentSite.lat}</td></tr>
+    <tr><td><strong>Longitude:</strong></td><td>${currentSite.lon}</td></tr>
+    <tr><td><strong>Met Data Source:</strong></td><td>ASOS Station ${currentSite.asos}</td></tr>
+  `;
+
+  renderAboutMap();
+}
+
+function renderAboutMap() {
+  if (!currentSite) return;
+  if (aboutMapInstance) aboutMapInstance.remove();
+
+  aboutMapInstance = L.map('aboutMap').setView([currentSite.lat, currentSite.lon], 15);
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Esri World Imagery',
+    maxZoom: 18
+  }).addTo(aboutMapInstance);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png', {
+    maxZoom: 18
+  }).addTo(aboutMapInstance);
+  L.marker([currentSite.lat, currentSite.lon])
+    .bindPopup(`<b>${currentSite.name}</b><br>AQS: ${currentSite.aqs_id}`)
+    .addTo(aboutMapInstance);
+}
+
+// --- Local Sync (dev server only) ---
+let isLocalServer = false;
+
+async function detectLocalServer() {
+  try {
+    const res = await fetch('/api/sync/status');
+    if (res.ok) {
+      isLocalServer = true;
+      document.getElementById('syncControls').style.display = 'block';
+    }
+  } catch {
+    // Not running dev_server.py — hide sync button (already hidden by default)
+  }
+}
+
+async function triggerSync() {
+  const btn = document.getElementById('syncBtn');
+  const statusEl = document.getElementById('syncStatus');
+
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Running Pipeline...';
+  statusEl.textContent = 'Starting sync — this may take a few minutes...';
+
+  try {
+    const res = await fetch('/api/sync', { method: 'POST' });
+    const data = await res.json();
+
+    if (data.status === 'already_running') {
+      statusEl.textContent = 'Sync already in progress...';
+    }
+
+    pollSyncStatus();
+  } catch (e) {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-globe"></i> Sync & Refresh Ecosystem';
+    statusEl.textContent = 'Error: Could not reach local server.';
+  }
+}
+
+async function pollSyncStatus() {
+  const btn = document.getElementById('syncBtn');
+  const statusEl = document.getElementById('syncStatus');
+
+  const poll = async () => {
+    try {
+      const res = await fetch('/api/sync/status');
+      const data = await res.json();
+
+      if (data.running) {
+        const lines = (data.log || '').trim().split('\n');
+        const lastLine = lines[lines.length - 1] || 'Working...';
+        statusEl.textContent = lastLine;
+        setTimeout(poll, 2000);
+      } else {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-globe"></i> Sync & Refresh Ecosystem';
+        statusEl.innerHTML = '<span style="color:#00a65a;">Sync complete! Reloading data...</span>';
+
+        // Reload the current site data
+        await onSiteChange();
+        statusEl.innerHTML = '<span style="color:#00a65a;">Done — dashboard refreshed.</span>';
+        setTimeout(() => { statusEl.textContent = ''; }, 5000);
+      }
+    } catch {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-globe"></i> Sync & Refresh Ecosystem';
+      statusEl.textContent = 'Lost connection to server.';
+    }
+  };
+
+  setTimeout(poll, 2000);
+}
+
+async function triggerRetrain() {
+  if (!currentSite) return;
+  const btn = document.getElementById('retrainBtn');
+  const statusEl = document.getElementById('retrainStatus');
+
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Retraining...';
+  statusEl.textContent = `Retraining model for ${currentSite.name}...`;
+
+  try {
+    const res = await fetch(`/api/retrain/${encodeURIComponent(currentSite.name)}`, { method: 'POST' });
+    const data = await res.json();
+
+    if (data.status === 'complete') {
+      statusEl.innerHTML = '<span style="color:#00a65a;">Model retrained! Reloading...</span>';
+      await onSiteChange();
+      statusEl.innerHTML = '<span style="color:#00a65a;">Done.</span>';
+      setTimeout(() => { statusEl.textContent = ''; }, 5000);
+    } else {
+      statusEl.textContent = `Error: ${data.message || 'Retrain failed'}`;
+    }
+  } catch (e) {
+    statusEl.textContent = 'Error: Could not reach server.';
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '<i class="fas fa-brain"></i> Retrain Model';
+}

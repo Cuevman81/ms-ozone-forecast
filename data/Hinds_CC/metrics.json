@@ -1,0 +1,123 @@
+{
+  "overall": {
+    "RF": {
+      "n": 378,
+      "rmse": 0.0038,
+      "bias": -0.0007,
+      "mae": 0.0027,
+      "r2": 0.862
+    },
+    "AQM_06R": {
+      "n": 439,
+      "rmse": 0.0108,
+      "bias": 0.003,
+      "mae": 0.0088,
+      "r2": 0.071
+    },
+    "AQM_06BC": {
+      "n": 439,
+      "rmse": 0.0104,
+      "bias": -0.0019,
+      "mae": 0.0084,
+      "r2": 0.105
+    },
+    "AQM_12R": {
+      "n": 439,
+      "rmse": 0.0108,
+      "bias": 0.003,
+      "mae": 0.0088,
+      "r2": 0.067
+    },
+    "AQM_12BC": {
+      "n": 439,
+      "rmse": 0.0105,
+      "bias": -0.002,
+      "mae": 0.0084,
+      "r2": 0.101
+    }
+  },
+  "moderate": {
+    "RF": {
+      "n": 37,
+      "rmse": 0.0056,
+      "bias": -0.0041,
+      "mae": 0.0041,
+      "r2": 0.322,
+      "pod": 0.46,
+      "far": 0
+    },
+    "AQM_06R": {
+      "n": 37,
+      "rmse": 0.0127,
+      "bias": -0.0113,
+      "mae": 0.0114,
+      "r2": 0.006,
+      "pod": 0.08,
+      "far": 0.67
+    },
+    "AQM_06BC": {
+      "n": 37,
+      "rmse": 0.0165,
+      "bias": -0.0153,
+      "mae": 0.0153,
+      "r2": 0.001,
+      "pod": 0,
+      "far": null
+    },
+    "AQM_12R": {
+      "n": 37,
+      "rmse": 0.0127,
+      "bias": -0.0113,
+      "mae": 0.0114,
+      "r2": 0.009,
+      "pod": 0.08,
+      "far": 0.73
+    },
+    "AQM_12BC": {
+      "n": 37,
+      "rmse": 0.0166,
+      "bias": -0.0154,
+      "mae": 0.0154,
+      "r2": 0.001,
+      "pod": 0,
+      "far": null
+    }
+  },
+  "usg": {
+    "RF": {
+      "n": 0,
+      "rmse": null,
+      "bias": null,
+      "mae": null,
+      "r2": null
+    },
+    "AQM_06R": {
+      "n": 0,
+      "rmse": null,
+      "bias": null,
+      "mae": null,
+      "r2": null
+    },
+    "AQM_06BC": {
+      "n": 0,
+      "rmse": null,
+      "bias": null,
+      "mae": null,
+      "r2": null
+    },
+    "AQM_12R": {
+      "n": 0,
+      "rmse": null,
+      "bias": null,
+      "mae": null,
+      "r2": null
+    },
+    "AQM_12BC": {
+      "n": 0,
+      "rmse": null,
+      "bias": null,
+      "mae": null,
+      "r2": null
+    }
+  }
+}

@@ -1,0 +1,110 @@
+[
+  {
+    "%IncMSE": 67.0928,
+    "IncNodePurity": 0.9357,
+    "Feature": "O3",
+    "_row": "O3"
+  },
+  {
+    "%IncMSE": 21.1084,
+    "IncNodePurity": 0.2362,
+    "Feature": "O3_lag1",
+    "_row": "O3_lag1"
+  },
+  {
+    "%IncMSE": 18.6247,
+    "IncNodePurity": 0.1246,
+    "Feature": "O3_lag2",
+    "_row": "O3_lag2"
+  },
+  {
+    "%IncMSE": 19.3147,
+    "IncNodePurity": 0.0793,
+    "Feature": "max_temp_f",
+    "_row": "max_temp_f"
+  },
+  {
+    "%IncMSE": 29.0953,
+    "IncNodePurity": 0.0598,
+    "Feature": "min_dewpoint_f",
+    "_row": "min_dewpoint_f"
+  },
+  {
+    "%IncMSE": 19.7916,
+    "IncNodePurity": 0.0702,
+    "Feature": "ws",
+    "_row": "ws"
+  },
+  {
+    "%IncMSE": 27.0145,
+    "IncNodePurity": 0.0962,
+    "Feature": "wd",
+    "_row": "wd"
+  },
+  {
+    "%IncMSE": 18.8411,
+    "IncNodePurity": 0.051,
+    "Feature": "max_temp_f_lag1",
+    "_row": "max_temp_f_lag1"
+  },
+  {
+    "%IncMSE": 20.5346,
+    "IncNodePurity": 0.0495,
+    "Feature": "min_dewpoint_f_lag1",
+    "_row": "min_dewpoint_f_lag1"
+  },
+  {
+    "%IncMSE": 12.7022,
+    "IncNodePurity": 0.0565,
+    "Feature": "ws_lag1",
+    "_row": "ws_lag1"
+  },
+  {
+    "%IncMSE": 14.7898,
+    "IncNodePurity": 0.0657,
+    "Feature": "wd_lag1",
+    "_row": "wd_lag1"
+  },
+  {
+    "%IncMSE": 43.6445,
+    "IncNodePurity": 0.3697,
+    "Feature": "max_temp_f_next",
+    "_row": "max_temp_f_next"
+  },
+  {
+    "%IncMSE": 44.5542,
+    "IncNodePurity": 0.129,
+    "Feature": "min_dewpoint_f_next",
+    "_row": "min_dewpoint_f_next"
+  },
+  {
+    "%IncMSE": 37.5128,
+    "IncNodePurity": 0.1397,
+    "Feature": "ws_next",
+    "_row": "ws_next"
+  },
+  {
+    "%IncMSE": 48.7419,
+    "IncNodePurity": 0.1617,
+    "Feature": "wd_next",
+    "_row": "wd_next"
+  },
+  {
+    "%IncMSE": 38.9353,
+    "IncNodePurity": 0.1687,
+    "Feature": "doy",
+    "_row": "doy"
+  },
+  {
+    "%IncMSE": 3.0969,
+    "IncNodePurity": 0.0065,
+    "Feature": "is_weekend",
+    "_row": "is_weekend"
+  },
+  {
+    "%IncMSE": 17.813,
+    "IncNodePurity": 0.0795,
+    "Feature": "td_spread",
+    "_row": "td_spread"
+  }
+]

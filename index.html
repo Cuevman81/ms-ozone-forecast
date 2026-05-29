@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MS Ozone Forecast Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <i class="fas fa-wind"></i> MS Ozone Forecast
+    </div>
+    <ul class="sidebar-nav">
+      <li class="active" data-tab="dashboard"><i class="fas fa-gauge-high"></i> Dashboard</li>
+      <li data-tab="analysis"><i class="fas fa-chart-line"></i> Trends &amp; Analysis</li>
+      <li data-tab="data"><i class="fas fa-database"></i> Data Management</li>
+      <li data-tab="about"><i class="fas fa-info-circle"></i> About Station</li>
+    </ul>
+    <div class="sidebar-controls">
+      <label for="regionSelect">Select Region</label>
+      <select id="regionSelect"></select>
+
+      <label for="siteSelect">Select Monitor Site</label>
+      <select id="siteSelect"></select>
+
+      <h4 id="sidebarSiteName" style="color:#fff; margin: 10px 0 6px;"></h4>
+      <div id="sidebarMap" class="sidebar-map"></div>
+
+      <div class="sidebar-status" id="sidebarStatus"></div>
+
+      <div id="syncControls" style="margin-top:12px; display:none;">
+        <button id="syncBtn" onclick="triggerSync()" style="
+          width:100%; padding:10px; border:none; border-radius:6px;
+          background:#3c8dbc; color:#fff; font-weight:bold; cursor:pointer;
+          font-size:0.95em; display:flex; align-items:center; justify-content:center; gap:8px;
+        ">
+          <i class="fas fa-globe"></i> Sync &amp; Refresh Ecosystem
+        </button>
+        <p style="color:#ccd; font-size:0.8em; margin-top:5px;">Updates data, models, and forecasts for all sites.</p>
+        <div id="syncStatus" style="margin-top:8px; font-size:0.8em; color:#b8c7ce;"></div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+
+    <!-- Dashboard Tab -->
+    <div class="tab-panel active" id="tab-dashboard">
+      <div class="value-boxes" id="valueBoxes">
+        <div class="value-box vb-blue" id="vbRF">
+          <div class="vb-icon"><i class="fas fa-robot"></i></div>
+          <div class="vb-content"><h2>--</h2><p>Tomorrow's RF Forecast</p></div>
+        </div>
+        <div class="value-box vb-blue" id="vbAQM">
+          <div class="vb-icon"><i class="fas fa-cloud-sun"></i></div>
+          <div class="vb-content"><h2>--</h2><p>Tomorrow's AQM Bias-Corr</p></div>
+        </div>
+        <div class="value-box vb-orange" id="vbTemp">
+          <div class="vb-icon"><i class="fas fa-temperature-half"></i></div>
+          <div class="vb-content"><h2>--</h2><p>Tomorrow's Forecasted High Temp</p></div>
+        </div>
+      </div>
+
+      <div class="row two-col">
+        <div class="card">
+          <div class="card-header info"><i class="fas fa-table"></i> Forecast Comparison (Today)</div>
+          <div class="card-body table-wrap">
+            <table id="forecastTableToday" class="display" style="width:100%"></table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header primary"><i class="fas fa-table"></i> Forecast Comparison (Tomorrow)</div>
+          <div class="card-body table-wrap">
+            <table id="forecastTableTomorrow" class="display" style="width:100%"></table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header info"><i class="fas fa-chart-line"></i> 7-Day Ozone Trend</div>
+        <div class="card-body">
+          <div id="trendPlot" style="height:320px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Analysis Tab -->
+    <div class="tab-panel" id="tab-analysis">
+      <div class="row sidebar-layout">
+        <div class="card">
+          <div class="card-header warning"><i class="fas fa-chart-bar"></i> Model Diagnostics — Variable Importance</div>
+          <div class="card-body">
+            <div id="importancePlot" style="height:320px;"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header danger"><i class="fas fa-brain"></i> Model Control</div>
+          <div class="card-body" id="modelInfo">
+            <div id="modelStatusLabel"></div>
+            <br><br>
+            <p style="color:#888; font-size:0.9em;">Updating the model uses the latest downloaded historical records.</p>
+            <button id="retrainBtn" onclick="triggerRetrain()" style="
+              width:100%; padding:10px; border:none; border-radius:6px;
+              background:#f39c12; color:#fff; font-weight:bold; cursor:pointer;
+              font-size:0.95em; display:none; align-items:center; justify-content:center; gap:8px; margin-top:10px;
+            ">
+              <i class="fas fa-brain"></i> Retrain Model
+            </button>
+            <div id="retrainStatus" style="margin-top:8px; font-size:0.85em; color:#888;"></div>
+            <hr style="margin:12px 0;">
+            <div id="modelMetricsText"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header primary"><i class="fas fa-chart-area"></i> Performance</div>
+        <div class="card-body">
+          <div class="sub-tabs">
+            <div class="sub-tab active" data-sub="perfAnalysis"><i class="fas fa-chart-line"></i> Performance Analysis</div>
+            <div class="sub-tab" data-sub="historyLog"><i class="fas fa-table"></i> Forecast History Log</div>
+          </div>
+
+          <div class="sub-panel active" id="sub-perfAnalysis">
+            <div class="row sidebar-layout">
+              <div>
+                <div id="perfTimeSeries" style="height:400px;"></div>
+                <div class="row two-col" style="margin-top:16px;">
+                  <div id="perfScatter" style="height:350px;"></div>
+                  <div id="perfErrorDist" style="height:350px;"></div>
+                </div>
+              </div>
+              <div class="metrics-section" id="metricsSection">
+                <h4>Overall Performance</h4>
+                <div id="metricsOverall"></div>
+                <h4>Moderate+ Days (&ge; 55ppb)</h4>
+                <div id="metricsModerate"></div>
+                <h4>USG+ Days (&ge; 71ppb)</h4>
+                <div id="metricsUSG"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sub-panel" id="sub-historyLog">
+            <div class="table-wrap">
+              <table id="historyTable" class="display" style="width:100%"></table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data Management Tab -->
+    <div class="tab-panel" id="tab-data">
+      <div class="info-boxes" id="dataInfoBoxesRow1" style="grid-template-columns: repeat(3, 1fr);"></div>
+      <div class="info-boxes" id="dataInfoBoxesRow2" style="grid-template-columns: repeat(3, 1fr);"></div>
+
+      <div class="row sidebar-layout">
+        <div class="card">
+          <div class="card-header primary"><i class="fas fa-table"></i> Raw Data Preview (Last 5 Rows)</div>
+          <div class="card-body table-wrap">
+            <table id="dataPreviewTable" class="display" style="width:100%"></table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header success"><i class="fas fa-download"></i> Data Pipeline</div>
+          <div class="card-body">
+            <p>Data is synced via the R pipeline (GitHub Actions or manual <code>Rscript</code> run). The export script generates the JSON files this dashboard reads.</p>
+            <br>
+            <p><strong>To refresh data:</strong></p>
+            <ol style="padding-left:20px; line-height:2;">
+              <li>Run <code>Ozone_Master_Sync.R</code> (updates data + models + forecasts)</li>
+              <li>Run <code>web-dashboard/export_json.R</code> (exports JSON for this dashboard)</li>
+              <li>Push or deploy</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- About Tab -->
+    <div class="tab-panel" id="tab-about">
+      <div class="row sidebar-layout">
+        <div>
+          <div class="card">
+            <div class="card-header info"><i class="fas fa-map-marker-alt"></i> Monitoring Site Profile</div>
+            <div class="card-body">
+              <table class="about-table" id="aboutSiteTable"></table>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header warning"><i class="fas fa-brain"></i> Model Details</div>
+            <div class="card-body">
+              <p>This application uses a <strong>Random Forest regression model</strong> to forecast the following day's peak 8-hour ozone concentration based on persistence, forecasted meteorology, and NOAA air quality model outputs.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header primary"><i class="fas fa-map"></i> Site Context Map</div>
+          <div class="card-body">
+            <div id="aboutMap" style="height:500px; border-radius:6px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer style="text-align:center; padding:20px; color:#999; font-size:0.8em;">
+      Mississippi DEQ — Ozone Forecast Dashboard | Data exported: <span id="exportDate">--</span>
+    </footer>
+  </main>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

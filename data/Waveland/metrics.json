@@ -1,0 +1,123 @@
+{
+  "overall": {
+    "RF": {
+      "n": 375,
+      "rmse": 0.0037,
+      "bias": -0.0006,
+      "mae": 0.0027,
+      "r2": 0.875
+    },
+    "AQM_06R": {
+      "n": 436,
+      "rmse": 0.0108,
+      "bias": 0.0024,
+      "mae": 0.0088,
+      "r2": 0.081
+    },
+    "AQM_06BC": {
+      "n": 436,
+      "rmse": 0.0106,
+      "bias": -0.0025,
+      "mae": 0.0084,
+      "r2": 0.127
+    },
+    "AQM_12R": {
+      "n": 436,
+      "rmse": 0.0109,
+      "bias": 0.0024,
+      "mae": 0.0088,
+      "r2": 0.079
+    },
+    "AQM_12BC": {
+      "n": 436,
+      "rmse": 0.0107,
+      "bias": -0.0026,
+      "mae": 0.0085,
+      "r2": 0.125
+    }
+  },
+  "moderate": {
+    "RF": {
+      "n": 47,
+      "rmse": 0.005,
+      "bias": -0.0039,
+      "mae": 0.0039,
+      "r2": 0.267,
+      "pod": 0.7,
+      "far": 0.03
+    },
+    "AQM_06R": {
+      "n": 47,
+      "rmse": 0.0144,
+      "bias": -0.013,
+      "mae": 0.013,
+      "r2": 0.064,
+      "pod": 0.06,
+      "far": 0.67
+    },
+    "AQM_06BC": {
+      "n": 47,
+      "rmse": 0.0181,
+      "bias": -0.0169,
+      "mae": 0.0169,
+      "r2": 0.04,
+      "pod": 0,
+      "far": null
+    },
+    "AQM_12R": {
+      "n": 47,
+      "rmse": 0.0145,
+      "bias": -0.0131,
+      "mae": 0.0131,
+      "r2": 0.06,
+      "pod": 0.06,
+      "far": 0.73
+    },
+    "AQM_12BC": {
+      "n": 47,
+      "rmse": 0.0182,
+      "bias": -0.017,
+      "mae": 0.017,
+      "r2": 0.041,
+      "pod": 0,
+      "far": null
+    }
+  },
+  "usg": {
+    "RF": {
+      "n": 0,
+      "rmse": null,
+      "bias": null,
+      "mae": null,
+      "r2": null
+    },
+    "AQM_06R": {
+      "n": 0,
+      "rmse": null,
+      "bias": null,
+      "mae": null,
+      "r2": null
+    },
+    "AQM_06BC": {
+      "n": 0,
+      "rmse": null,
+      "bias": null,
+      "mae": null,
+      "r2": null
+    },
+    "AQM_12R": {
+      "n": 0,
+      "rmse": null,
+      "bias": null,
+      "mae": null,
+      "r2": null
+    },
+    "AQM_12BC": {
+      "n": 0,
+      "rmse": null,
+      "bias": null,
+      "mae": null,
+      "r2": null
+    }
+  }
+}

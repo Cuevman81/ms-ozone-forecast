@@ -30,6 +30,8 @@ function setupNavigation() {
       if (tab === 'about' && currentSite) {
         setTimeout(() => renderAboutMap(), 100);
       }
+      // Recalculate DataTable column widths when tab becomes visible
+      setTimeout(() => $.fn.DataTable.tables({ visible: true, api: true }).columns.adjust(), 200);
     });
   });
 }
@@ -42,6 +44,7 @@ function setupSubTabs() {
       parent.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('active'));
       tab.classList.add('active');
       document.getElementById('sub-' + tab.dataset.sub).classList.add('active');
+      setTimeout(() => $.fn.DataTable.tables({ visible: true, api: true }).columns.adjust(), 200);
     });
   });
 }
@@ -351,7 +354,7 @@ function renderTomorrowTable(entry) {
   }).join('') + '</tbody>';
 
   table.innerHTML = thead + tbody;
-  $('#' + tableId).DataTable({ paging: false, searching: false, info: false, ordering: false, scrollX: true });
+  $('#' + tableId).DataTable({ paging: false, searching: false, info: false, ordering: false, autoWidth: true });
 }
 
 function today() {
@@ -669,7 +672,7 @@ function renderHistoryTable(history) {
     data: tableData,
     columns: headers.map((h, i) => ({ title: h })),
     pageLength: 25,
-    scrollX: true,
+    autoWidth: true,
     order: [[0, 'desc']],
     columnDefs: [
       {
@@ -767,7 +770,7 @@ function renderDataPreview(rows) {
   }
 
   const keys = ['date', 'O3', 'max_temp_f', 'min_dewpoint_f', 'ws', 'wd'];
-  const labels = ['Date', 'O3 (ppm)', 'Max Temp (F)', 'Min Dewpoint (F)', 'Wind Speed', 'Wind Dir'];
+  const labels = ['Date', 'O3 (ppm)', 'Max Temp (F)', 'Min Dewp (F)', 'Avg Wind (kts)', 'Wind Dir (°)'];
 
   let thead = '<thead><tr>' + labels.map(h => `<th>${h}</th>`).join('') + '</tr></thead>';
   let tbody = '<tbody>';
@@ -787,7 +790,7 @@ function renderDataPreview(rows) {
 
   tbody += '</tbody>';
   document.getElementById(tableId).innerHTML = thead + tbody;
-  $('#' + tableId).DataTable({ paging: false, searching: false, info: false, scrollX: true });
+  $('#' + tableId).DataTable({ paging: false, searching: false, info: false, autoWidth: true });
 }
 
 // --- About Tab ---

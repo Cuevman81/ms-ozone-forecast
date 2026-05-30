@@ -9,10 +9,15 @@ get_script_dir <- function() {
   }
   return(getwd())
 }
-setwd(get_script_dir())
+
+pipeline_dir <- get_script_dir()
+repo_root <- normalizePath(file.path(pipeline_dir, ".."))
+setwd(pipeline_dir)
 
 message("\n", paste(rep("=", 50), collapse = ""))
 message(" STARTING OZONE PIPELINE (GitHub Actions)")
+message(paste("  Pipeline dir: ", pipeline_dir))
+message(paste("  Repo root:    ", repo_root))
 message(paste(rep("=", 50), collapse = ""))
 
 # 1. Sync Data
@@ -28,8 +33,13 @@ message("\n[3/4] Generating Forecasts for all sites...")
 source("Ozone_Forecaster.R")
 
 # 4. Export JSON for web dashboard
+# Run as a separate Rscript process so it gets its own script path detection
 message("\n[4/4] Exporting JSON for dashboard...")
-source("../export_json.R")
+export_script <- file.path(repo_root, "export_json.R")
+exit_code <- system2("Rscript", args = export_script, stdout = "", stderr = "")
+if (exit_code != 0) {
+  stop("export_json.R failed with exit code ", exit_code)
+}
 
 message("\n", paste(rep("=", 50), collapse = ""))
 message(" PIPELINE COMPLETE ")

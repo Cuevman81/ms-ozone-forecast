@@ -44,11 +44,29 @@ jobs:
             if (length(missing) > 0) install.packages(missing, repos = "https://cloud.r-project.org")
           '
 
-      - name: Run pipeline (data sync + train + forecast)
+      - name: Verify secrets are set
+        env:
+          AQS_EMAIL: ${{ secrets.AQS_EMAIL }}
+          AQS_KEY: ${{ secrets.AQS_KEY }}
+        run: |
+          if [ -z "$AQS_EMAIL" ] || [ -z "$AQS_KEY" ]; then
+            echo "::error::AQS_EMAIL or AQS_KEY secrets are not set. Go to Settings > Secrets > Actions to add them."
+            exit 1
+          fi
+          echo "Secrets verified (AQS_EMAIL length: ${#AQS_EMAIL}, AQS_KEY length: ${#AQS_KEY})"
+
+      - name: Write R environment file
         env:
           AQS_EMAIL: ${{ secrets.AQS_EMAIL }}
           AQS_KEY: ${{ secrets.AQS_KEY }}
           AIRNOW_API_KEY: ${{ secrets.AIRNOW_API_KEY }}
+        run: |
+          echo "AQS_EMAIL=$AQS_EMAIL" >> $HOME/.Renviron
+          echo "AQS_KEY=$AQS_KEY" >> $HOME/.Renviron
+          echo "AIRNOW_API_KEY=$AIRNOW_API_KEY" >> $HOME/.Renviron
+          cat $HOME/.Renviron | sed 's/=.*/=***/'
+
+      - name: Run pipeline (data sync + train + forecast)
         run: Rscript r-pipeline/run_pipeline.R
 
       - name: Commit and push updated data

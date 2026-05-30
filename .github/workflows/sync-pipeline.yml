@@ -2,8 +2,8 @@ name: Ozone Data Sync Pipeline
 
 on:
   schedule:
-    # 6:00 AM Central (11:00 UTC)
-    - cron: '0 11 * * *'
+    # 7:30 AM Central (12:30 UTC) — after 06z AQM models finish
+    - cron: '30 12 * * *'
     # 2:00 PM Central (19:00 UTC) — after 12z AQM models finish
     - cron: '0 19 * * *'
   workflow_dispatch:

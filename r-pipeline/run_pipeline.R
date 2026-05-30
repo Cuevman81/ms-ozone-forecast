@@ -1,7 +1,15 @@
 # run_pipeline.R — Entry point for GitHub Actions
 # Sets working directory to r-pipeline/ so all source() calls resolve correctly.
 
-setwd(dirname(sys.frame(1)$ofile))
+get_script_dir <- function() {
+  args <- commandArgs(trailingOnly = FALSE)
+  file_arg <- grep("^--file=", args, value = TRUE)
+  if (length(file_arg) > 0) {
+    return(normalizePath(dirname(sub("^--file=", "", file_arg))))
+  }
+  return(getwd())
+}
+setwd(get_script_dir())
 
 message("\n", paste(rep("=", 50), collapse = ""))
 message(" STARTING OZONE PIPELINE (GitHub Actions)")

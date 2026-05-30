@@ -51,8 +51,7 @@ jobs:
           echo "AIRNOW_API_KEY=${{ secrets.AIRNOW_API_KEY }}" >> ~/.Renviron
 
       - name: Run pipeline (data sync + train + forecast)
-        working-directory: r-pipeline
-        run: Rscript run_pipeline.R
+        run: Rscript r-pipeline/run_pipeline.R
 
       - name: Commit and push updated data
         run: |

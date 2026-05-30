@@ -3,37 +3,37 @@
     "RF": {
       "n": 379,
       "rmse": 0.0043,
-      "bias": 0.0009,
+      "bias": 0.0008,
       "mae": 0.0031,
-      "r2": 0.827
+      "r2": 0.829
     },
     "AQM_06R": {
-      "n": 14,
-      "rmse": 0.0148,
-      "bias": 0.0127,
-      "mae": 0.0136,
-      "r2": 0.066
+      "n": 440,
+      "rmse": 0.0098,
+      "bias": 0.0024,
+      "mae": 0.0079,
+      "r2": 0.215
     },
     "AQM_06BC": {
-      "n": 14,
-      "rmse": 0.0103,
-      "bias": 0.0072,
-      "mae": 0.0086,
-      "r2": 0.345
+      "n": 440,
+      "rmse": 0.0091,
+      "bias": 0.0001,
+      "mae": 0.0073,
+      "r2": 0.38
     },
     "AQM_12R": {
-      "n": 14,
-      "rmse": 0.0148,
-      "bias": 0.0128,
-      "mae": 0.0137,
-      "r2": 0.086
+      "n": 440,
+      "rmse": 0.0099,
+      "bias": 0.0024,
+      "mae": 0.0079,
+      "r2": 0.209
     },
     "AQM_12BC": {
-      "n": 14,
-      "rmse": 0.0103,
-      "bias": 0.0075,
-      "mae": 0.0084,
-      "r2": 0.355
+      "n": 440,
+      "rmse": 0.0092,
+      "bias": 0,
+      "mae": 0.0074,
+      "r2": 0.38
     }
   },
   "moderate": {
@@ -47,32 +47,40 @@
       "far": 0.31
     },
     "AQM_06R": {
-      "n": 0,
-      "rmse": null,
-      "bias": null,
-      "mae": null,
-      "r2": null
+      "n": 48,
+      "rmse": 0.013,
+      "bias": -0.0103,
+      "mae": 0.0111,
+      "r2": 0.015,
+      "pod": 0.23,
+      "far": 0.62
     },
     "AQM_06BC": {
-      "n": 0,
-      "rmse": null,
-      "bias": null,
-      "mae": null,
-      "r2": null
+      "n": 48,
+      "rmse": 0.0113,
+      "bias": -0.0082,
+      "mae": 0.0092,
+      "r2": 0.001,
+      "pod": 0.21,
+      "far": 0.71
     },
     "AQM_12R": {
-      "n": 0,
-      "rmse": null,
-      "bias": null,
-      "mae": null,
-      "r2": null
+      "n": 48,
+      "rmse": 0.0132,
+      "bias": -0.0105,
+      "mae": 0.0113,
+      "r2": 0.022,
+      "pod": 0.19,
+      "far": 0.68
     },
     "AQM_12BC": {
-      "n": 0,
-      "rmse": null,
-      "bias": null,
-      "mae": null,
-      "r2": null
+      "n": 48,
+      "rmse": 0.0112,
+      "bias": -0.0084,
+      "mae": 0.0093,
+      "r2": 0.009,
+      "pod": 0.12,
+      "far": 0.81
     }
   },
   "usg": {
@@ -86,32 +94,40 @@
       "far": 0
     },
     "AQM_06R": {
-      "n": 0,
-      "rmse": null,
-      "bias": null,
-      "mae": null,
-      "r2": null
+      "n": 1,
+      "rmse": 0.0342,
+      "bias": -0.0342,
+      "mae": 0.0342,
+      "r2": null,
+      "pod": 0,
+      "far": null
     },
     "AQM_06BC": {
-      "n": 0,
-      "rmse": null,
-      "bias": null,
-      "mae": null,
-      "r2": null
+      "n": 1,
+      "rmse": 0.0345,
+      "bias": -0.0345,
+      "mae": 0.0345,
+      "r2": null,
+      "pod": 0,
+      "far": null
     },
     "AQM_12R": {
-      "n": 0,
-      "rmse": null,
-      "bias": null,
-      "mae": null,
-      "r2": null
+      "n": 1,
+      "rmse": 0.0346,
+      "bias": -0.0346,
+      "mae": 0.0346,
+      "r2": null,
+      "pod": 0,
+      "far": null
     },
     "AQM_12BC": {
-      "n": 0,
-      "rmse": null,
-      "bias": null,
-      "mae": null,
-      "r2": null
+      "n": 1,
+      "rmse": 0.0335,
+      "bias": -0.0335,
+      "mae": 0.0335,
+      "r2": null,
+      "pod": 0,
+      "far": null
     }
   }
 }

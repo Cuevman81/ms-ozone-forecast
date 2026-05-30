@@ -32,6 +32,27 @@ R Backend (scheduled)              Static Frontend (always on)
 
 The R pipeline fetches data, trains models, and generates forecasts. The `export_json.R` script converts the outputs to JSON files that the static web dashboard reads. No R server is needed at runtime.
 
+## Automated Data Updates
+
+The dashboard data is updated automatically via [GitHub Actions](https://github.com/Cuevman81/ms-ozone-forecast/actions) on two scheduled runs daily:
+
+| Run | Time (Central) | Purpose |
+|-----|---------------|---------|
+| Morning | **6:00 AM CT** | Fetch overnight observed data, update models, generate initial forecast |
+| Afternoon | **2:00 PM CT** | Capture completed 12z NOAA AQM model run, refresh forecast with latest data |
+
+Each pipeline run performs the following steps in order:
+
+1. **Data Sync** — Fetches the latest daily ozone observations from EPA AQS (with AirNow fallback) and meteorological data from Iowa State ASOS for all 6 sites
+2. **Model Training** — Retrains the Random Forest model for any site that has new data since its last training (smart retrain — skips sites with no changes)
+3. **Forecasting** — Generates tomorrow's ozone prediction using real-time O3, NWS weather forecasts, and NOAA AQM model outputs. Backfills observed values into past forecast entries for verification
+4. **JSON Export** — Converts all CSVs and model outputs to JSON for the web dashboard
+5. **Deploy** — Commits updated data to GitHub, which triggers an automatic Vercel redeploy
+
+Real-time hourly ozone is also available live via a serverless function that fetches directly from AirNow — this updates independently of the scheduled pipeline.
+
+The pipeline can also be triggered manually from the [Actions tab](https://github.com/Cuevman81/ms-ozone-forecast/actions/workflows/sync-pipeline.yml) using the "Run workflow" button.
+
 ## Model Features
 
 The Random Forest regression model predicts next-day maximum 8-hour ozone concentration using 18 features:

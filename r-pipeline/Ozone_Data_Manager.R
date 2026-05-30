@@ -265,6 +265,13 @@ update_site_data <- function(site_name) {
     final_data <- new_merged %>% dplyr::arrange(date)
   }
 
+  # Null out O3 during off-season for seasonal sites — no monitor is running
+  if (cfg$seasonal) {
+    off <- month(final_data$date) %in% c(11, 12, 1) |
+           (month(final_data$date) == 2 & day(final_data$date) < 15)
+    final_data$O3[off] <- NA
+  }
+
   write_csv(final_data, DATA_FILE)
   message(paste("  SUCCESS: Site", site_name, "updated with", nrow(new_merged), "NEW rows. Total:", nrow(final_data)))
 }

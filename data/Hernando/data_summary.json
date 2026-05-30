@@ -2,7 +2,7 @@
   "total_records": 13741,
   "latest_date": "2026-05-29",
   "earliest_date": "1973-09-27",
-  "completeness_pct": 99,
+  "completeness_pct": 90,
   "years_span": 52.7,
   "days_behind": 1,
   "last_5_rows": [

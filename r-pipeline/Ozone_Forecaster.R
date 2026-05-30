@@ -252,6 +252,16 @@ run_forecast <- function(site_name) {
   if (file.exists(log_file)) {
     hist_log <- read_csv(log_file, show_col_types = FALSE) %>% mutate(Target_Date = as.Date(Target_Date), Run_Date = as.Date(Run_Date))
 
+    # Purge any off-season rows for seasonal sites (no monitor running)
+    if (cfg$seasonal) {
+      off <- month(hist_log$Target_Date) %in% c(11, 12, 1) |
+             (month(hist_log$Target_Date) == 2 & day(hist_log$Target_Date) < 15)
+      if (any(off)) {
+        hist_log <- hist_log[!off, ]
+        message(paste("  Purged", sum(off), "off-season rows from history."))
+      }
+    }
+
     # Re-enable checking up to Sys.Date() since the `needs_fill` boolean guarantees we never overwrite healthy `RF_Pred` data now.
     # Window is 14 days: NOAA's S3 cache only holds recent runs, so older gaps can't be filled retroactively anyway.
     gap_dates <- seq(Sys.Date() - 14, Sys.Date(), by = "day")

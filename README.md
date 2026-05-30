@@ -145,4 +145,4 @@ web-dashboard/
 
 ## License
 
-This project is maintained by the Mississippi Department of Environmental Quality, Air Division.
+This project is maintained by Rodney Cuevas RCuevas@mdeq.ms.gov.

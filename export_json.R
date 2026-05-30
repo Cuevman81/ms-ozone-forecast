@@ -21,8 +21,15 @@ get_script_dir <- function() {
 }
 
 script_dir <- get_script_dir()
-parent_dir <- normalizePath(file.path(script_dir, ".."))
 out_dir <- file.path(script_dir, "data")
+
+# Find the R pipeline data: check r-pipeline/ first (GitHub Actions), then parent dir (local)
+r_pipeline_dir <- file.path(script_dir, "r-pipeline")
+parent_dir <- normalizePath(file.path(script_dir, ".."))
+if (file.exists(file.path(r_pipeline_dir, "sites_config.R"))) {
+  parent_dir <- r_pipeline_dir
+  message("Using r-pipeline/ directory for data files")
+}
 dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 
 # Load sites config

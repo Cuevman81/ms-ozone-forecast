@@ -111,10 +111,15 @@ async function onSiteChange() {
 
   const recent = await fetchJSON(`${basePath}/recent.json`);
 
-  // Fetch real-time O3 from local dev server (if available)
+  // Fetch real-time O3 — local dev server proxy or Vercel serverless function
   let realtimeO3 = null;
-  if (isLocalServer && currentSite) {
-    const rt = await fetchJSON(`/api/realtime/${currentSite.aqs_id}`);
+  if (currentSite) {
+    let rt = null;
+    if (isLocalServer) {
+      rt = await fetchJSON(`/api/realtime/${currentSite.aqs_id}`);
+    } else {
+      rt = await fetchJSON(`/api/realtime?aqs=${currentSite.aqs_id}`);
+    }
     if (rt && rt.value != null) realtimeO3 = rt.value;
   }
 

@@ -44,13 +44,11 @@ jobs:
             if (length(missing) > 0) install.packages(missing, repos = "https://cloud.r-project.org")
           '
 
-      - name: Set up API credentials
-        run: |
-          echo "AQS_EMAIL=${{ secrets.AQS_EMAIL }}" >> ~/.Renviron
-          echo "AQS_KEY=${{ secrets.AQS_KEY }}" >> ~/.Renviron
-          echo "AIRNOW_API_KEY=${{ secrets.AIRNOW_API_KEY }}" >> ~/.Renviron
-
       - name: Run pipeline (data sync + train + forecast)
+        env:
+          AQS_EMAIL: ${{ secrets.AQS_EMAIL }}
+          AQS_KEY: ${{ secrets.AQS_KEY }}
+          AIRNOW_API_KEY: ${{ secrets.AIRNOW_API_KEY }}
         run: Rscript r-pipeline/run_pipeline.R
 
       - name: Commit and push updated data

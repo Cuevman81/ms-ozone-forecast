@@ -156,7 +156,8 @@ get_aqm_forecast <- function(lat, lon, target_date, cycle, is_bc) {
             idx <- which(t_str == as.character(target_date))
             message(paste("    [DEBUG] Target:", target_date, "Matched time slots:", length(idx)))
             if (length(idx) > 0) {
-              val <- terra::extract(r[[idx[1]]], cbind(as.numeric(lon), as.numeric(lat)))[1, 1]
+              pts <- vect(cbind(as.numeric(lon), as.numeric(lat)), crs = "EPSG:4326")
+              val <- terra::extract(r[[idx[1]]], pts)[1, 2]
               message(paste("    [DEBUG] Extracted Val:", val))
               if (!is.na(val) && val > 1) val <- val / 1000
               unlink(tf)

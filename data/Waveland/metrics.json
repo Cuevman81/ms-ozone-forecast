@@ -8,32 +8,32 @@
       "r2": 0.873
     },
     "AQM_06R": {
-      "n": 437,
-      "rmse": 0.0108,
-      "bias": 0.0024,
-      "mae": 0.0088,
-      "r2": 0.079
+      "n": 0,
+      "rmse": null,
+      "bias": null,
+      "mae": null,
+      "r2": null
     },
     "AQM_06BC": {
-      "n": 437,
-      "rmse": 0.0107,
-      "bias": -0.0026,
-      "mae": 0.0085,
-      "r2": 0.125
+      "n": 0,
+      "rmse": null,
+      "bias": null,
+      "mae": null,
+      "r2": null
     },
     "AQM_12R": {
-      "n": 437,
-      "rmse": 0.0109,
-      "bias": 0.0024,
-      "mae": 0.0088,
-      "r2": 0.077
+      "n": 0,
+      "rmse": null,
+      "bias": null,
+      "mae": null,
+      "r2": null
     },
     "AQM_12BC": {
-      "n": 437,
-      "rmse": 0.0107,
-      "bias": -0.0026,
-      "mae": 0.0085,
-      "r2": 0.123
+      "n": 0,
+      "rmse": null,
+      "bias": null,
+      "mae": null,
+      "r2": null
     }
   },
   "moderate": {
@@ -47,40 +47,32 @@
       "far": 0.03
     },
     "AQM_06R": {
-      "n": 47,
-      "rmse": 0.0144,
-      "bias": -0.013,
-      "mae": 0.013,
-      "r2": 0.064,
-      "pod": 0.06,
-      "far": 0.67
+      "n": 0,
+      "rmse": null,
+      "bias": null,
+      "mae": null,
+      "r2": null
     },
     "AQM_06BC": {
-      "n": 47,
-      "rmse": 0.0181,
-      "bias": -0.0169,
-      "mae": 0.0169,
-      "r2": 0.04,
-      "pod": 0,
-      "far": null
+      "n": 0,
+      "rmse": null,
+      "bias": null,
+      "mae": null,
+      "r2": null
     },
     "AQM_12R": {
-      "n": 47,
-      "rmse": 0.0145,
-      "bias": -0.0131,
-      "mae": 0.0131,
-      "r2": 0.06,
-      "pod": 0.06,
-      "far": 0.73
+      "n": 0,
+      "rmse": null,
+      "bias": null,
+      "mae": null,
+      "r2": null
     },
     "AQM_12BC": {
-      "n": 47,
-      "rmse": 0.0182,
-      "bias": -0.017,
-      "mae": 0.017,
-      "r2": 0.041,
-      "pod": 0,
-      "far": null
+      "n": 0,
+      "rmse": null,
+      "bias": null,
+      "mae": null,
+      "r2": null
     }
   },
   "usg": {

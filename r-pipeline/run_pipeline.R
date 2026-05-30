@@ -1,5 +1,5 @@
 # run_pipeline.R — Entry point for GitHub Actions
-# Sets working directory to r-pipeline/ so all source() calls resolve correctly.
+# Sources each R script to load functions, then explicitly loops all sites.
 
 get_script_dir <- function() {
   args <- commandArgs(trailingOnly = FALSE)
@@ -20,20 +20,31 @@ message(paste("  Pipeline dir: ", pipeline_dir))
 message(paste("  Repo root:    ", repo_root))
 message(paste(rep("=", 50), collapse = ""))
 
-# 1. Sync Data
+# Load site config
+source("sites_config.R")
+
+# 1. Sync Data — load functions then call for each site
 message("\n[1/4] Syncing Data for all sites...")
 source("Ozone_Data_Manager.R")
+for (s in names(SITES_CONFIG)) {
+  try(update_site_data(s))
+}
 
 # 2. Train Models
 message("\n[2/4] Training Models for all sites...")
 source("Ozone_Model_Training.R")
+for (s in names(SITES_CONFIG)) {
+  try(train_site_model(s))
+}
 
 # 3. Generate Forecasts
 message("\n[3/4] Generating Forecasts for all sites...")
 source("Ozone_Forecaster.R")
+for (s in names(SITES_CONFIG)) {
+  try(run_forecast(s))
+}
 
 # 4. Export JSON for web dashboard
-# Run as a separate Rscript process so it gets its own script path detection
 message("\n[4/4] Exporting JSON for dashboard...")
 export_script <- file.path(repo_root, "export_json.R")
 exit_code <- system2("Rscript", args = export_script, stdout = "", stderr = "")

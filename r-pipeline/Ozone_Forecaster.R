@@ -135,37 +135,42 @@ get_aqm_forecast <- function(lat, lon, target_date, cycle, is_bc) {
   for (r_date in run_dates) {
     run_str <- format(as.Date(r_date), "%Y%m%d")
     type_str <- if (is_bc) "max_8hr_o3_bc" else "max_8hr_o3"
-    url <- paste0(
-      "https://noaa-nws-naqfc-pds.s3.amazonaws.com/AQMv7/CS/", run_str, "/", cycle, "/",
-      "aqm.t", cycle, "z.", type_str, ".", run_str, ".227.grib2"
+    # Try NOMADS first (faster dissemination), then S3 fallback
+    urls <- c(
+      paste0("https://nomads.ncep.noaa.gov/pub/data/nccf/com/aqm/prod/aqm.", run_str, "/", cycle, "/",
+             "aqm.t", cycle, "z.", type_str, ".227.grib2"),
+      paste0("https://noaa-nws-naqfc-pds.s3.amazonaws.com/AQMv7/CS/", run_str, "/", cycle, "/",
+             "aqm.t", cycle, "z.", type_str, ".", run_str, ".227.grib2")
     )
-    tf <- tempfile(fileext = ".grib2")
-    tryCatch(
-      {
-        message(paste("    [DEBUG] Checking URL:", url))
-        suppressWarnings(download.file(url, tf, mode = "wb", quiet = TRUE))
-        sz <- file.info(tf)$size
-        message(paste("    [DEBUG] Size:", sz))
-        if (sz > 1000) {
-          r <- rast(tf)
-          t_str <- format(time(r), "%Y-%m-%d", tz = "UTC")
-          idx <- which(t_str == as.character(target_date))
-          message(paste("    [DEBUG] Target:", target_date, "Matched time slots:", length(idx)))
-          if (length(idx) > 0) {
-            val <- terra::extract(r[[idx[1]]], cbind(as.numeric(lon), as.numeric(lat)))[1, 1]
-            message(paste("    [DEBUG] Extracted Val:", val))
-            if (!is.na(val) && val > 1) val <- val / 1000
-            unlink(tf)
-            return(list(val = val, date = r_date))
+    for (url in urls) {
+      tf <- tempfile(fileext = ".grib2")
+      tryCatch(
+        {
+          message(paste("    [DEBUG] Checking URL:", url))
+          suppressWarnings(download.file(url, tf, mode = "wb", quiet = TRUE))
+          sz <- file.info(tf)$size
+          message(paste("    [DEBUG] Size:", sz))
+          if (sz > 1000) {
+            r <- rast(tf)
+            t_str <- format(time(r), "%Y-%m-%d", tz = "UTC")
+            idx <- which(t_str == as.character(target_date))
+            message(paste("    [DEBUG] Target:", target_date, "Matched time slots:", length(idx)))
+            if (length(idx) > 0) {
+              val <- terra::extract(r[[idx[1]]], cbind(as.numeric(lon), as.numeric(lat)))[1, 1]
+              message(paste("    [DEBUG] Extracted Val:", val))
+              if (!is.na(val) && val > 1) val <- val / 1000
+              unlink(tf)
+              return(list(val = val, date = r_date))
+            }
           }
+          unlink(tf)
+        },
+        error = function(e) {
+          message(paste("    [DEBUG] Error occurred:", e$message))
+          if (exists("tf") && file.exists(tf)) unlink(tf)
         }
-        unlink(tf)
-      },
-      error = function(e) {
-        message(paste("    [DEBUG] Error occurred:", e$message))
-        if (exists("tf") && file.exists(tf)) unlink(tf)
-      }
-    )
+      )
+    }
   }
   return(list(val = NA, date = NA))
 }

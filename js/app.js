@@ -645,12 +645,9 @@ function renderHistoryTable(history) {
   const headers = [
     'Run Date', 'Target Date', 'Observed O3', 'RF Prediction',
     'AQM 06z Reg', 'AQM 06z BC', 'AQM 12z Reg', 'AQM 12z BC',
-    'Temp (F)', 'Dewp (F)', 'Wind (kts)', 'Wind Dir'
+    'Max Temp (F)', 'Min Dewp (F)', 'Avg Wind (kts)', 'Wind Dir (°)'
   ];
   const o3Cols = new Set(['Observed_O3', 'RF_Pred', 'AQM_06_Reg', 'AQM_06_BC', 'AQM_12_Reg', 'AQM_12_BC']);
-
-  let thead = '<thead><tr>' + headers.map(h => `<th>${h}</th>`).join('') + '</tr></thead>';
-  let tbody = '<tbody>';
 
   // Filter seasonal if needed
   let filtered = history;
@@ -663,31 +660,44 @@ function renderHistoryTable(history) {
     });
   }
 
-  filtered.forEach(row => {
-    tbody += '<tr>';
-    cols.forEach(col => {
-      const val = row[col];
-      let style = '';
-      if (o3Cols.has(col)) {
-        style = aqiCellStyle(val);
-      } else if (col === 'Met_Temp_F' && val != null) {
-        style = tempCellStyle(val);
-      } else if (col === 'Met_Dewp_F' && val != null) {
-        style = dewpCellStyle(val);
-      }
-      const display = o3Cols.has(col) ? fmt(val) : (val != null ? val : 'N/A');
-      tbody += `<td style="${style}">${display}</td>`;
-    });
-    tbody += '</tr>';
-  });
+  // Build DataTables using columns API for proper alignment
+  const tableData = filtered.map(row => cols.map(col => row[col] != null ? row[col] : null));
 
-  tbody += '</tbody>';
-  document.getElementById(tableId).innerHTML = thead + tbody;
+  document.getElementById(tableId).innerHTML = '';
 
   $('#' + tableId).DataTable({
+    data: tableData,
+    columns: headers.map((h, i) => ({ title: h })),
     pageLength: 25,
     scrollX: true,
-    order: [[0, 'desc']]
+    order: [[0, 'desc']],
+    columnDefs: [
+      {
+        targets: [2, 3, 4, 5, 6, 7],
+        render: function(data) { return data != null ? Number(data).toFixed(4) : 'N/A'; },
+        createdCell: function(td, data) {
+          if (data != null) td.style.cssText = aqiCellStyle(data);
+        }
+      },
+      {
+        targets: [8],
+        render: function(data) { return data != null ? data : 'N/A'; },
+        createdCell: function(td, data) {
+          if (data != null) td.style.cssText = tempCellStyle(data);
+        }
+      },
+      {
+        targets: [9],
+        render: function(data) { return data != null ? data : 'N/A'; },
+        createdCell: function(td, data) {
+          if (data != null) td.style.cssText = dewpCellStyle(data);
+        }
+      },
+      {
+        targets: [10, 11],
+        render: function(data) { return data != null ? data : 'N/A'; }
+      }
+    ]
   });
 }
 

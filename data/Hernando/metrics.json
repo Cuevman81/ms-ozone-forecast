@@ -3,37 +3,37 @@
     "RF": {
       "n": 379,
       "rmse": 0.0043,
-      "bias": 0.0008,
+      "bias": 0.0009,
       "mae": 0.0031,
-      "r2": 0.829
+      "r2": 0.827
     },
     "AQM_06R": {
-      "n": 0,
-      "rmse": null,
-      "bias": null,
-      "mae": null,
-      "r2": null
+      "n": 14,
+      "rmse": 0.0148,
+      "bias": 0.0127,
+      "mae": 0.0136,
+      "r2": 0.066
     },
     "AQM_06BC": {
-      "n": 0,
-      "rmse": null,
-      "bias": null,
-      "mae": null,
-      "r2": null
+      "n": 14,
+      "rmse": 0.0103,
+      "bias": 0.0072,
+      "mae": 0.0086,
+      "r2": 0.345
     },
     "AQM_12R": {
-      "n": 0,
-      "rmse": null,
-      "bias": null,
-      "mae": null,
-      "r2": null
+      "n": 14,
+      "rmse": 0.0148,
+      "bias": 0.0128,
+      "mae": 0.0137,
+      "r2": 0.086
     },
     "AQM_12BC": {
-      "n": 0,
-      "rmse": null,
-      "bias": null,
-      "mae": null,
-      "r2": null
+      "n": 14,
+      "rmse": 0.0103,
+      "bias": 0.0075,
+      "mae": 0.0084,
+      "r2": 0.355
     }
   },
   "moderate": {

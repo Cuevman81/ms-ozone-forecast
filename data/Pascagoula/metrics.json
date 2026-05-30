@@ -5,35 +5,35 @@
       "rmse": 0.0037,
       "bias": 0.0001,
       "mae": 0.0026,
-      "r2": 0.873
+      "r2": 0.871
     },
     "AQM_06R": {
-      "n": 0,
-      "rmse": null,
-      "bias": null,
-      "mae": null,
-      "r2": null
+      "n": 14,
+      "rmse": 0.0144,
+      "bias": 0.0106,
+      "mae": 0.0121,
+      "r2": 0.049
     },
     "AQM_06BC": {
-      "n": 0,
-      "rmse": null,
-      "bias": null,
-      "mae": null,
-      "r2": null
+      "n": 14,
+      "rmse": 0.0127,
+      "bias": 0.0019,
+      "mae": 0.0107,
+      "r2": 0.027
     },
     "AQM_12R": {
-      "n": 0,
-      "rmse": null,
-      "bias": null,
-      "mae": null,
-      "r2": null
+      "n": 14,
+      "rmse": 0.014,
+      "bias": 0.01,
+      "mae": 0.0119,
+      "r2": 0.053
     },
     "AQM_12BC": {
-      "n": 0,
-      "rmse": null,
-      "bias": null,
-      "mae": null,
-      "r2": null
+      "n": 14,
+      "rmse": 0.0128,
+      "bias": 0.0016,
+      "mae": 0.01,
+      "r2": 0.034
     }
   },
   "moderate": {
@@ -47,32 +47,40 @@
       "far": 0.02
     },
     "AQM_06R": {
-      "n": 0,
-      "rmse": null,
-      "bias": null,
-      "mae": null,
-      "r2": null
+      "n": 1,
+      "rmse": 0.0079,
+      "bias": -0.0079,
+      "mae": 0.0079,
+      "r2": null,
+      "pod": 0,
+      "far": null
     },
     "AQM_06BC": {
-      "n": 0,
-      "rmse": null,
-      "bias": null,
-      "mae": null,
-      "r2": null
+      "n": 1,
+      "rmse": 0.0132,
+      "bias": -0.0132,
+      "mae": 0.0132,
+      "r2": null,
+      "pod": 0,
+      "far": null
     },
     "AQM_12R": {
-      "n": 0,
-      "rmse": null,
-      "bias": null,
-      "mae": null,
-      "r2": null
+      "n": 1,
+      "rmse": 0.0076,
+      "bias": -0.0076,
+      "mae": 0.0076,
+      "r2": null,
+      "pod": 0,
+      "far": null
     },
     "AQM_12BC": {
-      "n": 0,
-      "rmse": null,
-      "bias": null,
-      "mae": null,
-      "r2": null
+      "n": 1,
+      "rmse": 0.0116,
+      "bias": -0.0116,
+      "mae": 0.0116,
+      "r2": null,
+      "pod": 0,
+      "far": null
     }
   },
   "usg": {

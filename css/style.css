@@ -258,6 +258,12 @@ table.display {
   font-size: 0.9em;
 }
 
+/* Fix DataTables header alignment */
+table.dataTable thead th {
+  white-space: nowrap;
+  font-size: 0.85em;
+}
+
 /* AQI color coding for table cells */
 .aqi-good { background-color: #dff0d8 !important; }
 .aqi-moderate { background-color: #fcf8e3 !important; }

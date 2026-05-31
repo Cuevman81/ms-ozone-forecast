@@ -30,6 +30,12 @@ function setupNavigation() {
       if (tab === 'about' && currentSite) {
         setTimeout(() => renderAboutMap(), 100);
       }
+      // Resize Plotly charts when their tab becomes visible (fixes initial hidden-render sizing)
+      if (tab === 'analysis') {
+        setTimeout(() => {
+          document.querySelectorAll('#tab-analysis .js-plotly-plot').forEach(el => Plotly.Plots.resize(el));
+        }, 150);
+      }
       // Recalculate DataTable column widths when tab becomes visible
       setTimeout(() => $.fn.DataTable.tables({ visible: true, api: true }).columns.adjust(), 200);
     });
@@ -43,7 +49,12 @@ function setupSubTabs() {
       parent.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
       parent.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('active'));
       tab.classList.add('active');
-      document.getElementById('sub-' + tab.dataset.sub).classList.add('active');
+      const subPanel = document.getElementById('sub-' + tab.dataset.sub);
+      subPanel.classList.add('active');
+      // Resize Plotly charts when sub-tab becomes visible
+      setTimeout(() => {
+        subPanel.querySelectorAll('.js-plotly-plot').forEach(el => Plotly.Plots.resize(el));
+      }, 150);
       setTimeout(() => $.fn.DataTable.tables({ visible: true, api: true }).columns.adjust(), 200);
     });
   });

@@ -142,6 +142,11 @@ async function onSiteChange() {
   renderAnalysis(history, importance, metrics, dataSummary);
   renderDataTab(dataSummary);
   renderAboutTab();
+
+  // Resize all Plotly charts after layout settles (fixes narrow charts on initial page load)
+  setTimeout(() => {
+    document.querySelectorAll('.js-plotly-plot').forEach(el => Plotly.Plots.resize(el));
+  }, 300);
 }
 
 async function fetchJSON(url) {

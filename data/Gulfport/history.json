@@ -6,12 +6,12 @@
     "RF_Pred": 0.0324,
     "AQM_06_Reg": 0.0474,
     "AQM_06_BC": 0.0353,
-    "AQM_12_Reg": 0.0468,
-    "AQM_12_BC": 0.0383,
+    "AQM_12_Reg": 0.0478,
+    "AQM_12_BC": 0.0363,
     "Met_Temp_F": 86,
     "Met_Dewp_F": 73,
     "Met_WS_kts": 6,
-    "Met_WD_deg": 134
+    "Met_WD_deg": 137
   },
   {
     "Run_Date": "2026-06-07",

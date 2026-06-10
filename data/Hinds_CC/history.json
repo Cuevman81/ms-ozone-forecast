@@ -1,5 +1,19 @@
 [
   {
+    "Run_Date": "2026-06-10",
+    "Target_Date": "2026-06-11",
+    "Observed_O3": null,
+    "RF_Pred": 0.0252,
+    "AQM_06_Reg": 0.0482,
+    "AQM_06_BC": 0.0439,
+    "AQM_12_Reg": 0.0484,
+    "AQM_12_BC": 0.0428,
+    "Met_Temp_F": 94,
+    "Met_Dewp_F": 70,
+    "Met_WS_kts": 3.7,
+    "Met_WD_deg": 189
+  },
+  {
     "Run_Date": "2026-06-09",
     "Target_Date": "2026-06-10",
     "Observed_O3": null,
@@ -16,16 +30,16 @@
   {
     "Run_Date": "2026-06-08",
     "Target_Date": "2026-06-09",
-    "Observed_O3": null,
-    "RF_Pred": 0.0296,
+    "Observed_O3": 0.046,
+    "RF_Pred": 0.0297,
     "AQM_06_Reg": 0.0367,
     "AQM_06_BC": 0.0247,
     "AQM_12_Reg": 0.0365,
     "AQM_12_BC": 0.0267,
-    "Met_Temp_F": 92,
-    "Met_Dewp_F": 70,
-    "Met_WS_kts": 2.4,
-    "Met_WD_deg": 188
+    "Met_Temp_F": 90,
+    "Met_Dewp_F": 68,
+    "Met_WS_kts": 2.6,
+    "Met_WD_deg": 173
   },
   {
     "Run_Date": "2026-06-07",

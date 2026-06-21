@@ -3,15 +3,15 @@
     "Run_Date": "2026-06-21",
     "Target_Date": "2026-06-22",
     "Observed_O3": null,
-    "RF_Pred": 0.0259,
+    "RF_Pred": 0.0275,
     "AQM_06_Reg": 0.034,
     "AQM_06_BC": 0.023,
-    "AQM_12_Reg": 0.0351,
-    "AQM_12_BC": 0.0187,
+    "AQM_12_Reg": 0.0329,
+    "AQM_12_BC": 0.023,
     "Met_Temp_F": 92,
     "Met_Dewp_F": 74,
     "Met_WS_kts": 8,
-    "Met_WD_deg": 212
+    "Met_WD_deg": 213
   },
   {
     "Run_Date": "2026-06-20",

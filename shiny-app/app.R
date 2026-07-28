@@ -318,7 +318,9 @@ ui <- dashboardPage(
             width = 8,
             box(
               title = "Model Diagnostics", width = NULL, status = "warning", solidHeader = TRUE,
-              plotOutput("importance_plot", height = "300px")
+              # 18 predictors need roughly 24px each to stay legible; 300px
+              # crushed the axis labels together.
+              plotOutput("importance_plot", height = "480px")
             )
           ),
           column(
@@ -856,7 +858,15 @@ server <- function(input, output, session) {
     ggplot(imp, aes(x = reorder(Feature, `%IncMSE`), y = `%IncMSE`)) +
       geom_bar(stat = "identity", fill = "steelblue") +
       coord_flip() +
-      theme_minimal()
+      labs(
+        title = "Variable Importance (%IncMSE)",
+        x = NULL, y = "% Increase in MSE"
+      ) +
+      theme_minimal(base_size = 12) +
+      theme(
+        axis.text.y = element_text(size = 10),
+        panel.grid.major.y = element_blank()
+      )
   })
 
   # Reactive for history data

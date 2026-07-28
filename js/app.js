@@ -522,14 +522,32 @@ function renderImportancePlot(importance) {
     x: sorted.map(d => d['%IncMSE']),
     type: 'bar',
     orientation: 'h',
-    marker: { color: 'steelblue' }
+    marker: { color: 'steelblue' },
+    hovertemplate: '%{y}: %{x:.1f}<extra></extra>'
   };
+
+  // One row per feature. At a fixed 320px the 18 features only got ~13px each,
+  // so Plotly thinned the tick labels to every other category and the names no
+  // longer sat beside their own bars. Grow the plot with the feature count and
+  // pin dtick to 1 so every bar keeps its label.
+  const rowPx = 22;
+  const chromePx = 90; // title + x-axis title + margins
+  const height = Math.max(320, sorted.length * rowPx + chromePx);
 
   Plotly.newPlot(el, [trace], {
     title: 'Variable Importance (%IncMSE)',
-    height: 320,
-    margin: { l: 180, r: 20, t: 40, b: 40 },
-    xaxis: { title: '% Increase in MSE' }
+    height: height,
+    margin: { l: 10, r: 20, t: 40, b: 50 },
+    xaxis: { title: '% Increase in MSE' },
+    yaxis: {
+      type: 'category',
+      tickmode: 'linear',
+      dtick: 1,
+      automargin: true,
+      ticks: 'outside',
+      ticklen: 4,
+      tickfont: { size: 11 }
+    }
   }, { responsive: true });
 }
 

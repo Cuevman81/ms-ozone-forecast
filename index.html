@@ -97,7 +97,9 @@
         <div class="card">
           <div class="card-header warning"><i class="fas fa-chart-bar"></i> Model Diagnostics — Variable Importance</div>
           <div class="card-body">
-            <div id="importancePlot" style="height:320px;"></div>
+            <!-- Height is set by Plotly from the feature count so every label fits;
+                 min-height only reserves space before the first render. -->
+            <div id="importancePlot" style="min-height:320px;"></div>
           </div>
         </div>
         <div class="card">

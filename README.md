@@ -98,26 +98,64 @@ The dev server provides:
 
 ### Updating Data
 
+Normally you do not need to: GitHub Actions runs the pipeline twice daily. To
+run it by hand:
+
 ```bash
-# 1. Run the R pipeline (requires R with RAQSAPI, randomForest, terra, etc.)
-Rscript Ozone_Master_Sync.R
+# Data sync + model training + forecasts + JSON export, in one step.
+Rscript r-pipeline/run_pipeline.R
 
-# 2. Export JSON for the dashboard
-Rscript web-dashboard/export_json.R
-
-# 3. Push to deploy
-cd web-dashboard && git add -A && git commit -m "Update data" && git push
+# Then push to deploy
+git add -A && git commit -m "Update data" && git push
 ```
+
+`run_pipeline.R` is the same entry point the scheduled workflow uses, so a manual
+run and a scheduled run produce identical files.
+
+### Running the Shiny app
+
+```bash
+# From the project root (the folder containing web-dashboard/)
+Rscript -e 'shiny::runApp("web-dashboard/shiny-app")'
+```
+
+Or open `run_app.R` in RStudio and click Source.
+
+## Single source of truth
+
+Everything reads and writes **`r-pipeline/`** — the Shiny app, the JSON exporter,
+the local dev server, and GitHub Actions. `app.R` resolves `DATA_DIR` to that
+folder at startup and takes `sites_config.R` from it as well, so there is exactly
+one copy of every CSV, model, and history log.
+
+This matters: these files used to be duplicated in the project root, and the two
+sets drifted two months apart. The app was forecasting from a stale model and
+overwriting the pipeline's logged forecasts. The old copies are parked in
+`../_legacy/` — see the README there.
+
+The pipeline owns `history_<site>.csv`. The Shiny app displays it and never
+writes to it.
 
 ## Project Structure
 
 ```
-web-dashboard/
+web-dashboard/                # <- git repo root
 ├── index.html          # Main dashboard (4 tabs)
 ├── css/style.css       # Dashboard styling
 ├── js/app.js           # Application logic (Plotly, Leaflet, DataTables)
 ├── dev_server.py       # Local dev server with sync/retrain API
 ├── export_json.R       # R script: CSV/RDS -> JSON conversion
+├── vercel.json         # Cache-control and security headers
+├── .vercelignore       # Keeps r-pipeline/ and shiny-app/ out of the deploy
+├── shiny-app/
+│   └── app.R           # The R Shiny app (run locally, not deployed)
+├── r-pipeline/         # Source of truth: data, models, and pipeline scripts
+│   ├── run_pipeline.R      # Entry point used by GitHub Actions
+│   ├── sites_config.R      # Site metadata (the only copy)
+│   ├── Ozone_Data_Manager.R / _Model_Training.R / _Forecaster.R
+│   ├── aq_MetDaily_<site>.csv   # Training data
+│   ├── model_<site>.rds         # Trained RF models
+│   └── history_<site>.csv       # Forecast log (pipeline writes, app reads)
 └── data/               # Pre-exported JSON (one folder per site)
     ├── sites_config.json
     ├── meta.json

@@ -1,0 +1,17 @@
+# Keep these in git, but do not ship them to Vercel.
+# The browser only ever reads data/*.json — it never requests the raw pipeline
+# inputs or the Shiny source. Excluding them cuts ~32 MB from every deploy.
+
+# Pipeline inputs: CSVs, trained models, and the R scripts GitHub Actions runs.
+r-pipeline/
+
+# The R Shiny app. Runs locally in RStudio, not on Vercel.
+shiny-app/
+
+# Local dev server and its logs.
+dev_server.py
+sync.log
+__pycache__/
+
+# JSON exporter — runs in CI, not at request time.
+export_json.R

@@ -24,6 +24,19 @@ from pathlib import Path
 PORT = 8080
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 WEB_DIR = Path(__file__).resolve().parent
+# The pipeline scripts and data that GitHub Actions maintains. Everything runs
+# here, never against the legacy copies in PROJECT_ROOT, so the local sync and
+# the scheduled sync produce the same files.
+PIPELINE_DIR = WEB_DIR / "r-pipeline"
+
+
+def valid_site_names():
+    """Site names from the exported config, used to validate untrusted input."""
+    try:
+        with open(WEB_DIR / "data" / "sites_config.json") as f:
+            return {s["name"] for s in json.load(f)}
+    except Exception:
+        return set()
 
 # Track sync state
 sync_state = {"running": False, "last_result": None, "log": ""}
@@ -94,6 +107,14 @@ class DashboardHandler(http.server.SimpleHTTPRequestHandler):
         site_name = self.path.split("/api/retrain/")[1].replace("%20", " ")
         log_file = WEB_DIR / "sync.log"
 
+        # site_name comes straight off the URL and is interpolated into an R
+        # expression below, so accept only names that actually exist in the
+        # config rather than passing arbitrary text to Rscript -e.
+        allowed = valid_site_names()
+        if allowed and site_name not in allowed:
+            self.send_json(400, {"status": "error", "message": f"Unknown site: {site_name}"})
+            return
+
         try:
             with open(log_file, "a") as lf:
                 lf.write(f"\n--- Retrain: {site_name} ---\n")
@@ -101,14 +122,14 @@ class DashboardHandler(http.server.SimpleHTTPRequestHandler):
                     ["Rscript", "-e",
                      f'source("Ozone_Model_Training.R"); train_site_model("{site_name}")'],
                     stdout=lf, stderr=subprocess.STDOUT,
-                    cwd=str(PROJECT_ROOT),
+                    cwd=str(PIPELINE_DIR),
                 )
                 proc.wait(timeout=300)
 
             # Re-export JSON so dashboard picks up new model
             subprocess.run(
                 ["Rscript", str(WEB_DIR / "export_json.R")],
-                capture_output=True, cwd=str(PROJECT_ROOT), timeout=120
+                capture_output=True, cwd=str(WEB_DIR), timeout=120
             )
             self.send_json(200, {"status": "complete", "site": site_name})
         except Exception as e:
@@ -149,20 +170,18 @@ class DashboardHandler(http.server.SimpleHTTPRequestHandler):
 
 def run_sync_pipeline():
     """
-    Run the full R pipeline, identical to what app.R's master sync does:
-      1. Ozone_Master_Sync.R — data fetch (AQS/AirNow O3 + ASOS weather),
-         gap-fill missing days, retrain Random Forest models, generate
-         tomorrow's forecast + backfill history with observed values
-      2. export_json.R — convert CSVs + .rds models to JSON for dashboard
+    Runs r-pipeline/run_pipeline.R -- the exact entry point GitHub Actions uses
+    (data sync + model training + forecasts + JSON export), against the exact
+    same files. Previously this ran Ozone_Master_Sync.R from the project root,
+    which operated on the legacy root copies of the CSVs and models; a local
+    sync and the scheduled sync therefore updated two different sets of files
+    and drifted apart.
 
     This is the same as clicking "Sync & Refresh Ecosystem" in the Shiny app.
     """
     steps = [
-        ("Master Sync (Data + Models + Forecasts)", [
-            "Rscript", str(PROJECT_ROOT / "Ozone_Master_Sync.R")
-        ]),
-        ("JSON Export for Dashboard", [
-            "Rscript", str(WEB_DIR / "export_json.R")
+        ("Full pipeline (data + models + forecasts + JSON export)", [
+            "Rscript", str(PIPELINE_DIR / "run_pipeline.R")
         ]),
     ]
 
@@ -177,7 +196,7 @@ def run_sync_pipeline():
                 proc = subprocess.Popen(
                     cmd,
                     stdout=lf, stderr=subprocess.STDOUT,
-                    cwd=str(PROJECT_ROOT),
+                    cwd=str(PIPELINE_DIR),
                 )
                 proc.wait(timeout=600)
                 if proc.returncode != 0:

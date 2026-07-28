@@ -7,6 +7,9 @@ let sitesConfig = [];
 let currentSite = null;
 let sidebarMap = null;
 let aboutMapInstance = null;
+// Today's history row, kept so the async real-time O3 value can be patched into
+// the Today table without re-fetching or re-rendering the rest of the dashboard.
+let currentTodayEntry = null;
 
 // --- Initialization ---
 document.addEventListener('DOMContentLoaded', async () => {
@@ -115,30 +118,29 @@ async function onSiteChange() {
   const safeName = name.replace(/ /g, '_');
   const basePath = `${DATA_BASE}/${safeName}`;
 
+  // Start the real-time O3 lookup now but deliberately do NOT await it here.
+  // It walks backwards through hourly AirNow files and routinely takes seconds
+  // (longer, or never, when AirNow is slow). Awaiting it before rendering left
+  // the entire dashboard blank on that call — for a value that fills exactly one
+  // table cell. Render from local JSON first, then patch that cell in when it
+  // lands. A rejected promise must not surface as an unhandled rejection.
+  const realtimePromise = fetchJSON(
+    isLocalServer
+      ? `/api/realtime/${currentSite.aqs_id}`
+      : `/api/realtime?aqs=${currentSite.aqs_id}`
+  ).catch(() => null);
+
   // Load all data in parallel
-  const [history, dataSummary, importance, metrics] = await Promise.all([
+  const [history, dataSummary, importance, metrics, recent] = await Promise.all([
     fetchJSON(`${basePath}/history.json`),
     fetchJSON(`${basePath}/data_summary.json`),
     fetchJSON(`${basePath}/importance.json`),
     fetchJSON(`${basePath}/metrics.json`),
+    fetchJSON(`${basePath}/recent.json`),
   ]);
 
-  const recent = await fetchJSON(`${basePath}/recent.json`);
-
-  // Fetch real-time O3 — local dev server proxy or Vercel serverless function
-  let realtimeO3 = null;
-  if (currentSite) {
-    let rt = null;
-    if (isLocalServer) {
-      rt = await fetchJSON(`/api/realtime/${currentSite.aqs_id}`);
-    } else {
-      rt = await fetchJSON(`/api/realtime?aqs=${currentSite.aqs_id}`);
-    }
-    if (rt && rt.value != null) realtimeO3 = rt.value;
-  }
-
   renderSidebarStatus(dataSummary);
-  renderDashboard(history, recent, dataSummary, realtimeO3);
+  renderDashboard(history, recent, dataSummary, null);
   renderAnalysis(history, importance, metrics, dataSummary);
   renderDataTab(dataSummary);
   renderAboutTab();
@@ -147,6 +149,14 @@ async function onSiteChange() {
   setTimeout(() => {
     document.querySelectorAll('.js-plotly-plot').forEach(el => Plotly.Plots.resize(el));
   }, 300);
+
+  // Patch the real-time cell once it resolves, unless the user has since switched
+  // sites — a slow response for the previous site must not overwrite the new one.
+  realtimePromise.then(rt => {
+    if (!rt || rt.value == null) return;
+    if (!currentSite || currentSite.name !== name) return;
+    renderTodayTable(currentTodayEntry, rt.value);
+  });
 }
 
 async function fetchJSON(url) {
@@ -245,12 +255,17 @@ function renderSidebarStatus(summary) {
 
 // --- Dashboard Tab ---
 function renderDashboard(history, recent, summary, realtimeO3) {
-  renderValueBoxes(history);
-  renderForecastTables(history, realtimeO3);
+  // Resolve the two entries once, on the local calendar, and share them.
+  const todayEntry = history ? history.find(h => h.Target_Date === today()) : null;
+  const tomorrowEntry = history ? history.find(h => h.Target_Date === tomorrow()) : null;
+  currentTodayEntry = todayEntry;
+
+  renderValueBoxes(history, tomorrowEntry);
+  renderForecastTables(history, realtimeO3, todayEntry, tomorrowEntry);
   renderTrendPlot(recent);
 }
 
-function renderValueBoxes(history) {
+function renderValueBoxes(history, tomorrowEntry) {
   const vbRF = document.getElementById('vbRF');
   const vbAQM = document.getElementById('vbAQM');
   const vbTemp = document.getElementById('vbTemp');
@@ -262,13 +277,19 @@ function renderValueBoxes(history) {
     return;
   }
 
-  const latest = history[0];
+  // Prefer the entry actually targeting tomorrow. If the pipeline has not issued
+  // it yet, fall back to the newest entry but say which date it is for, so a
+  // stale forecast is never displayed as if it were tomorrow's.
+  const latest = tomorrowEntry || history[0];
+  const stale = !tomorrowEntry;
+  const forLabel = stale ? ` (issued for ${latest.Target_Date})` : '';
+  const prefix = stale ? 'Latest' : "Tomorrow's";
 
   const rfVal = latest.RF_Pred;
   const rfInfo = getAqiInfo(rfVal);
   setValueBox(vbRF,
     rfVal != null ? fmt(rfVal) + ' ppm' : 'N/A',
-    `Tomorrow's RF Forecast: ${rfInfo.status}`,
+    `${prefix} RF Forecast: ${rfInfo.status}${forLabel}`,
     rfInfo.cssClass
   );
 
@@ -276,14 +297,14 @@ function renderValueBoxes(history) {
   const aqmInfo = getAqiInfo(aqmVal);
   setValueBox(vbAQM,
     aqmVal != null ? fmt(aqmVal) + ' ppm' : 'N/A',
-    `Tomorrow's AQM Bias-Corr: ${aqmInfo.status}`,
+    `${prefix} AQM Bias-Corr: ${aqmInfo.status}${forLabel}`,
     aqmInfo.cssClass
   );
 
   const tempVal = latest.Met_Temp_F;
   setValueBox(vbTemp,
     tempVal != null ? tempVal.toFixed(1) + ' F' : 'N/A',
-    "Tomorrow's Forecasted High Temp",
+    `${prefix} Forecasted High Temp${forLabel}`,
     'vb-orange'
   );
 }
@@ -294,23 +315,18 @@ function setValueBox(el, value, subtitle, cssClass) {
   el.querySelector('.vb-content').innerHTML = `<h2>${value}</h2><p>${subtitle}</p>`;
 }
 
-function renderForecastTables(history, realtimeO3) {
+function renderForecastTables(history, realtimeO3, todayEntry, tomorrowEntry) {
   if (!history || history.length === 0) {
     initEmptyTable('forecastTableToday');
     initEmptyTable('forecastTableTomorrow');
     return;
   }
 
-  const today = new Date().toISOString().slice(0, 10);
-  const tomorrow = new Date(Date.now() + 86400000).toISOString().slice(0, 10);
-
   // Today's table: matches app.R forecast_today reactive
-  const todayEntry = history.find(h => h.Target_Date === today);
   renderTodayTable(todayEntry, realtimeO3);
 
   // Tomorrow's table: matches app.R forecast_res / forecast_table
-  const tomorrowEntry = history.find(h => h.Target_Date === tomorrow) || history[0];
-  renderTomorrowTable(tomorrowEntry);
+  renderTomorrowTable(tomorrowEntry || history[0]);
 }
 
 function renderTodayTable(entry, realtimeO3) {
@@ -373,11 +389,24 @@ function renderTomorrowTable(entry) {
   $('#' + tableId).DataTable({ paging: false, searching: false, info: false, ordering: false, autoWidth: true });
 }
 
-function today() {
-  const d = new Date();
+// Local-calendar date string (YYYY-MM-DD).
+// Never use toISOString() for this: it returns UTC, so from ~7pm Central onward
+// it reports tomorrow's date and every "today"/"tomorrow" lookup shifts by a day.
+// app.R uses Sys.Date() (local), so this keeps the two in agreement.
+function localDateStr(d = new Date()) {
   return d.getFullYear() + '-' +
     String(d.getMonth() + 1).padStart(2, '0') + '-' +
     String(d.getDate()).padStart(2, '0');
+}
+
+function today() {
+  return localDateStr();
+}
+
+function tomorrow() {
+  const d = new Date();
+  d.setDate(d.getDate() + 1);
+  return localDateStr(d);
 }
 
 function getSyncStatus(runDate) {
@@ -429,7 +458,16 @@ function renderTrendPlot(recent) {
     yaxis: { title: 'Max 8-hr Ozone (ppm)' },
     height: 320,
     margin: { t: 40, b: 50, l: 60, r: 20 },
-    showlegend: false
+    showlegend: false,
+    shapes: [{
+      type: 'line', x0: dates[0], x1: dates[dates.length - 1],
+      y0: 0.070, y1: 0.070,
+      line: { color: 'rgba(255,0,0,0.5)', width: 1.5, dash: 'dash' }
+    }],
+    annotations: [{
+      x: dates[dates.length - 1], y: 0.070, text: 'NAAQS',
+      showarrow: false, yshift: 10, font: { size: 10, color: 'red' }
+    }]
   };
 
   Plotly.newPlot(el, [trace], layout, { responsive: true });
@@ -509,7 +547,7 @@ function renderPerformancePlots(history) {
 
     const padded = [];
     for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
-      const key = d.toISOString().slice(0, 10);
+      const key = localDateStr(d);
       const m = d.getMonth() + 1;
       const day = d.getDate();
       const offSeason = m >= 11 || m === 1 || (m === 2 && day < 15);
@@ -549,7 +587,16 @@ function renderPerformancePlots(history) {
     hovermode: 'x unified',
     legend: { orientation: 'h', y: -0.25 },
     height: 400,
-    margin: { t: 40, b: 80, l: 60, r: 20 }
+    margin: { t: 40, b: 80, l: 60, r: 20 },
+    shapes: [{
+      type: 'line', x0: dates[0], x1: dates[dates.length - 1],
+      y0: 0.070, y1: 0.070,
+      line: { color: 'rgba(255,0,0,0.5)', width: 1.5, dash: 'dash' }
+    }],
+    annotations: [{
+      x: dates[dates.length - 1], y: 0.070, text: 'NAAQS (0.070 ppm)',
+      showarrow: false, yshift: 10, font: { size: 10, color: 'red' }
+    }]
   }, { responsive: true });
 
   // Scatter: RF vs Observed
@@ -618,12 +665,17 @@ function buildMetricsTable(data, showCategorical) {
     ['RMSE (ppm)', m => fmt(m.rmse)],
     ['Mean Bias', m => fmt(m.bias)],
     ['MAE', m => fmt(m.mae)],
+    ['NMB (%)', m => m.nmb != null ? m.nmb.toFixed(1) : 'N/A'],
+    ['NME (%)', m => m.nme != null ? m.nme.toFixed(1) : 'N/A'],
     ['R²', m => m.r2 != null ? m.r2.toFixed(3) : 'N/A'],
   ];
 
   if (showCategorical) {
+    rows.push(['Hits / Miss / FA', m =>
+      m.hits != null ? `${m.hits} / ${m.misses} / ${m.fas}` : 'N/A']);
     rows.push(['POD (Hit Rate)', m => m.pod != null ? m.pod.toFixed(2) : 'N/A']);
     rows.push(['FAR', m => m.far != null ? m.far.toFixed(2) : 'N/A']);
+    rows.push(['CSI (Threat Score)', m => m.csi != null ? m.csi.toFixed(2) : 'N/A']);
   }
 
   let html = '<table class="metrics-table"><thead><tr><th>Metric</th>';
@@ -659,12 +711,12 @@ function renderHistoryTable(history) {
   const cols = [
     'Run_Date', 'Target_Date', 'Observed_O3', 'RF_Pred',
     'AQM_06_Reg', 'AQM_06_BC', 'AQM_12_Reg', 'AQM_12_BC',
-    'Met_Temp_F', 'Met_Dewp_F', 'Met_WS_kts', 'Met_WD_deg'
+    'Met_Temp_F', 'Met_Dewp_F', 'Met_WS_kts', 'Met_WD_deg', 'Forecast_Type'
   ];
   const headers = [
     'Run Date', 'Target Date', 'Observed O3', 'RF Prediction',
     'AQM 06z Reg', 'AQM 06z BC', 'AQM 12z Reg', 'AQM 12z BC',
-    'Max Temp (F)', 'Min Dewp (F)', 'Avg Wind (kts)', 'Wind Dir (°)'
+    'Max Temp (F)', 'Min Dewp (F)', 'Avg Wind (kts)', 'Wind Dir (°)', 'Type'
   ];
   const o3Cols = new Set(['Observed_O3', 'RF_Pred', 'AQM_06_Reg', 'AQM_06_BC', 'AQM_12_Reg', 'AQM_12_BC']);
 
@@ -715,6 +767,17 @@ function renderHistoryTable(history) {
       {
         targets: [10, 11],
         render: function(data) { return data != null ? data : 'N/A'; }
+      },
+      {
+        // Provenance of RF_Pred. Hindcast rows used observed target-day weather,
+        // so they are not comparable to real forecasts — mark them clearly.
+        targets: [12],
+        render: function(data) {
+          if (data == null) return '<span style="color:#aaa;">legacy</span>';
+          return data === 'operational'
+            ? '<span style="color:#00a65a; font-weight:600;">operational</span>'
+            : '<span style="color:#f39c12; font-weight:600;">hindcast</span>';
+        }
       }
     ]
   });

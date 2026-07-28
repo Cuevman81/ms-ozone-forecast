@@ -116,6 +116,16 @@
             <div id="retrainStatus" style="margin-top:8px; font-size:0.85em; color:#888;"></div>
             <hr style="margin:12px 0;">
             <div id="modelMetricsText"></div>
+            <p style="font-size:0.78em; color:#777; margin-top:12px; line-height:1.5;">
+              <strong>Comparing RF against AQM:</strong> most RF rows in the history log were
+              reconstructed after the fact using the <em>observed</em> next-day weather, while the
+              NOAA AQM values are genuine forecasts. Perfect-prognosis rows score much better than
+              the model can achieve live, so the RF column flatters itself in any pooled comparison.
+              The <em>Type</em> column in the Forecast History Log marks which rows are
+              <span style="color:#00a65a; font-weight:600;">operational</span> (real forecasts) versus
+              <span style="color:#f39c12; font-weight:600;">hindcast</span>; weigh the operational
+              rows when judging live skill.
+            </p>
           </div>
         </div>
       </div>
@@ -144,6 +154,17 @@
                 <div id="metricsModerate"></div>
                 <h4>USG+ Days (&ge; 71ppb)</h4>
                 <div id="metricsUSG"></div>
+                <p style="font-size:0.78em; color:#777; margin-top:14px; line-height:1.5;">
+                  <strong>Reading the threshold tables:</strong> RMSE, Bias, NMB, NME and R&sup2;
+                  are computed only on days where the <em>observed</em> value cleared the threshold.
+                  Conditioning on the observation narrows the remaining spread, so R&sup2; collapses
+                  toward 0 and bias turns negative even for a skillful model &mdash; a known artifact
+                  of conditional verification, not proof the model failed. Judge event performance on
+                  POD / FAR / CSI (computed on the full record) and use Overall for correlation.
+                  <br><br>
+                  <strong>NMB / NME</strong> are the EPA photochemical benchmarks
+                  (ozone: NMB within &plusmn;15%, NME under 25%).
+                </p>
               </div>
             </div>
           </div>

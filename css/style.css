@@ -120,6 +120,27 @@ body {
   flex: 1;
   padding: 20px 25px;
   min-height: 100vh;
+  /* Flex items default to min-width:auto, which lets wide content (Plotly)
+     push this past the viewport. See the min-width:0 note below. */
+  min-width: 0;
+}
+
+/* Grid and flex children default to min-width:auto, meaning they refuse to
+   shrink below their content's intrinsic width. A Plotly chart reports a wide
+   intrinsic width, so without this the chart widens its grid column, which
+   widens the row, which gives the chart even more room on the next resize --
+   the page ends up scrolling sideways and charts never settle at the right
+   size. min-width:0 lets the column win and the chart fit into it instead. */
+.row > *,
+.value-boxes > *,
+.info-boxes > * {
+  min-width: 0;
+}
+
+/* Plotly injects inline widths; never let one exceed its container. */
+.card-body .js-plotly-plot,
+.sub-panel .js-plotly-plot {
+  max-width: 100%;
 }
 
 /* --- Tab Panels --- */

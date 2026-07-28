@@ -33,6 +33,17 @@ class DashboardHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(WEB_DIR), **kwargs)
 
+    def end_headers(self):
+        # SimpleHTTPRequestHandler sends Last-Modified but no Cache-Control, which
+        # lets the browser apply *heuristic* freshness (roughly 10% of the file's
+        # age). For data/ JSON that was last written weeks ago, that means the
+        # browser will happily serve its cached copy for days without ever
+        # revalidating -- so running a sync appeared to change nothing. Force
+        # revalidation on every request; this is a dev server, correctness beats
+        # the handful of bytes saved.
+        self.send_header("Cache-Control", "no-store, must-revalidate")
+        super().end_headers()
+
     def do_POST(self):
         if self.path == "/api/sync":
             self.handle_sync()

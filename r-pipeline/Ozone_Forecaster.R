@@ -361,7 +361,9 @@ run_forecast <- function(site_name) {
           AQM_06_Reg = round(as.numeric(h_aqm06_reg$val), 4), AQM_06_BC = round(as.numeric(h_aqm06_bc$val), 4),
           AQM_12_Reg = round(as.numeric(h_aqm12_reg$val), 4), AQM_12_BC = round(as.numeric(h_aqm12_bc$val), 4),
           Met_Temp_F = met_t_val, Met_Dewp_F = met_dp_val,
-          Met_WS_kts = met_ws_val, Met_WD_deg = met_wd_val
+          Met_WS_kts = met_ws_val, Met_WD_deg = met_wd_val,
+          # Built from observed target-day meteorology -- perfect prognosis.
+          Forecast_Type = "hindcast"
         )
         hist_log <- hist_log %>%
           filter(as.character(Target_Date) != as.character(g_date)) %>%
@@ -436,11 +438,23 @@ run_forecast <- function(site_name) {
   # 6. History Management & Verification
   log_file <- paste0("history_", gsub(" ", "_", site_name), ".csv")
 
-  # Standard column order
+  # Standard column order.
+  #
+  # Forecast_Type records how RF_Pred was produced, which is essential for honest
+  # verification:
+  #   "operational" - issued ahead of time using the NWS *forecast* meteorology,
+  #                   i.e. a real forecast.
+  #   "hindcast"    - reconstructed by the retrospective gap-fill above using the
+  #                   *observed* ASOS meteorology for the target day. This is a
+  #                   perfect-prognosis run and scores far better than the model
+  #                   can achieve operationally, so hindcast and operational rows
+  #                   must not be pooled into one skill score.
+  # Legacy rows written before this column existed are left NA (unknown).
   cols_standard <- c(
     "Run_Date", "Target_Date", "Observed_O3", "RF_Pred",
     "AQM_06_Reg", "AQM_06_BC", "AQM_12_Reg", "AQM_12_BC",
-    "Met_Temp_F", "Met_Dewp_F", "Met_WS_kts", "Met_WD_deg"
+    "Met_Temp_F", "Met_Dewp_F", "Met_WS_kts", "Met_WD_deg",
+    "Forecast_Type"
   )
 
   # New entry for today's run
@@ -456,14 +470,21 @@ run_forecast <- function(site_name) {
     Met_Temp_F = round(as.numeric(m_temp), 1),
     Met_Dewp_F = round(as.numeric(m_dp), 1),
     Met_WS_kts = round(as.numeric(m_ws), 1),
-    Met_WD_deg = round(as.numeric(m_wd), 0)
+    Met_WD_deg = round(as.numeric(m_wd), 0),
+    # Issued ahead of the target day off the NWS forecast -- a real forecast.
+    Forecast_Type = "operational"
   ) %>% select(all_of(cols_standard))
 
   if (file.exists(log_file)) {
     hist_log <- read_csv(log_file, show_col_types = FALSE)
 
-    # Ensure all standard columns exist
-    for (c in cols_standard) if (!(c %in% colnames(hist_log))) hist_log[[c]] <- as.numeric(NA)
+    # Ensure all standard columns exist. Forecast_Type is character, so seeding it
+    # with a numeric NA would make the later bind_rows() fail on a type clash.
+    for (c in cols_standard) {
+      if (!(c %in% colnames(hist_log))) {
+        hist_log[[c]] <- if (c == "Forecast_Type") NA_character_ else as.numeric(NA)
+      }
+    }
 
     # Retroactive Verification: Try to fill in missing Observed_O3 from historical data for strictly PAST dates
     needs_verify <- is.na(hist_log$Observed_O3) & hist_log$Target_Date < Sys.Date()

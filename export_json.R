@@ -95,12 +95,26 @@ for (site_name in names(SITES_CONFIG)) {
         n <- nrow(sub_data)
         if (n < 1) return(list(n = 0, rmse = NA, bias = NA, mae = NA, r2 = NA))
 
+        obs <- sub_data$Observed_O3
+        pred <- sub_data[[col_name]]
+        obs_sum <- sum(obs)
+
         res <- list(
           n = n,
-          rmse = round(sqrt(mean((sub_data$Observed_O3 - sub_data[[col_name]])^2)), 4),
-          bias = round(mean(sub_data[[col_name]] - sub_data$Observed_O3), 4),
-          mae = round(mean(abs(sub_data$Observed_O3 - sub_data[[col_name]])), 4),
-          r2 = if (n >= 2) round(cor(sub_data$Observed_O3, sub_data[[col_name]])^2, 3) else NA
+          rmse = round(sqrt(mean((obs - pred)^2)), 4),
+          bias = round(mean(pred - obs), 4),
+          mae = round(mean(abs(obs - pred)), 4),
+          # Normalized Mean Bias / Error (%) — the EPA photochemical model
+          # evaluation statistics (Emery et al. 2017). Ozone benchmarks:
+          # NMB within +/-15%, NME under 25%.
+          nmb = if (obs_sum > 0) round(sum(pred - obs) / obs_sum * 100, 1) else NA,
+          nme = if (obs_sum > 0) round(sum(abs(pred - obs)) / obs_sum * 100, 1) else NA,
+          # cor() is undefined (and warns) when either series is constant.
+          r2 = if (n >= 2 && sd(obs) > 0 && sd(pred) > 0) {
+            round(cor(obs, pred)^2, 3)
+          } else {
+            NA
+          }
         )
 
         if (!is.null(threshold)) {
@@ -108,8 +122,12 @@ for (site_name in names(SITES_CONFIG)) {
           hits <- sum(eval_data$Observed_O3 >= threshold & eval_data[[col_name]] >= threshold, na.rm = TRUE)
           misses <- sum(eval_data$Observed_O3 >= threshold & eval_data[[col_name]] < threshold, na.rm = TRUE)
           fas <- sum(eval_data$Observed_O3 < threshold & eval_data[[col_name]] >= threshold, na.rm = TRUE)
+          res$hits <- hits
+          res$misses <- misses
+          res$fas <- fas
           res$pod <- if ((hits + misses) > 0) round(hits / (hits + misses), 2) else NA
           res$far <- if ((hits + fas) > 0) round(fas / (hits + fas), 2) else NA
+          res$csi <- if ((hits + misses + fas) > 0) round(hits / (hits + misses + fas), 2) else NA
         }
         res
       }

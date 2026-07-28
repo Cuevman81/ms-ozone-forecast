@@ -3,7 +3,7 @@
     "Run_Date": "2026-07-28",
     "Target_Date": "2026-07-29",
     "Observed_O3": null,
-    "RF_Pred": 0.035,
+    "RF_Pred": 0.0344,
     "AQM_06_Reg": 0.0487,
     "AQM_06_BC": 0.0405,
     "AQM_12_Reg": 0.0527,
@@ -11,7 +11,8 @@
     "Met_Temp_F": 97,
     "Met_Dewp_F": 75,
     "Met_WS_kts": 5.6,
-    "Met_WD_deg": 260
+    "Met_WD_deg": 260,
+    "Forecast_Type": "operational"
   },
   {
     "Run_Date": "2026-07-27",
@@ -25,7 +26,8 @@
     "Met_Temp_F": 97,
     "Met_Dewp_F": 74,
     "Met_WS_kts": 5.7,
-    "Met_WD_deg": 263
+    "Met_WD_deg": 263,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-07-26",
@@ -39,7 +41,8 @@
     "Met_Temp_F": 96,
     "Met_Dewp_F": 73,
     "Met_WS_kts": 5.7,
-    "Met_WD_deg": 276
+    "Met_WD_deg": 276,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-07-25",
@@ -53,7 +56,8 @@
     "Met_Temp_F": 95,
     "Met_Dewp_F": 71,
     "Met_WS_kts": 4.5,
-    "Met_WD_deg": 267
+    "Met_WD_deg": 267,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-07-24",
@@ -67,7 +71,8 @@
     "Met_Temp_F": 93,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 3.5,
-    "Met_WD_deg": 253
+    "Met_WD_deg": 253,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-07-23",
@@ -81,7 +86,8 @@
     "Met_Temp_F": 92,
     "Met_Dewp_F": 71,
     "Met_WS_kts": 3.2,
-    "Met_WD_deg": 184
+    "Met_WD_deg": 184,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-07-22",
@@ -95,7 +101,8 @@
     "Met_Temp_F": 90,
     "Met_Dewp_F": 74,
     "Met_WS_kts": 11.4,
-    "Met_WD_deg": 157
+    "Met_WD_deg": 157,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-07-21",
@@ -109,7 +116,8 @@
     "Met_Temp_F": 85,
     "Met_Dewp_F": 71.6,
     "Met_WS_kts": 14.6,
-    "Met_WD_deg": 65
+    "Met_WD_deg": 65,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-07-20",
@@ -123,7 +131,8 @@
     "Met_Temp_F": 95,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 8.5,
-    "Met_WD_deg": 13
+    "Met_WD_deg": 13,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-07-19",
@@ -137,7 +146,8 @@
     "Met_Temp_F": 97,
     "Met_Dewp_F": 71,
     "Met_WS_kts": 5.2,
-    "Met_WD_deg": 353
+    "Met_WD_deg": 353,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-07-18",
@@ -151,7 +161,8 @@
     "Met_Temp_F": 97,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 5.8,
-    "Met_WD_deg": 358
+    "Met_WD_deg": 358,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-07-17",
@@ -165,7 +176,8 @@
     "Met_Temp_F": 97,
     "Met_Dewp_F": 71,
     "Met_WS_kts": 5.1,
-    "Met_WD_deg": 310
+    "Met_WD_deg": 310,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-07-16",
@@ -179,7 +191,8 @@
     "Met_Temp_F": 97,
     "Met_Dewp_F": 71,
     "Met_WS_kts": 4.5,
-    "Met_WD_deg": 305
+    "Met_WD_deg": 305,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-07-15",
@@ -193,7 +206,8 @@
     "Met_Temp_F": 93,
     "Met_Dewp_F": 68,
     "Met_WS_kts": 2.8,
-    "Met_WD_deg": 229
+    "Met_WD_deg": 229,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-07-14",
@@ -207,7 +221,8 @@
     "Met_Temp_F": 92,
     "Met_Dewp_F": 68,
     "Met_WS_kts": 3.4,
-    "Met_WD_deg": 277
+    "Met_WD_deg": 277,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-07-13",
@@ -221,7 +236,8 @@
     "Met_Temp_F": 83,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 3.6,
-    "Met_WD_deg": 271
+    "Met_WD_deg": 271,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-07-12",
@@ -235,7 +251,8 @@
     "Met_Temp_F": 82,
     "Met_Dewp_F": 73,
     "Met_WS_kts": 4.5,
-    "Met_WD_deg": 280
+    "Met_WD_deg": 280,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-07-11",
@@ -249,7 +266,8 @@
     "Met_Temp_F": 92,
     "Met_Dewp_F": 73,
     "Met_WS_kts": 2.7,
-    "Met_WD_deg": 282
+    "Met_WD_deg": 282,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-07-10",
@@ -263,7 +281,8 @@
     "Met_Temp_F": 93,
     "Met_Dewp_F": 73,
     "Met_WS_kts": 3,
-    "Met_WD_deg": 190
+    "Met_WD_deg": 190,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-07-09",
@@ -277,7 +296,8 @@
     "Met_Temp_F": 92,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 3,
-    "Met_WD_deg": 194
+    "Met_WD_deg": 194,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-07-08",
@@ -291,7 +311,8 @@
     "Met_Temp_F": 93,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 2.8,
-    "Met_WD_deg": 211
+    "Met_WD_deg": 211,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-07-07",
@@ -305,7 +326,8 @@
     "Met_Temp_F": 93,
     "Met_Dewp_F": 71,
     "Met_WS_kts": 4.1,
-    "Met_WD_deg": 241
+    "Met_WD_deg": 241,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-07-06",
@@ -319,7 +341,8 @@
     "Met_Temp_F": 95,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 4.3,
-    "Met_WD_deg": 281
+    "Met_WD_deg": 281,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-07-05",
@@ -333,7 +356,8 @@
     "Met_Temp_F": 91,
     "Met_Dewp_F": 71,
     "Met_WS_kts": 3.7,
-    "Met_WD_deg": 239
+    "Met_WD_deg": 239,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-07-04",
@@ -347,7 +371,8 @@
     "Met_Temp_F": 91,
     "Met_Dewp_F": 71,
     "Met_WS_kts": 4.1,
-    "Met_WD_deg": 287
+    "Met_WD_deg": 287,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-07-03",
@@ -361,7 +386,8 @@
     "Met_Temp_F": 94,
     "Met_Dewp_F": 74,
     "Met_WS_kts": 3.4,
-    "Met_WD_deg": 190
+    "Met_WD_deg": 190,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-07-02",
@@ -375,7 +401,8 @@
     "Met_Temp_F": 92,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 3.2,
-    "Met_WD_deg": 164
+    "Met_WD_deg": 164,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-07-01",
@@ -389,7 +416,8 @@
     "Met_Temp_F": 92,
     "Met_Dewp_F": 71,
     "Met_WS_kts": 5.1,
-    "Met_WD_deg": 105
+    "Met_WD_deg": 105,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-30",
@@ -403,7 +431,8 @@
     "Met_Temp_F": 93,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 5.8,
-    "Met_WD_deg": 124
+    "Met_WD_deg": 124,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-29",
@@ -417,7 +446,8 @@
     "Met_Temp_F": 94,
     "Met_Dewp_F": 68,
     "Met_WS_kts": 3.4,
-    "Met_WD_deg": 321
+    "Met_WD_deg": 321,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-28",
@@ -431,7 +461,8 @@
     "Met_Temp_F": 93,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 2.7,
-    "Met_WD_deg": 181
+    "Met_WD_deg": 181,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-27",
@@ -445,7 +476,8 @@
     "Met_Temp_F": 92,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 4.1,
-    "Met_WD_deg": 203
+    "Met_WD_deg": 203,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-26",
@@ -459,7 +491,8 @@
     "Met_Temp_F": 91,
     "Met_Dewp_F": 75,
     "Met_WS_kts": 4.8,
-    "Met_WD_deg": 189
+    "Met_WD_deg": 189,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-25",
@@ -473,7 +506,8 @@
     "Met_Temp_F": 90,
     "Met_Dewp_F": 74,
     "Met_WS_kts": 4.3,
-    "Met_WD_deg": 195
+    "Met_WD_deg": 195,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-24",
@@ -487,7 +521,8 @@
     "Met_Temp_F": 88,
     "Met_Dewp_F": 68,
     "Met_WS_kts": 1.9,
-    "Met_WD_deg": 163
+    "Met_WD_deg": 163,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-23",
@@ -501,7 +536,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 65,
     "Met_WS_kts": 3.4,
-    "Met_WD_deg": 86
+    "Met_WD_deg": 86,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-22",
@@ -515,7 +551,8 @@
     "Met_Temp_F": 94,
     "Met_Dewp_F": 73,
     "Met_WS_kts": 4.5,
-    "Met_WD_deg": 284
+    "Met_WD_deg": 284,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-21",
@@ -529,7 +566,8 @@
     "Met_Temp_F": 92,
     "Met_Dewp_F": 74,
     "Met_WS_kts": 5.8,
-    "Met_WD_deg": 215
+    "Met_WD_deg": 215,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-20",
@@ -543,7 +581,8 @@
     "Met_Temp_F": 90,
     "Met_Dewp_F": 74,
     "Met_WS_kts": 5.2,
-    "Met_WD_deg": 199
+    "Met_WD_deg": 199,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-19",
@@ -557,7 +596,8 @@
     "Met_Temp_F": 87,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 4.5,
-    "Met_WD_deg": 133
+    "Met_WD_deg": 133,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-18",
@@ -571,7 +611,8 @@
     "Met_Temp_F": 92,
     "Met_Dewp_F": 71,
     "Met_WS_kts": 7.3,
-    "Met_WD_deg": 185
+    "Met_WD_deg": 185,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-17",
@@ -585,7 +626,8 @@
     "Met_Temp_F": 84,
     "Met_Dewp_F": 71,
     "Met_WS_kts": 10.3,
-    "Met_WD_deg": 176
+    "Met_WD_deg": 176,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-16",
@@ -599,7 +641,8 @@
     "Met_Temp_F": 88,
     "Met_Dewp_F": 74,
     "Met_WS_kts": 7.4,
-    "Met_WD_deg": 175
+    "Met_WD_deg": 175,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-15",
@@ -613,7 +656,8 @@
     "Met_Temp_F": 82,
     "Met_Dewp_F": 71.6,
     "Met_WS_kts": 2.2,
-    "Met_WD_deg": 242
+    "Met_WD_deg": 242,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-14",
@@ -627,7 +671,8 @@
     "Met_Temp_F": 85,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 3.5,
-    "Met_WD_deg": 265
+    "Met_WD_deg": 265,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-13",
@@ -641,7 +686,8 @@
     "Met_Temp_F": 94,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 3.9,
-    "Met_WD_deg": 225
+    "Met_WD_deg": 225,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-12",
@@ -655,7 +701,8 @@
     "Met_Temp_F": 91,
     "Met_Dewp_F": 71,
     "Met_WS_kts": 4,
-    "Met_WD_deg": 238
+    "Met_WD_deg": 238,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-11",
@@ -669,7 +716,8 @@
     "Met_Temp_F": 91,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 3.4,
-    "Met_WD_deg": 181
+    "Met_WD_deg": 181,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-10",
@@ -683,7 +731,8 @@
     "Met_Temp_F": 88,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 4.2,
-    "Met_WD_deg": 156
+    "Met_WD_deg": 156,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-09",
@@ -697,7 +746,8 @@
     "Met_Temp_F": 87,
     "Met_Dewp_F": 67,
     "Met_WS_kts": 4.5,
-    "Met_WD_deg": 147
+    "Met_WD_deg": 147,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-08",
@@ -711,7 +761,8 @@
     "Met_Temp_F": 87,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 6.3,
-    "Met_WD_deg": 131
+    "Met_WD_deg": 131,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-07",
@@ -725,7 +776,8 @@
     "Met_Temp_F": 85,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 6.5,
-    "Met_WD_deg": 145
+    "Met_WD_deg": 145,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-06",
@@ -739,7 +791,8 @@
     "Met_Temp_F": 86,
     "Met_Dewp_F": 73,
     "Met_WS_kts": 7.2,
-    "Met_WD_deg": 158
+    "Met_WD_deg": 158,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-05",
@@ -753,7 +806,8 @@
     "Met_Temp_F": 81,
     "Met_Dewp_F": 71.6,
     "Met_WS_kts": 8.7,
-    "Met_WD_deg": 139
+    "Met_WD_deg": 139,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-04",
@@ -767,7 +821,8 @@
     "Met_Temp_F": 85,
     "Met_Dewp_F": 64,
     "Met_WS_kts": 11.4,
-    "Met_WD_deg": 99
+    "Met_WD_deg": 99,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-03",
@@ -781,7 +836,8 @@
     "Met_Temp_F": 82,
     "Met_Dewp_F": 59,
     "Met_WS_kts": 12.2,
-    "Met_WD_deg": 105
+    "Met_WD_deg": 105,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-02",
@@ -795,7 +851,8 @@
     "Met_Temp_F": 81,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 8.5,
-    "Met_WD_deg": 84
+    "Met_WD_deg": 84,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-06-01",
@@ -809,7 +866,8 @@
     "Met_Temp_F": 90,
     "Met_Dewp_F": 68,
     "Met_WS_kts": 4.4,
-    "Met_WD_deg": 103
+    "Met_WD_deg": 103,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-31",
@@ -823,7 +881,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 3,
-    "Met_WD_deg": 283
+    "Met_WD_deg": 283,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-30",
@@ -837,7 +896,8 @@
     "Met_Temp_F": 90,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 4.2,
-    "Met_WD_deg": 206
+    "Met_WD_deg": 206,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-29",
@@ -851,7 +911,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 66,
     "Met_WS_kts": 3.9,
-    "Met_WD_deg": 218
+    "Met_WD_deg": 218,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-28",
@@ -865,7 +926,8 @@
     "Met_Temp_F": 86,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 4.4,
-    "Met_WD_deg": 166
+    "Met_WD_deg": 166,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-27",
@@ -879,7 +941,8 @@
     "Met_Temp_F": 85,
     "Met_Dewp_F": 71.6,
     "Met_WS_kts": 7.5,
-    "Met_WD_deg": 135
+    "Met_WD_deg": 135,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-26",
@@ -893,7 +956,8 @@
     "Met_Temp_F": 86,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 7.1,
-    "Met_WD_deg": 150
+    "Met_WD_deg": 150,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-25",
@@ -907,7 +971,8 @@
     "Met_Temp_F": 85,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 7,
-    "Met_WD_deg": 164
+    "Met_WD_deg": 164,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-24",
@@ -921,7 +986,8 @@
     "Met_Temp_F": 79,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 4.9,
-    "Met_WD_deg": 124
+    "Met_WD_deg": 124,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-23",
@@ -935,7 +1001,8 @@
     "Met_Temp_F": 82,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 3.2,
-    "Met_WD_deg": 189
+    "Met_WD_deg": 189,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-22",
@@ -949,7 +1016,8 @@
     "Met_Temp_F": 84,
     "Met_Dewp_F": 68,
     "Met_WS_kts": 3,
-    "Met_WD_deg": 183
+    "Met_WD_deg": 183,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-21",
@@ -963,7 +1031,8 @@
     "Met_Temp_F": 81,
     "Met_Dewp_F": 67,
     "Met_WS_kts": 6,
-    "Met_WD_deg": 159
+    "Met_WD_deg": 159,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-20",
@@ -977,7 +1046,8 @@
     "Met_Temp_F": 85,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 8.8,
-    "Met_WD_deg": 141
+    "Met_WD_deg": 141,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-19",
@@ -991,7 +1061,8 @@
     "Met_Temp_F": 85,
     "Met_Dewp_F": 71,
     "Met_WS_kts": 7,
-    "Met_WD_deg": 143
+    "Met_WD_deg": 143,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-18",
@@ -1005,7 +1076,8 @@
     "Met_Temp_F": 84,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 9.8,
-    "Met_WD_deg": 133
+    "Met_WD_deg": 133,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-17",
@@ -1019,7 +1091,8 @@
     "Met_Temp_F": 84,
     "Met_Dewp_F": 68,
     "Met_WS_kts": 12.2,
-    "Met_WD_deg": 127
+    "Met_WD_deg": 127,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-16",
@@ -1033,7 +1106,8 @@
     "Met_Temp_F": 82,
     "Met_Dewp_F": 64,
     "Met_WS_kts": 10.2,
-    "Met_WD_deg": 133
+    "Met_WD_deg": 133,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-15",
@@ -1047,7 +1121,8 @@
     "Met_Temp_F": 82,
     "Met_Dewp_F": 60,
     "Met_WS_kts": 6,
-    "Met_WD_deg": 144
+    "Met_WD_deg": 144,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-14",
@@ -1061,7 +1136,8 @@
     "Met_Temp_F": 81,
     "Met_Dewp_F": 53,
     "Met_WS_kts": 5.8,
-    "Met_WD_deg": 136
+    "Met_WD_deg": 136,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-13",
@@ -1075,7 +1151,8 @@
     "Met_Temp_F": 88,
     "Met_Dewp_F": 52,
     "Met_WS_kts": 4.8,
-    "Met_WD_deg": 347
+    "Met_WD_deg": 347,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-12",
@@ -1089,7 +1166,8 @@
     "Met_Temp_F": 86,
     "Met_Dewp_F": 59,
     "Met_WS_kts": 5.3,
-    "Met_WD_deg": 360
+    "Met_WD_deg": 360,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-11",
@@ -1103,7 +1181,8 @@
     "Met_Temp_F": 82,
     "Met_Dewp_F": 65,
     "Met_WS_kts": 6.2,
-    "Met_WD_deg": 22
+    "Met_WD_deg": 22,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-10",
@@ -1117,7 +1196,8 @@
     "Met_Temp_F": 81,
     "Met_Dewp_F": 66,
     "Met_WS_kts": 2.9,
-    "Met_WD_deg": 19
+    "Met_WD_deg": 19,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-09",
@@ -1131,7 +1211,8 @@
     "Met_Temp_F": 80,
     "Met_Dewp_F": 64,
     "Met_WS_kts": 4.2,
-    "Met_WD_deg": 133
+    "Met_WD_deg": 133,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-08",
@@ -1145,7 +1226,8 @@
     "Met_Temp_F": 73,
     "Met_Dewp_F": 62.6,
     "Met_WS_kts": 5.5,
-    "Met_WD_deg": 142
+    "Met_WD_deg": 142,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-07",
@@ -1159,7 +1241,8 @@
     "Met_Temp_F": 72,
     "Met_Dewp_F": 61,
     "Met_WS_kts": 5.9,
-    "Met_WD_deg": 54
+    "Met_WD_deg": 54,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-06",
@@ -1173,7 +1256,8 @@
     "Met_Temp_F": 80,
     "Met_Dewp_F": 64,
     "Met_WS_kts": 6.5,
-    "Met_WD_deg": 324
+    "Met_WD_deg": 324,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-05",
@@ -1187,7 +1271,8 @@
     "Met_Temp_F": 80,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 7.2,
-    "Met_WD_deg": 168
+    "Met_WD_deg": 168,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-04",
@@ -1201,7 +1286,8 @@
     "Met_Temp_F": 79,
     "Met_Dewp_F": 56,
     "Met_WS_kts": 7.2,
-    "Met_WD_deg": 161
+    "Met_WD_deg": 161,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-03",
@@ -1215,7 +1301,8 @@
     "Met_Temp_F": 76,
     "Met_Dewp_F": 45,
     "Met_WS_kts": 4.4,
-    "Met_WD_deg": 178
+    "Met_WD_deg": 178,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-02",
@@ -1229,7 +1316,8 @@
     "Met_Temp_F": 76,
     "Met_Dewp_F": 39,
     "Met_WS_kts": 3.4,
-    "Met_WD_deg": 254
+    "Met_WD_deg": 254,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-05-01",
@@ -1243,7 +1331,8 @@
     "Met_Temp_F": 73,
     "Met_Dewp_F": 41,
     "Met_WS_kts": 9.6,
-    "Met_WD_deg": 354
+    "Met_WD_deg": 354,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-30",
@@ -1257,7 +1346,8 @@
     "Met_Temp_F": 67,
     "Met_Dewp_F": 54,
     "Met_WS_kts": 8.1,
-    "Met_WD_deg": 17
+    "Met_WD_deg": 17,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-29",
@@ -1271,7 +1361,8 @@
     "Met_Temp_F": 77,
     "Met_Dewp_F": 66,
     "Met_WS_kts": 4.2,
-    "Met_WD_deg": 29
+    "Met_WD_deg": 29,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-28",
@@ -1285,7 +1376,8 @@
     "Met_Temp_F": 82,
     "Met_Dewp_F": 65,
     "Met_WS_kts": 6,
-    "Met_WD_deg": 173
+    "Met_WD_deg": 173,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-27",
@@ -1299,7 +1391,8 @@
     "Met_Temp_F": 82,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 8.3,
-    "Met_WD_deg": 161
+    "Met_WD_deg": 161,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-26",
@@ -1313,7 +1406,8 @@
     "Met_Temp_F": 81,
     "Met_Dewp_F": 67,
     "Met_WS_kts": 9.4,
-    "Met_WD_deg": 143
+    "Met_WD_deg": 143,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-25",
@@ -1327,7 +1421,8 @@
     "Met_Temp_F": 80,
     "Met_Dewp_F": 63,
     "Met_WS_kts": 2.5,
-    "Met_WD_deg": 181
+    "Met_WD_deg": 181,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-24",
@@ -1341,7 +1436,8 @@
     "Met_Temp_F": 83,
     "Met_Dewp_F": 62,
     "Met_WS_kts": 6.3,
-    "Met_WD_deg": 180
+    "Met_WD_deg": 180,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-23",
@@ -1355,7 +1451,8 @@
     "Met_Temp_F": 80,
     "Met_Dewp_F": 63,
     "Met_WS_kts": 9,
-    "Met_WD_deg": 152
+    "Met_WD_deg": 152,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-22",
@@ -1369,7 +1466,8 @@
     "Met_Temp_F": 79,
     "Met_Dewp_F": 59,
     "Met_WS_kts": 8.7,
-    "Met_WD_deg": 126
+    "Met_WD_deg": 126,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-21",
@@ -1383,7 +1481,8 @@
     "Met_Temp_F": 79,
     "Met_Dewp_F": 55,
     "Met_WS_kts": 8.4,
-    "Met_WD_deg": 121
+    "Met_WD_deg": 121,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-20",
@@ -1397,7 +1496,8 @@
     "Met_Temp_F": 78,
     "Met_Dewp_F": 46,
     "Met_WS_kts": 5.8,
-    "Met_WD_deg": 121
+    "Met_WD_deg": 121,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-19",
@@ -1411,7 +1511,8 @@
     "Met_Temp_F": 77,
     "Met_Dewp_F": 37,
     "Met_WS_kts": 4.6,
-    "Met_WD_deg": 90
+    "Met_WD_deg": 90,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-18",
@@ -1425,7 +1526,8 @@
     "Met_Temp_F": 70,
     "Met_Dewp_F": 37,
     "Met_WS_kts": 9.1,
-    "Met_WD_deg": 1
+    "Met_WD_deg": 1,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-17",
@@ -1439,7 +1541,8 @@
     "Met_Temp_F": 81,
     "Met_Dewp_F": 63,
     "Met_WS_kts": 5.8,
-    "Met_WD_deg": 182
+    "Met_WD_deg": 182,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-16",
@@ -1453,7 +1556,8 @@
     "Met_Temp_F": 81,
     "Met_Dewp_F": 56,
     "Met_WS_kts": 4.3,
-    "Met_WD_deg": 165
+    "Met_WD_deg": 165,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-15",
@@ -1467,7 +1571,8 @@
     "Met_Temp_F": 82,
     "Met_Dewp_F": 64,
     "Met_WS_kts": 5.4,
-    "Met_WD_deg": 167
+    "Met_WD_deg": 167,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-14",
@@ -1481,7 +1586,8 @@
     "Met_Temp_F": 80,
     "Met_Dewp_F": 61,
     "Met_WS_kts": 8.3,
-    "Met_WD_deg": 151
+    "Met_WD_deg": 151,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-13",
@@ -1495,7 +1601,8 @@
     "Met_Temp_F": 78,
     "Met_Dewp_F": 59,
     "Met_WS_kts": 7.8,
-    "Met_WD_deg": 148
+    "Met_WD_deg": 148,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-12",
@@ -1509,7 +1616,8 @@
     "Met_Temp_F": 80,
     "Met_Dewp_F": 61,
     "Met_WS_kts": 9.6,
-    "Met_WD_deg": 146
+    "Met_WD_deg": 146,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-11",
@@ -1523,7 +1631,8 @@
     "Met_Temp_F": 78,
     "Met_Dewp_F": 57,
     "Met_WS_kts": 8.3,
-    "Met_WD_deg": 128
+    "Met_WD_deg": 128,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-10",
@@ -1537,7 +1646,8 @@
     "Met_Temp_F": 81,
     "Met_Dewp_F": 52,
     "Met_WS_kts": 4.6,
-    "Met_WD_deg": 129
+    "Met_WD_deg": 129,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-09",
@@ -1551,7 +1661,8 @@
     "Met_Temp_F": 77,
     "Met_Dewp_F": 59,
     "Met_WS_kts": 8.4,
-    "Met_WD_deg": 98
+    "Met_WD_deg": 98,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-08",
@@ -1565,7 +1676,8 @@
     "Met_Temp_F": 75,
     "Met_Dewp_F": 54,
     "Met_WS_kts": 11.3,
-    "Met_WD_deg": 90
+    "Met_WD_deg": 90,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-07",
@@ -1579,7 +1691,8 @@
     "Met_Temp_F": 75,
     "Met_Dewp_F": 49,
     "Met_WS_kts": 10.6,
-    "Met_WD_deg": 81
+    "Met_WD_deg": 81,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-06",
@@ -1593,7 +1706,8 @@
     "Met_Temp_F": 77,
     "Met_Dewp_F": 44,
     "Met_WS_kts": 9.3,
-    "Met_WD_deg": 57
+    "Met_WD_deg": 57,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-05",
@@ -1607,7 +1721,8 @@
     "Met_Temp_F": 75,
     "Met_Dewp_F": 52,
     "Met_WS_kts": 6.8,
-    "Met_WD_deg": 351
+    "Met_WD_deg": 351,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-04",
@@ -1621,7 +1736,8 @@
     "Met_Temp_F": 75,
     "Met_Dewp_F": 52,
     "Met_WS_kts": 6.8,
-    "Met_WD_deg": 351
+    "Met_WD_deg": 351,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-03",
@@ -1635,7 +1751,8 @@
     "Met_Temp_F": 80,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 8.4,
-    "Met_WD_deg": 135
+    "Met_WD_deg": 135,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-02",
@@ -1649,7 +1766,8 @@
     "Met_Temp_F": 79,
     "Met_Dewp_F": 67,
     "Met_WS_kts": 8.5,
-    "Met_WD_deg": 130
+    "Met_WD_deg": 130,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-04-01",
@@ -1663,7 +1781,8 @@
     "Met_Temp_F": 78,
     "Met_Dewp_F": 66,
     "Met_WS_kts": 9,
-    "Met_WD_deg": 140
+    "Met_WD_deg": 140,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-31",
@@ -1677,7 +1796,8 @@
     "Met_Temp_F": 78,
     "Met_Dewp_F": 66.2,
     "Met_WS_kts": 10.8,
-    "Met_WD_deg": 139
+    "Met_WD_deg": 139,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-30",
@@ -1691,7 +1811,8 @@
     "Met_Temp_F": 79,
     "Met_Dewp_F": 66.2,
     "Met_WS_kts": 10.9,
-    "Met_WD_deg": 128
+    "Met_WD_deg": 128,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-29",
@@ -1705,7 +1826,8 @@
     "Met_Temp_F": 76,
     "Met_Dewp_F": 55.4,
     "Met_WS_kts": 10.4,
-    "Met_WD_deg": 109
+    "Met_WD_deg": 109,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-28",
@@ -1719,7 +1841,8 @@
     "Met_Temp_F": 72,
     "Met_Dewp_F": 36,
     "Met_WS_kts": 11.6,
-    "Met_WD_deg": 99
+    "Met_WD_deg": 99,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-27",
@@ -1733,7 +1856,8 @@
     "Met_Temp_F": 77,
     "Met_Dewp_F": 34,
     "Met_WS_kts": 9.6,
-    "Met_WD_deg": 7
+    "Met_WD_deg": 7,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-26",
@@ -1747,7 +1871,8 @@
     "Met_Temp_F": 81,
     "Met_Dewp_F": 60,
     "Met_WS_kts": 3.5,
-    "Met_WD_deg": 217
+    "Met_WD_deg": 217,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-25",
@@ -1761,7 +1886,8 @@
     "Met_Temp_F": 77,
     "Met_Dewp_F": 63,
     "Met_WS_kts": 5.1,
-    "Met_WD_deg": 152
+    "Met_WD_deg": 152,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-24",
@@ -1775,7 +1901,8 @@
     "Met_Temp_F": 74,
     "Met_Dewp_F": 55,
     "Met_WS_kts": 6.3,
-    "Met_WD_deg": 131
+    "Met_WD_deg": 131,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-23",
@@ -1789,7 +1916,8 @@
     "Met_Temp_F": 80,
     "Met_Dewp_F": 45,
     "Met_WS_kts": 3.9,
-    "Met_WD_deg": 45
+    "Met_WD_deg": 45,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-22",
@@ -1803,7 +1931,8 @@
     "Met_Temp_F": 81,
     "Met_Dewp_F": 59,
     "Met_WS_kts": 5.1,
-    "Met_WD_deg": 244
+    "Met_WD_deg": 244,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-21",
@@ -1817,7 +1946,8 @@
     "Met_Temp_F": 76,
     "Met_Dewp_F": 49,
     "Met_WS_kts": 4.3,
-    "Met_WD_deg": 200
+    "Met_WD_deg": 200,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-20",
@@ -1831,7 +1961,8 @@
     "Met_Temp_F": 79,
     "Met_Dewp_F": 54,
     "Met_WS_kts": 5.9,
-    "Met_WD_deg": 220
+    "Met_WD_deg": 220,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-19",
@@ -1845,7 +1976,8 @@
     "Met_Temp_F": 75,
     "Met_Dewp_F": 48,
     "Met_WS_kts": 4.5,
-    "Met_WD_deg": 238
+    "Met_WD_deg": 238,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-18",
@@ -1859,7 +1991,8 @@
     "Met_Temp_F": 71,
     "Met_Dewp_F": 41,
     "Met_WS_kts": 4,
-    "Met_WD_deg": 241
+    "Met_WD_deg": 241,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-17",
@@ -1873,7 +2006,8 @@
     "Met_Temp_F": 57,
     "Met_Dewp_F": 13,
     "Met_WS_kts": 4.9,
-    "Met_WD_deg": 344
+    "Met_WD_deg": 344,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-16",
@@ -1887,7 +2021,8 @@
     "Met_Temp_F": 57,
     "Met_Dewp_F": 13,
     "Met_WS_kts": 4.9,
-    "Met_WD_deg": 344
+    "Met_WD_deg": 344,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-15",
@@ -1901,7 +2036,8 @@
     "Met_Temp_F": 74,
     "Met_Dewp_F": 20,
     "Met_WS_kts": 13.7,
-    "Met_WD_deg": 324
+    "Met_WD_deg": 324,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-14",
@@ -1915,7 +2051,8 @@
     "Met_Temp_F": 77,
     "Met_Dewp_F": 61,
     "Met_WS_kts": 9.5,
-    "Met_WD_deg": 158
+    "Met_WD_deg": 158,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-13",
@@ -1929,7 +2066,8 @@
     "Met_Temp_F": 72,
     "Met_Dewp_F": 45,
     "Met_WS_kts": 5.7,
-    "Met_WD_deg": 137
+    "Met_WD_deg": 137,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-12",
@@ -1943,7 +2081,8 @@
     "Met_Temp_F": 67,
     "Met_Dewp_F": 37,
     "Met_WS_kts": 3,
-    "Met_WD_deg": 138
+    "Met_WD_deg": 138,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-11",
@@ -1957,7 +2096,8 @@
     "Met_Temp_F": 65,
     "Met_Dewp_F": 33,
     "Met_WS_kts": 9.4,
-    "Met_WD_deg": 349
+    "Met_WD_deg": 349,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-10",
@@ -1971,7 +2111,8 @@
     "Met_Temp_F": 80,
     "Met_Dewp_F": 60,
     "Met_WS_kts": 10.8,
-    "Met_WD_deg": 158
+    "Met_WD_deg": 158,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-09",
@@ -1985,7 +2126,8 @@
     "Met_Temp_F": 80,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 7.6,
-    "Met_WD_deg": 156
+    "Met_WD_deg": 156,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-08",
@@ -1999,7 +2141,8 @@
     "Met_Temp_F": 78,
     "Met_Dewp_F": 62,
     "Met_WS_kts": 6.2,
-    "Met_WD_deg": 150
+    "Met_WD_deg": 150,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-07",
@@ -2013,7 +2156,8 @@
     "Met_Temp_F": 75,
     "Met_Dewp_F": 63,
     "Met_WS_kts": 4.2,
-    "Met_WD_deg": 34
+    "Met_WD_deg": 34,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-06",
@@ -2027,7 +2171,8 @@
     "Met_Temp_F": 79,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 10.8,
-    "Met_WD_deg": 134
+    "Met_WD_deg": 134,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-05",
@@ -2041,7 +2186,8 @@
     "Met_Temp_F": 78,
     "Met_Dewp_F": 68,
     "Met_WS_kts": 12.3,
-    "Met_WD_deg": 126
+    "Met_WD_deg": 126,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-04",
@@ -2055,7 +2201,8 @@
     "Met_Temp_F": 75,
     "Met_Dewp_F": 64.4,
     "Met_WS_kts": 10.2,
-    "Met_WD_deg": 117
+    "Met_WD_deg": 117,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-03",
@@ -2069,7 +2216,8 @@
     "Met_Temp_F": 74,
     "Met_Dewp_F": 63,
     "Met_WS_kts": 6.1,
-    "Met_WD_deg": 115
+    "Met_WD_deg": 115,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-02",
@@ -2083,7 +2231,8 @@
     "Met_Temp_F": 75,
     "Met_Dewp_F": 61,
     "Met_WS_kts": 7,
-    "Met_WD_deg": 113
+    "Met_WD_deg": 113,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-03-01",
@@ -2097,7 +2246,8 @@
     "Met_Temp_F": 73,
     "Met_Dewp_F": 53,
     "Met_WS_kts": 5.5,
-    "Met_WD_deg": 103
+    "Met_WD_deg": 103,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-02-28",
@@ -2111,7 +2261,8 @@
     "Met_Temp_F": 74,
     "Met_Dewp_F": 51,
     "Met_WS_kts": 2.9,
-    "Met_WD_deg": 140
+    "Met_WD_deg": 140,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-02-27",
@@ -2125,7 +2276,8 @@
     "Met_Temp_F": 74,
     "Met_Dewp_F": 51,
     "Met_WS_kts": 2.9,
-    "Met_WD_deg": 140
+    "Met_WD_deg": 140,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-02-26",
@@ -2139,7 +2291,8 @@
     "Met_Temp_F": 78,
     "Met_Dewp_F": 56,
     "Met_WS_kts": 3.5,
-    "Met_WD_deg": 124
+    "Met_WD_deg": 124,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-02-25",
@@ -2153,7 +2306,8 @@
     "Met_Temp_F": 73,
     "Met_Dewp_F": 60,
     "Met_WS_kts": 5,
-    "Met_WD_deg": 188
+    "Met_WD_deg": 188,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-02-24",
@@ -2167,7 +2321,8 @@
     "Met_Temp_F": 71,
     "Met_Dewp_F": 48,
     "Met_WS_kts": 6.5,
-    "Met_WD_deg": 181
+    "Met_WD_deg": 181,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-02-23",
@@ -2181,7 +2336,8 @@
     "Met_Temp_F": 56,
     "Met_Dewp_F": 20,
     "Met_WS_kts": 4.9,
-    "Met_WD_deg": 167
+    "Met_WD_deg": 167,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-02-22",
@@ -2195,7 +2351,8 @@
     "Met_Temp_F": 57,
     "Met_Dewp_F": 14,
     "Met_WS_kts": 10.3,
-    "Met_WD_deg": 336
+    "Met_WD_deg": 336,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-02-21",
@@ -2209,7 +2366,8 @@
     "Met_Temp_F": 63,
     "Met_Dewp_F": 14,
     "Met_WS_kts": 14.4,
-    "Met_WD_deg": 337
+    "Met_WD_deg": 337,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-02-20",
@@ -2223,7 +2381,8 @@
     "Met_Temp_F": 82,
     "Met_Dewp_F": 51,
     "Met_WS_kts": 7.1,
-    "Met_WD_deg": 236
+    "Met_WD_deg": 236,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-02-19",
@@ -2237,7 +2396,8 @@
     "Met_Temp_F": 80,
     "Met_Dewp_F": 66,
     "Met_WS_kts": 4.9,
-    "Met_WD_deg": 192
+    "Met_WD_deg": 192,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-02-18",
@@ -2251,7 +2411,8 @@
     "Met_Temp_F": 75,
     "Met_Dewp_F": 66,
     "Met_WS_kts": 6.6,
-    "Met_WD_deg": 189
+    "Met_WD_deg": 189,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-02-17",
@@ -2265,7 +2426,8 @@
     "Met_Temp_F": 75,
     "Met_Dewp_F": 60,
     "Met_WS_kts": 6,
-    "Met_WD_deg": 176
+    "Met_WD_deg": 176,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-02-16",
@@ -2279,7 +2441,8 @@
     "Met_Temp_F": 69,
     "Met_Dewp_F": 46,
     "Met_WS_kts": 7.9,
-    "Met_WD_deg": 127
+    "Met_WD_deg": 127,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-02-15",
@@ -2293,7 +2456,8 @@
     "Met_Temp_F": 60,
     "Met_Dewp_F": 50,
     "Met_WS_kts": 4.4,
-    "Met_WD_deg": 7
+    "Met_WD_deg": 7,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2026-02-14",
@@ -2307,7 +2471,8 @@
     "Met_Temp_F": 75,
     "Met_Dewp_F": 51,
     "Met_WS_kts": 11.6,
-    "Met_WD_deg": 280
+    "Met_WD_deg": 280,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-30",
@@ -2321,7 +2486,8 @@
     "Met_Temp_F": 67,
     "Met_Dewp_F": 41,
     "Met_WS_kts": 1.7,
-    "Met_WD_deg": 288
+    "Met_WD_deg": 288,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-29",
@@ -2335,7 +2501,8 @@
     "Met_Temp_F": 66,
     "Met_Dewp_F": 44,
     "Met_WS_kts": 7.1,
-    "Met_WD_deg": 310
+    "Met_WD_deg": 310,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-28",
@@ -2349,7 +2516,8 @@
     "Met_Temp_F": 71,
     "Met_Dewp_F": 39,
     "Met_WS_kts": 11,
-    "Met_WD_deg": 289
+    "Met_WD_deg": 289,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-27",
@@ -2363,7 +2531,8 @@
     "Met_Temp_F": 77,
     "Met_Dewp_F": 57,
     "Met_WS_kts": 6.1,
-    "Met_WD_deg": 60
+    "Met_WD_deg": 60,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-26",
@@ -2377,7 +2546,8 @@
     "Met_Temp_F": 79,
     "Met_Dewp_F": 59,
     "Met_WS_kts": 5.3,
-    "Met_WD_deg": 335
+    "Met_WD_deg": 335,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-25",
@@ -2391,7 +2561,8 @@
     "Met_Temp_F": 78,
     "Met_Dewp_F": 68,
     "Met_WS_kts": 7.8,
-    "Met_WD_deg": 143
+    "Met_WD_deg": 143,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-24",
@@ -2405,7 +2576,8 @@
     "Met_Temp_F": 78,
     "Met_Dewp_F": 56,
     "Met_WS_kts": 10.5,
-    "Met_WD_deg": 107
+    "Met_WD_deg": 107,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-23",
@@ -2419,7 +2591,8 @@
     "Met_Temp_F": 82,
     "Met_Dewp_F": 44,
     "Met_WS_kts": 5.4,
-    "Met_WD_deg": 99
+    "Met_WD_deg": 99,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-22",
@@ -2433,7 +2606,8 @@
     "Met_Temp_F": 78,
     "Met_Dewp_F": 40,
     "Met_WS_kts": 3.1,
-    "Met_WD_deg": 122
+    "Met_WD_deg": 122,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-21",
@@ -2447,7 +2621,8 @@
     "Met_Temp_F": 80,
     "Met_Dewp_F": 37,
     "Met_WS_kts": 5.6,
-    "Met_WD_deg": 4
+    "Met_WD_deg": 4,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-20",
@@ -2461,7 +2636,8 @@
     "Met_Temp_F": 81,
     "Met_Dewp_F": 57,
     "Met_WS_kts": 3.4,
-    "Met_WD_deg": 176
+    "Met_WD_deg": 176,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-19",
@@ -2475,7 +2651,8 @@
     "Met_Temp_F": 75,
     "Met_Dewp_F": 44,
     "Met_WS_kts": 5.6,
-    "Met_WD_deg": 105
+    "Met_WD_deg": 105,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-18",
@@ -2489,7 +2666,8 @@
     "Met_Temp_F": 87,
     "Met_Dewp_F": 45,
     "Met_WS_kts": 6.5,
-    "Met_WD_deg": 323
+    "Met_WD_deg": 323,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-17",
@@ -2503,7 +2681,8 @@
     "Met_Temp_F": 85,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 10,
-    "Met_WD_deg": 149
+    "Met_WD_deg": 149,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-16",
@@ -2517,7 +2696,8 @@
     "Met_Temp_F": 83,
     "Met_Dewp_F": 61,
     "Met_WS_kts": 5.2,
-    "Met_WD_deg": 127
+    "Met_WD_deg": 127,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-15",
@@ -2531,7 +2711,8 @@
     "Met_Temp_F": 86,
     "Met_Dewp_F": 60,
     "Met_WS_kts": 1.9,
-    "Met_WD_deg": 171
+    "Met_WD_deg": 171,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-14",
@@ -2545,7 +2726,8 @@
     "Met_Temp_F": 87,
     "Met_Dewp_F": 54,
     "Met_WS_kts": 4.2,
-    "Met_WD_deg": 106
+    "Met_WD_deg": 106,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-13",
@@ -2559,7 +2741,8 @@
     "Met_Temp_F": 86,
     "Met_Dewp_F": 52,
     "Met_WS_kts": 3.2,
-    "Met_WD_deg": 5
+    "Met_WD_deg": 5,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-12",
@@ -2573,7 +2756,8 @@
     "Met_Temp_F": 85,
     "Met_Dewp_F": 49,
     "Met_WS_kts": 1.7,
-    "Met_WD_deg": 249
+    "Met_WD_deg": 249,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-11",
@@ -2587,7 +2771,8 @@
     "Met_Temp_F": 82,
     "Met_Dewp_F": 49,
     "Met_WS_kts": 2.4,
-    "Met_WD_deg": 300
+    "Met_WD_deg": 300,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-10",
@@ -2601,7 +2786,8 @@
     "Met_Temp_F": 83,
     "Met_Dewp_F": 54,
     "Met_WS_kts": 5.5,
-    "Met_WD_deg": 7
+    "Met_WD_deg": 7,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-09",
@@ -2615,7 +2801,8 @@
     "Met_Temp_F": 84,
     "Met_Dewp_F": 57,
     "Met_WS_kts": 7.1,
-    "Met_WD_deg": 28
+    "Met_WD_deg": 28,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-08",
@@ -2629,7 +2816,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 56,
     "Met_WS_kts": 7.2,
-    "Met_WD_deg": 10
+    "Met_WD_deg": 10,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-07",
@@ -2643,7 +2831,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 4.3,
-    "Met_WD_deg": 7
+    "Met_WD_deg": 7,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-06",
@@ -2657,7 +2846,8 @@
     "Met_Temp_F": 85,
     "Met_Dewp_F": 73,
     "Met_WS_kts": 4.5,
-    "Met_WD_deg": 114
+    "Met_WD_deg": 114,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-05",
@@ -2671,7 +2861,8 @@
     "Met_Temp_F": 86,
     "Met_Dewp_F": 73,
     "Met_WS_kts": 9.4,
-    "Met_WD_deg": 119
+    "Met_WD_deg": 119,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-04",
@@ -2685,7 +2876,8 @@
     "Met_Temp_F": 79,
     "Met_Dewp_F": 65,
     "Met_WS_kts": 10.7,
-    "Met_WD_deg": 85
+    "Met_WD_deg": 85,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-03",
@@ -2699,7 +2891,8 @@
     "Met_Temp_F": 81,
     "Met_Dewp_F": 60,
     "Met_WS_kts": 9,
-    "Met_WD_deg": 56
+    "Met_WD_deg": 56,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-02",
@@ -2713,7 +2906,8 @@
     "Met_Temp_F": 84,
     "Met_Dewp_F": 55,
     "Met_WS_kts": 7.8,
-    "Met_WD_deg": 65
+    "Met_WD_deg": 65,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-10-01",
@@ -2727,7 +2921,8 @@
     "Met_Temp_F": 86,
     "Met_Dewp_F": 60,
     "Met_WS_kts": 7.8,
-    "Met_WD_deg": 94
+    "Met_WD_deg": 94,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-30",
@@ -2741,7 +2936,8 @@
     "Met_Temp_F": 87,
     "Met_Dewp_F": 65,
     "Met_WS_kts": 3.5,
-    "Met_WD_deg": 117
+    "Met_WD_deg": 117,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-29",
@@ -2755,7 +2951,8 @@
     "Met_Temp_F": 91,
     "Met_Dewp_F": 61,
     "Met_WS_kts": 3.8,
-    "Met_WD_deg": 17
+    "Met_WD_deg": 17,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-28",
@@ -2769,7 +2966,8 @@
     "Met_Temp_F": 91,
     "Met_Dewp_F": 63,
     "Met_WS_kts": 4,
-    "Met_WD_deg": 66
+    "Met_WD_deg": 66,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-27",
@@ -2783,7 +2981,8 @@
     "Met_Temp_F": 91,
     "Met_Dewp_F": 59,
     "Met_WS_kts": 4.3,
-    "Met_WD_deg": 13
+    "Met_WD_deg": 13,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-26",
@@ -2797,7 +2996,8 @@
     "Met_Temp_F": 90,
     "Met_Dewp_F": 61,
     "Met_WS_kts": 4.3,
-    "Met_WD_deg": 357
+    "Met_WD_deg": 357,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-25",
@@ -2811,7 +3011,8 @@
     "Met_Temp_F": 87,
     "Met_Dewp_F": 64,
     "Met_WS_kts": 4,
-    "Met_WD_deg": 330
+    "Met_WD_deg": 330,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-24",
@@ -2825,7 +3026,8 @@
     "Met_Temp_F": 85,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 2.3,
-    "Met_WD_deg": 274
+    "Met_WD_deg": 274,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-23",
@@ -2839,7 +3041,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 73,
     "Met_WS_kts": 4.1,
-    "Met_WD_deg": 199
+    "Met_WD_deg": 199,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-22",
@@ -2853,7 +3056,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 5,
-    "Met_WD_deg": 161
+    "Met_WD_deg": 161,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-21",
@@ -2867,7 +3071,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 6.8,
-    "Met_WD_deg": 137
+    "Met_WD_deg": 137,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-20",
@@ -2881,7 +3086,8 @@
     "Met_Temp_F": 91,
     "Met_Dewp_F": 67,
     "Met_WS_kts": 4.8,
-    "Met_WD_deg": 149
+    "Met_WD_deg": 149,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-19",
@@ -2895,7 +3101,8 @@
     "Met_Temp_F": 91,
     "Met_Dewp_F": 66,
     "Met_WS_kts": 1.7,
-    "Met_WD_deg": 181
+    "Met_WD_deg": 181,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-18",
@@ -2909,7 +3116,8 @@
     "Met_Temp_F": 92,
     "Met_Dewp_F": 55,
     "Met_WS_kts": 2.9,
-    "Met_WD_deg": 173
+    "Met_WD_deg": 173,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-17",
@@ -2923,7 +3131,8 @@
     "Met_Temp_F": 90,
     "Met_Dewp_F": 61,
     "Met_WS_kts": 2.8,
-    "Met_WD_deg": 147
+    "Met_WD_deg": 147,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-16",
@@ -2937,7 +3146,8 @@
     "Met_Temp_F": 90,
     "Met_Dewp_F": 62,
     "Met_WS_kts": 3.6,
-    "Met_WD_deg": 145
+    "Met_WD_deg": 145,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-15",
@@ -2951,7 +3161,8 @@
     "Met_Temp_F": 88,
     "Met_Dewp_F": 65,
     "Met_WS_kts": 2.3,
-    "Met_WD_deg": 156
+    "Met_WD_deg": 156,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-14",
@@ -2965,7 +3176,8 @@
     "Met_Temp_F": 91,
     "Met_Dewp_F": 61,
     "Met_WS_kts": 3,
-    "Met_WD_deg": 165
+    "Met_WD_deg": 165,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-13",
@@ -2979,7 +3191,8 @@
     "Met_Temp_F": 90,
     "Met_Dewp_F": 61,
     "Met_WS_kts": 2.4,
-    "Met_WD_deg": 174
+    "Met_WD_deg": 174,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-12",
@@ -2993,7 +3206,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 3.8,
-    "Met_WD_deg": 139
+    "Met_WD_deg": 139,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-11",
@@ -3007,7 +3221,8 @@
     "Met_Temp_F": 92,
     "Met_Dewp_F": 63,
     "Met_WS_kts": 2.3,
-    "Met_WD_deg": 198
+    "Met_WD_deg": 198,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-10",
@@ -3021,7 +3236,8 @@
     "Met_Temp_F": 91,
     "Met_Dewp_F": 61,
     "Met_WS_kts": 2.7,
-    "Met_WD_deg": 59
+    "Met_WD_deg": 59,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-09",
@@ -3035,7 +3251,8 @@
     "Met_Temp_F": 87,
     "Met_Dewp_F": 65,
     "Met_WS_kts": 4.3,
-    "Met_WD_deg": 115
+    "Met_WD_deg": 115,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-08",
@@ -3049,7 +3266,8 @@
     "Met_Temp_F": 87,
     "Met_Dewp_F": 60,
     "Met_WS_kts": 6,
-    "Met_WD_deg": 101
+    "Met_WD_deg": 101,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-07",
@@ -3063,7 +3281,8 @@
     "Met_Temp_F": 88,
     "Met_Dewp_F": 52,
     "Met_WS_kts": 6.3,
-    "Met_WD_deg": 3
+    "Met_WD_deg": 3,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-06",
@@ -3077,7 +3296,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 56,
     "Met_WS_kts": 8.2,
-    "Met_WD_deg": 4
+    "Met_WD_deg": 4,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-05",
@@ -3091,7 +3311,8 @@
     "Met_Temp_F": 92,
     "Met_Dewp_F": 68,
     "Met_WS_kts": 2.6,
-    "Met_WD_deg": 348
+    "Met_WD_deg": 348,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-04",
@@ -3105,7 +3326,8 @@
     "Met_Temp_F": 90,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 3.7,
-    "Met_WD_deg": 158
+    "Met_WD_deg": 158,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-03",
@@ -3119,7 +3341,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 63,
     "Met_WS_kts": 4,
-    "Met_WD_deg": 184
+    "Met_WD_deg": 184,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-02",
@@ -3133,7 +3356,8 @@
     "Met_Temp_F": 88,
     "Met_Dewp_F": 62,
     "Met_WS_kts": 3,
-    "Met_WD_deg": 144
+    "Met_WD_deg": 144,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-09-01",
@@ -3147,7 +3371,8 @@
     "Met_Temp_F": 86,
     "Met_Dewp_F": 62,
     "Met_WS_kts": 4.9,
-    "Met_WD_deg": 101
+    "Met_WD_deg": 101,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-31",
@@ -3161,7 +3386,8 @@
     "Met_Temp_F": 87,
     "Met_Dewp_F": 66,
     "Met_WS_kts": 6.8,
-    "Met_WD_deg": 107
+    "Met_WD_deg": 107,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-30",
@@ -3175,7 +3401,8 @@
     "Met_Temp_F": 88,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 4.9,
-    "Met_WD_deg": 71
+    "Met_WD_deg": 71,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-29",
@@ -3189,7 +3416,8 @@
     "Met_Temp_F": 86,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 4.7,
-    "Met_WD_deg": 357
+    "Met_WD_deg": 357,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-28",
@@ -3203,7 +3431,8 @@
     "Met_Temp_F": 80,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 3.1,
-    "Met_WD_deg": 31
+    "Met_WD_deg": 31,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-27",
@@ -3217,7 +3446,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 4.1,
-    "Met_WD_deg": 136
+    "Met_WD_deg": 136,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-26",
@@ -3231,7 +3461,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 64,
     "Met_WS_kts": 3.2,
-    "Met_WD_deg": 64
+    "Met_WD_deg": 64,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-25",
@@ -3245,7 +3476,8 @@
     "Met_Temp_F": 91,
     "Met_Dewp_F": 62,
     "Met_WS_kts": 3.6,
-    "Met_WD_deg": 62
+    "Met_WD_deg": 62,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-24",
@@ -3259,7 +3491,8 @@
     "Met_Temp_F": 91,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 4.3,
-    "Met_WD_deg": 79
+    "Met_WD_deg": 79,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-23",
@@ -3273,7 +3506,8 @@
     "Met_Temp_F": 94,
     "Met_Dewp_F": 67,
     "Met_WS_kts": 3.5,
-    "Met_WD_deg": 326
+    "Met_WD_deg": 326,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-22",
@@ -3287,7 +3521,8 @@
     "Met_Temp_F": 90,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 2.3,
-    "Met_WD_deg": 219
+    "Met_WD_deg": 219,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-21",
@@ -3301,7 +3536,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 2.7,
-    "Met_WD_deg": 339
+    "Met_WD_deg": 339,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-20",
@@ -3315,7 +3551,8 @@
     "Met_Temp_F": 92,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 3.3,
-    "Met_WD_deg": 356
+    "Met_WD_deg": 356,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-19",
@@ -3329,7 +3566,8 @@
     "Met_Temp_F": 91,
     "Met_Dewp_F": 73,
     "Met_WS_kts": 2.9,
-    "Met_WD_deg": 133
+    "Met_WD_deg": 133,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-18",
@@ -3343,7 +3581,8 @@
     "Met_Temp_F": 95,
     "Met_Dewp_F": 71,
     "Met_WS_kts": 3.8,
-    "Met_WD_deg": 98
+    "Met_WD_deg": 98,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-17",
@@ -3357,7 +3596,8 @@
     "Met_Temp_F": 93,
     "Met_Dewp_F": 73,
     "Met_WS_kts": 3.8,
-    "Met_WD_deg": 134
+    "Met_WD_deg": 134,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-16",
@@ -3371,7 +3611,8 @@
     "Met_Temp_F": 95,
     "Met_Dewp_F": 71.6,
     "Met_WS_kts": 2.1,
-    "Met_WD_deg": 1
+    "Met_WD_deg": 1,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-15",
@@ -3385,7 +3626,8 @@
     "Met_Temp_F": 93,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 3.8,
-    "Met_WD_deg": 320
+    "Met_WD_deg": 320,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-14",
@@ -3399,7 +3641,8 @@
     "Met_Temp_F": 92,
     "Met_Dewp_F": 71,
     "Met_WS_kts": 3,
-    "Met_WD_deg": 281
+    "Met_WD_deg": 281,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-13",
@@ -3413,7 +3656,8 @@
     "Met_Temp_F": 93,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 4.6,
-    "Met_WD_deg": 237
+    "Met_WD_deg": 237,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-12",
@@ -3427,7 +3671,8 @@
     "Met_Temp_F": 90,
     "Met_Dewp_F": 74,
     "Met_WS_kts": 3.6,
-    "Met_WD_deg": 201
+    "Met_WD_deg": 201,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-11",
@@ -3441,7 +3686,8 @@
     "Met_Temp_F": 83,
     "Met_Dewp_F": 75,
     "Met_WS_kts": 3,
-    "Met_WD_deg": 58
+    "Met_WD_deg": 58,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-10",
@@ -3455,7 +3701,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 73,
     "Met_WS_kts": 5.1,
-    "Met_WD_deg": 59
+    "Met_WD_deg": 59,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-09",
@@ -3469,7 +3716,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 6.4,
-    "Met_WD_deg": 93
+    "Met_WD_deg": 93,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-08",
@@ -3483,7 +3731,8 @@
     "Met_Temp_F": 88,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 5.1,
-    "Met_WD_deg": 51
+    "Met_WD_deg": 51,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-07",
@@ -3497,7 +3746,8 @@
     "Met_Temp_F": 91,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 5.4,
-    "Met_WD_deg": 93
+    "Met_WD_deg": 93,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-06",
@@ -3511,7 +3761,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 74,
     "Met_WS_kts": 2.1,
-    "Met_WD_deg": 75
+    "Met_WD_deg": 75,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-05",
@@ -3525,7 +3776,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 2.6,
-    "Met_WD_deg": 105
+    "Met_WD_deg": 105,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-04",
@@ -3539,7 +3791,8 @@
     "Met_Temp_F": 88,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 3.9,
-    "Met_WD_deg": 63
+    "Met_WD_deg": 63,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-03",
@@ -3553,7 +3806,8 @@
     "Met_Temp_F": 88,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 3.9,
-    "Met_WD_deg": 51
+    "Met_WD_deg": 51,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-02",
@@ -3567,7 +3821,8 @@
     "Met_Temp_F": 92,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 5.3,
-    "Met_WD_deg": 339
+    "Met_WD_deg": 339,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-08-01",
@@ -3581,7 +3836,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 73,
     "Met_WS_kts": 3.4,
-    "Met_WD_deg": 16
+    "Met_WD_deg": 16,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-31",
@@ -3595,7 +3851,8 @@
     "Met_Temp_F": 93,
     "Met_Dewp_F": 73,
     "Met_WS_kts": 3.6,
-    "Met_WD_deg": 221
+    "Met_WD_deg": 221,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-30",
@@ -3609,7 +3866,8 @@
     "Met_Temp_F": 92,
     "Met_Dewp_F": 68,
     "Met_WS_kts": 3.1,
-    "Met_WD_deg": 214
+    "Met_WD_deg": 214,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-29",
@@ -3623,7 +3881,8 @@
     "Met_Temp_F": 92,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 4.1,
-    "Met_WD_deg": 258
+    "Met_WD_deg": 258,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-28",
@@ -3637,7 +3896,8 @@
     "Met_Temp_F": 99,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 5.4,
-    "Met_WD_deg": 324
+    "Met_WD_deg": 324,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-27",
@@ -3651,7 +3911,8 @@
     "Met_Temp_F": 98,
     "Met_Dewp_F": 71,
     "Met_WS_kts": 5.6,
-    "Met_WD_deg": 328
+    "Met_WD_deg": 328,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-26",
@@ -3665,7 +3926,8 @@
     "Met_Temp_F": 92,
     "Met_Dewp_F": 74,
     "Met_WS_kts": 1.9,
-    "Met_WD_deg": 168
+    "Met_WD_deg": 168,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-25",
@@ -3679,7 +3941,8 @@
     "Met_Temp_F": 91,
     "Met_Dewp_F": 76,
     "Met_WS_kts": 5.5,
-    "Met_WD_deg": 156
+    "Met_WD_deg": 156,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-24",
@@ -3693,7 +3956,8 @@
     "Met_Temp_F": 90,
     "Met_Dewp_F": 73,
     "Met_WS_kts": 7.8,
-    "Met_WD_deg": 155
+    "Met_WD_deg": 155,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-23",
@@ -3707,7 +3971,8 @@
     "Met_Temp_F": 88,
     "Met_Dewp_F": 75,
     "Met_WS_kts": 6.9,
-    "Met_WD_deg": 119
+    "Met_WD_deg": 119,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-22",
@@ -3721,7 +3986,8 @@
     "Met_Temp_F": 97,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 3.8,
-    "Met_WD_deg": 354
+    "Met_WD_deg": 354,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-21",
@@ -3735,7 +4001,8 @@
     "Met_Temp_F": 97,
     "Met_Dewp_F": 74,
     "Met_WS_kts": 4,
-    "Met_WD_deg": 294
+    "Met_WD_deg": 294,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-20",
@@ -3749,7 +4016,8 @@
     "Met_Temp_F": 94,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 3.3,
-    "Met_WD_deg": 238
+    "Met_WD_deg": 238,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-19",
@@ -3763,7 +4031,8 @@
     "Met_Temp_F": 93,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 3.4,
-    "Met_WD_deg": 193
+    "Met_WD_deg": 193,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-18",
@@ -3777,7 +4046,8 @@
     "Met_Temp_F": 90,
     "Met_Dewp_F": 73,
     "Met_WS_kts": 3.6,
-    "Met_WD_deg": 191
+    "Met_WD_deg": 191,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-17",
@@ -3791,7 +4061,8 @@
     "Met_Temp_F": 88,
     "Met_Dewp_F": 75,
     "Met_WS_kts": 5.3,
-    "Met_WD_deg": 190
+    "Met_WD_deg": 190,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-16",
@@ -3805,7 +4076,8 @@
     "Met_Temp_F": 88,
     "Met_Dewp_F": 74,
     "Met_WS_kts": 8.4,
-    "Met_WD_deg": 123
+    "Met_WD_deg": 123,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-15",
@@ -3819,7 +4091,8 @@
     "Met_Temp_F": 95,
     "Met_Dewp_F": 73,
     "Met_WS_kts": 4.7,
-    "Met_WD_deg": 321
+    "Met_WD_deg": 321,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-14",
@@ -3833,7 +4106,8 @@
     "Met_Temp_F": 96,
     "Met_Dewp_F": 71,
     "Met_WS_kts": 3.8,
-    "Met_WD_deg": 312
+    "Met_WD_deg": 312,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-13",
@@ -3847,7 +4121,8 @@
     "Met_Temp_F": 92,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 2.1,
-    "Met_WD_deg": 236
+    "Met_WD_deg": 236,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-12",
@@ -3861,7 +4136,8 @@
     "Met_Temp_F": 92,
     "Met_Dewp_F": 73.4,
     "Met_WS_kts": 3.2,
-    "Met_WD_deg": 208
+    "Met_WD_deg": 208,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-11",
@@ -3875,7 +4151,8 @@
     "Met_Temp_F": 92,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 3.1,
-    "Met_WD_deg": 170
+    "Met_WD_deg": 170,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-10",
@@ -3889,7 +4166,8 @@
     "Met_Temp_F": 90,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 3.2,
-    "Met_WD_deg": 237
+    "Met_WD_deg": 237,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-09",
@@ -3903,7 +4181,8 @@
     "Met_Temp_F": 90,
     "Met_Dewp_F": 71,
     "Met_WS_kts": 3.2,
-    "Met_WD_deg": 278
+    "Met_WD_deg": 278,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-08",
@@ -3917,7 +4196,8 @@
     "Met_Temp_F": 90,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 2.8,
-    "Met_WD_deg": 271
+    "Met_WD_deg": 271,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-07",
@@ -3931,7 +4211,8 @@
     "Met_Temp_F": 91,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 3.5,
-    "Met_WD_deg": 231
+    "Met_WD_deg": 231,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-06",
@@ -3945,7 +4226,8 @@
     "Met_Temp_F": 91,
     "Met_Dewp_F": 71,
     "Met_WS_kts": 3.7,
-    "Met_WD_deg": 192
+    "Met_WD_deg": 192,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-05",
@@ -3959,7 +4241,8 @@
     "Met_Temp_F": 91,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 2.5,
-    "Met_WD_deg": 176
+    "Met_WD_deg": 176,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-04",
@@ -3973,7 +4256,8 @@
     "Met_Temp_F": 93,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 3.7,
-    "Met_WD_deg": 25
+    "Met_WD_deg": 25,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-03",
@@ -3987,7 +4271,8 @@
     "Met_Temp_F": 94,
     "Met_Dewp_F": 65,
     "Met_WS_kts": 4,
-    "Met_WD_deg": 356
+    "Met_WD_deg": 356,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-02",
@@ -4001,7 +4286,8 @@
     "Met_Temp_F": 94,
     "Met_Dewp_F": 65,
     "Met_WS_kts": 3.4,
-    "Met_WD_deg": 342
+    "Met_WD_deg": 342,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-07-01",
@@ -4015,7 +4301,8 @@
     "Met_Temp_F": 91,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 3.6,
-    "Met_WD_deg": 275
+    "Met_WD_deg": 275,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-30",
@@ -4029,7 +4316,8 @@
     "Met_Temp_F": 92,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 5.2,
-    "Met_WD_deg": 283
+    "Met_WD_deg": 283,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-29",
@@ -4043,7 +4331,8 @@
     "Met_Temp_F": 91,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 3.4,
-    "Met_WD_deg": 254
+    "Met_WD_deg": 254,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-28",
@@ -4057,7 +4346,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 2.9,
-    "Met_WD_deg": 238
+    "Met_WD_deg": 238,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-27",
@@ -4071,7 +4361,8 @@
     "Met_Temp_F": 88,
     "Met_Dewp_F": 71,
     "Met_WS_kts": 1.9,
-    "Met_WD_deg": 170
+    "Met_WD_deg": 170,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-26",
@@ -4085,7 +4376,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 71,
     "Met_WS_kts": 2.9,
-    "Met_WD_deg": 149
+    "Met_WD_deg": 149,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-25",
@@ -4099,7 +4391,8 @@
     "Met_Temp_F": 91,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 4.2,
-    "Met_WD_deg": 112
+    "Met_WD_deg": 112,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-24",
@@ -4113,7 +4406,8 @@
     "Met_Temp_F": 94,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 4.1,
-    "Met_WD_deg": 104
+    "Met_WD_deg": 104,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-23",
@@ -4127,7 +4421,8 @@
     "Met_Temp_F": 91,
     "Met_Dewp_F": 71,
     "Met_WS_kts": 5.5,
-    "Met_WD_deg": 112
+    "Met_WD_deg": 112,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-22",
@@ -4141,7 +4436,8 @@
     "Met_Temp_F": 91,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 3.4,
-    "Met_WD_deg": 86
+    "Met_WD_deg": 86,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-21",
@@ -4155,7 +4451,8 @@
     "Met_Temp_F": 91,
     "Met_Dewp_F": 67,
     "Met_WS_kts": 3.3,
-    "Met_WD_deg": 115
+    "Met_WD_deg": 115,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-20",
@@ -4169,7 +4466,8 @@
     "Met_Temp_F": 92,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 4.2,
-    "Met_WD_deg": 86
+    "Met_WD_deg": 86,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-19",
@@ -4183,7 +4481,8 @@
     "Met_Temp_F": 92,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 3.6,
-    "Met_WD_deg": 247
+    "Met_WD_deg": 247,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-18",
@@ -4197,7 +4496,8 @@
     "Met_Temp_F": 92,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 3.3,
-    "Met_WD_deg": 217
+    "Met_WD_deg": 217,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-17",
@@ -4211,7 +4511,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 74,
     "Met_WS_kts": 4.9,
-    "Met_WD_deg": 175
+    "Met_WD_deg": 175,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-16",
@@ -4225,7 +4526,8 @@
     "Met_Temp_F": 87,
     "Met_Dewp_F": 71.6,
     "Met_WS_kts": 3.5,
-    "Met_WD_deg": 193
+    "Met_WD_deg": 193,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-15",
@@ -4239,7 +4541,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 3.2,
-    "Met_WD_deg": 192
+    "Met_WD_deg": 192,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-14",
@@ -4253,7 +4556,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 3,
-    "Met_WD_deg": 180
+    "Met_WD_deg": 180,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-13",
@@ -4267,7 +4571,8 @@
     "Met_Temp_F": 90,
     "Met_Dewp_F": 67,
     "Met_WS_kts": 4.3,
-    "Met_WD_deg": 208
+    "Met_WD_deg": 208,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-12",
@@ -4281,7 +4586,8 @@
     "Met_Temp_F": 87,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 4.5,
-    "Met_WD_deg": 178
+    "Met_WD_deg": 178,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-11",
@@ -4295,7 +4601,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 71,
     "Met_WS_kts": 6.6,
-    "Met_WD_deg": 149
+    "Met_WD_deg": 149,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-10",
@@ -4309,7 +4616,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 4.3,
-    "Met_WD_deg": 145
+    "Met_WD_deg": 145,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-09",
@@ -4323,7 +4631,8 @@
     "Met_Temp_F": 88,
     "Met_Dewp_F": 67,
     "Met_WS_kts": 3.8,
-    "Met_WD_deg": 254
+    "Met_WD_deg": 254,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-08",
@@ -4337,7 +4646,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 68,
     "Met_WS_kts": 6.3,
-    "Met_WD_deg": 227
+    "Met_WD_deg": 227,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-07",
@@ -4351,7 +4661,8 @@
     "Met_Temp_F": 92,
     "Met_Dewp_F": 73,
     "Met_WS_kts": 4.8,
-    "Met_WD_deg": 236
+    "Met_WD_deg": 236,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-06",
@@ -4365,7 +4676,8 @@
     "Met_Temp_F": 91,
     "Met_Dewp_F": 74,
     "Met_WS_kts": 5.3,
-    "Met_WD_deg": 214
+    "Met_WD_deg": 214,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-05",
@@ -4379,7 +4691,8 @@
     "Met_Temp_F": 90,
     "Met_Dewp_F": 73,
     "Met_WS_kts": 5,
-    "Met_WD_deg": 207
+    "Met_WD_deg": 207,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-04",
@@ -4393,7 +4706,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 71,
     "Met_WS_kts": 2.6,
-    "Met_WD_deg": 182
+    "Met_WD_deg": 182,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-03",
@@ -4407,7 +4721,8 @@
     "Met_Temp_F": 86,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 6.7,
-    "Met_WD_deg": 123
+    "Met_WD_deg": 123,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-02",
@@ -4421,7 +4736,8 @@
     "Met_Temp_F": 87,
     "Met_Dewp_F": 63,
     "Met_WS_kts": 8.3,
-    "Met_WD_deg": 109
+    "Met_WD_deg": 109,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-06-01",
@@ -4435,7 +4751,8 @@
     "Met_Temp_F": 86,
     "Met_Dewp_F": 65,
     "Met_WS_kts": 3,
-    "Met_WD_deg": 155
+    "Met_WD_deg": 155,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-31",
@@ -4449,7 +4766,8 @@
     "Met_Temp_F": 85,
     "Met_Dewp_F": 57,
     "Met_WS_kts": 2.7,
-    "Met_WD_deg": 205
+    "Met_WD_deg": 205,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-30",
@@ -4463,7 +4781,8 @@
     "Met_Temp_F": 84,
     "Met_Dewp_F": 55,
     "Met_WS_kts": 4.6,
-    "Met_WD_deg": 345
+    "Met_WD_deg": 345,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-29",
@@ -4477,7 +4796,8 @@
     "Met_Temp_F": 90,
     "Met_Dewp_F": 67,
     "Met_WS_kts": 5.8,
-    "Met_WD_deg": 312
+    "Met_WD_deg": 312,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-28",
@@ -4491,7 +4811,8 @@
     "Met_Temp_F": 84,
     "Met_Dewp_F": 68,
     "Met_WS_kts": 3.4,
-    "Met_WD_deg": 119
+    "Met_WD_deg": 119,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-27",
@@ -4505,7 +4826,8 @@
     "Met_Temp_F": 88,
     "Met_Dewp_F": 69,
     "Met_WS_kts": 4.5,
-    "Met_WD_deg": 186
+    "Met_WD_deg": 186,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-26",
@@ -4519,7 +4841,8 @@
     "Met_Temp_F": 86,
     "Met_Dewp_F": 71,
     "Met_WS_kts": 6.2,
-    "Met_WD_deg": 177
+    "Met_WD_deg": 177,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-25",
@@ -4533,7 +4856,8 @@
     "Met_Temp_F": 87,
     "Met_Dewp_F": 67,
     "Met_WS_kts": 6.7,
-    "Met_WD_deg": 155
+    "Met_WD_deg": 155,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-24",
@@ -4547,7 +4871,8 @@
     "Met_Temp_F": 90,
     "Met_Dewp_F": 67,
     "Met_WS_kts": 5,
-    "Met_WD_deg": 166
+    "Met_WD_deg": 166,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-23",
@@ -4561,7 +4886,8 @@
     "Met_Temp_F": 88,
     "Met_Dewp_F": 66,
     "Met_WS_kts": 5,
-    "Met_WD_deg": 189
+    "Met_WD_deg": 189,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-22",
@@ -4575,7 +4901,8 @@
     "Met_Temp_F": 87,
     "Met_Dewp_F": 66,
     "Met_WS_kts": 4.4,
-    "Met_WD_deg": 163
+    "Met_WD_deg": 163,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-21",
@@ -4589,7 +4916,8 @@
     "Met_Temp_F": 88,
     "Met_Dewp_F": 55,
     "Met_WS_kts": 4.8,
-    "Met_WD_deg": 137
+    "Met_WD_deg": 137,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-20",
@@ -4603,7 +4931,8 @@
     "Met_Temp_F": 81,
     "Met_Dewp_F": 61,
     "Met_WS_kts": 3.6,
-    "Met_WD_deg": 342
+    "Met_WD_deg": 342,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-19",
@@ -4617,7 +4946,8 @@
     "Met_Temp_F": 87,
     "Met_Dewp_F": 73,
     "Met_WS_kts": 8.9,
-    "Met_WD_deg": 178
+    "Met_WD_deg": 178,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-18",
@@ -4631,7 +4961,8 @@
     "Met_Temp_F": 86,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 7.6,
-    "Met_WD_deg": 165
+    "Met_WD_deg": 165,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-17",
@@ -4645,7 +4976,8 @@
     "Met_Temp_F": 85,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 6,
-    "Met_WD_deg": 174
+    "Met_WD_deg": 174,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-16",
@@ -4659,7 +4991,8 @@
     "Met_Temp_F": 86,
     "Met_Dewp_F": 73,
     "Met_WS_kts": 6.4,
-    "Met_WD_deg": 191
+    "Met_WD_deg": 191,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-15",
@@ -4673,7 +5006,8 @@
     "Met_Temp_F": 86,
     "Met_Dewp_F": 73.4,
     "Met_WS_kts": 8.2,
-    "Met_WD_deg": 185
+    "Met_WD_deg": 185,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-14",
@@ -4687,7 +5021,8 @@
     "Met_Temp_F": 85,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 7.2,
-    "Met_WD_deg": 185
+    "Met_WD_deg": 185,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-13",
@@ -4701,7 +5036,8 @@
     "Met_Temp_F": 83,
     "Met_Dewp_F": 67,
     "Met_WS_kts": 8.2,
-    "Met_WD_deg": 187
+    "Met_WD_deg": 187,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-12",
@@ -4715,7 +5051,8 @@
     "Met_Temp_F": 81,
     "Met_Dewp_F": 59,
     "Met_WS_kts": 5.1,
-    "Met_WD_deg": 199
+    "Met_WD_deg": 199,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-11",
@@ -4729,7 +5066,8 @@
     "Met_Temp_F": 76,
     "Met_Dewp_F": 56,
     "Met_WS_kts": 4.2,
-    "Met_WD_deg": 207
+    "Met_WD_deg": 207,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-10",
@@ -4743,7 +5081,8 @@
     "Met_Temp_F": 77,
     "Met_Dewp_F": 60,
     "Met_WS_kts": 3.4,
-    "Met_WD_deg": 217
+    "Met_WD_deg": 217,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-09",
@@ -4757,7 +5096,8 @@
     "Met_Temp_F": 74,
     "Met_Dewp_F": 62,
     "Met_WS_kts": 4,
-    "Met_WD_deg": 306
+    "Met_WD_deg": 306,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-08",
@@ -4771,7 +5111,8 @@
     "Met_Temp_F": 73,
     "Met_Dewp_F": 64,
     "Met_WS_kts": 5.6,
-    "Met_WD_deg": 25
+    "Met_WD_deg": 25,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-07",
@@ -4785,7 +5126,8 @@
     "Met_Temp_F": 82,
     "Met_Dewp_F": 63,
     "Met_WS_kts": 3,
-    "Met_WD_deg": 157
+    "Met_WD_deg": 157,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-06",
@@ -4799,7 +5141,8 @@
     "Met_Temp_F": 76,
     "Met_Dewp_F": 65,
     "Met_WS_kts": 5.7,
-    "Met_WD_deg": 82
+    "Met_WD_deg": 82,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-05",
@@ -4813,7 +5156,8 @@
     "Met_Temp_F": 80,
     "Met_Dewp_F": 62,
     "Met_WS_kts": 12.3,
-    "Met_WD_deg": 111
+    "Met_WD_deg": 111,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-04",
@@ -4827,7 +5171,8 @@
     "Met_Temp_F": 78,
     "Met_Dewp_F": 49,
     "Met_WS_kts": 3.3,
-    "Met_WD_deg": 119
+    "Met_WD_deg": 119,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-03",
@@ -4841,7 +5186,8 @@
     "Met_Temp_F": 79,
     "Met_Dewp_F": 47,
     "Met_WS_kts": 4.3,
-    "Met_WD_deg": 319
+    "Met_WD_deg": 319,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-02",
@@ -4855,7 +5201,8 @@
     "Met_Temp_F": 78,
     "Met_Dewp_F": 61,
     "Met_WS_kts": 4.8,
-    "Met_WD_deg": 279
+    "Met_WD_deg": 279,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-05-01",
@@ -4869,7 +5216,8 @@
     "Met_Temp_F": 83,
     "Met_Dewp_F": 66,
     "Met_WS_kts": 6.6,
-    "Met_WD_deg": 168
+    "Met_WD_deg": 168,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-30",
@@ -4883,7 +5231,8 @@
     "Met_Temp_F": 82,
     "Met_Dewp_F": 59,
     "Met_WS_kts": 6.4,
-    "Met_WD_deg": 153
+    "Met_WD_deg": 153,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-29",
@@ -4897,7 +5246,8 @@
     "Met_Temp_F": 84,
     "Met_Dewp_F": 66,
     "Met_WS_kts": 8.4,
-    "Met_WD_deg": 155
+    "Met_WD_deg": 155,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-28",
@@ -4911,7 +5261,8 @@
     "Met_Temp_F": 84,
     "Met_Dewp_F": 66,
     "Met_WS_kts": 6.9,
-    "Met_WD_deg": 145
+    "Met_WD_deg": 145,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-27",
@@ -4925,7 +5276,8 @@
     "Met_Temp_F": 84,
     "Met_Dewp_F": 65,
     "Met_WS_kts": 4.3,
-    "Met_WD_deg": 155
+    "Met_WD_deg": 155,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-26",
@@ -4939,7 +5291,8 @@
     "Met_Temp_F": 86,
     "Met_Dewp_F": 64,
     "Met_WS_kts": 2.9,
-    "Met_WD_deg": 181
+    "Met_WD_deg": 181,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-25",
@@ -4953,7 +5306,8 @@
     "Met_Temp_F": 85,
     "Met_Dewp_F": 65,
     "Met_WS_kts": 3,
-    "Met_WD_deg": 182
+    "Met_WD_deg": 182,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-24",
@@ -4967,7 +5321,8 @@
     "Met_Temp_F": 82,
     "Met_Dewp_F": 66,
     "Met_WS_kts": 7,
-    "Met_WD_deg": 161
+    "Met_WD_deg": 161,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-23",
@@ -4981,7 +5336,8 @@
     "Met_Temp_F": 82,
     "Met_Dewp_F": 67,
     "Met_WS_kts": 8.2,
-    "Met_WD_deg": 135
+    "Met_WD_deg": 135,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-22",
@@ -4995,7 +5351,8 @@
     "Met_Temp_F": 82,
     "Met_Dewp_F": 67,
     "Met_WS_kts": 7.4,
-    "Met_WD_deg": 153
+    "Met_WD_deg": 153,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-21",
@@ -5009,7 +5366,8 @@
     "Met_Temp_F": 82,
     "Met_Dewp_F": 67,
     "Met_WS_kts": 5.7,
-    "Met_WD_deg": 159
+    "Met_WD_deg": 159,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-20",
@@ -5023,7 +5381,8 @@
     "Met_Temp_F": 79,
     "Met_Dewp_F": 66,
     "Met_WS_kts": 8.4,
-    "Met_WD_deg": 148
+    "Met_WD_deg": 148,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-19",
@@ -5037,7 +5396,8 @@
     "Met_Temp_F": 81,
     "Met_Dewp_F": 67,
     "Met_WS_kts": 13.9,
-    "Met_WD_deg": 132
+    "Met_WD_deg": 132,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-18",
@@ -5051,7 +5411,8 @@
     "Met_Temp_F": 80,
     "Met_Dewp_F": 67,
     "Met_WS_kts": 11.6,
-    "Met_WD_deg": 127
+    "Met_WD_deg": 127,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-17",
@@ -5065,7 +5426,8 @@
     "Met_Temp_F": 80,
     "Met_Dewp_F": 63,
     "Met_WS_kts": 10.9,
-    "Met_WD_deg": 147
+    "Met_WD_deg": 147,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-16",
@@ -5079,7 +5441,8 @@
     "Met_Temp_F": 77,
     "Met_Dewp_F": 50,
     "Met_WS_kts": 6.1,
-    "Met_WD_deg": 151
+    "Met_WD_deg": 151,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-15",
@@ -5093,7 +5456,8 @@
     "Met_Temp_F": 75,
     "Met_Dewp_F": 35,
     "Met_WS_kts": 5.2,
-    "Met_WD_deg": 95
+    "Met_WD_deg": 95,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-14",
@@ -5107,7 +5471,8 @@
     "Met_Temp_F": 82,
     "Met_Dewp_F": 39,
     "Met_WS_kts": 6,
-    "Met_WD_deg": 332
+    "Met_WD_deg": 332,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-13",
@@ -5121,7 +5486,8 @@
     "Met_Temp_F": 78,
     "Met_Dewp_F": 55,
     "Met_WS_kts": 5,
-    "Met_WD_deg": 196
+    "Met_WD_deg": 196,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-12",
@@ -5135,7 +5501,8 @@
     "Met_Temp_F": 76,
     "Met_Dewp_F": 47,
     "Met_WS_kts": 5,
-    "Met_WD_deg": 158
+    "Met_WD_deg": 158,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-11",
@@ -5149,7 +5516,8 @@
     "Met_Temp_F": 77,
     "Met_Dewp_F": 40,
     "Met_WS_kts": 4,
-    "Met_WD_deg": 338
+    "Met_WD_deg": 338,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-10",
@@ -5163,7 +5531,8 @@
     "Met_Temp_F": 80,
     "Met_Dewp_F": 35,
     "Met_WS_kts": 8,
-    "Met_WD_deg": 321
+    "Met_WD_deg": 321,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-09",
@@ -5177,7 +5546,8 @@
     "Met_Temp_F": 77,
     "Met_Dewp_F": 51,
     "Met_WS_kts": 4.6,
-    "Met_WD_deg": 221
+    "Met_WD_deg": 221,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-08",
@@ -5191,7 +5561,8 @@
     "Met_Temp_F": 72,
     "Met_Dewp_F": 39,
     "Met_WS_kts": 3.1,
-    "Met_WD_deg": 234
+    "Met_WD_deg": 234,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-07",
@@ -5205,7 +5576,8 @@
     "Met_Temp_F": 74,
     "Met_Dewp_F": 37,
     "Met_WS_kts": 5.6,
-    "Met_WD_deg": 323
+    "Met_WD_deg": 323,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-06",
@@ -5219,7 +5591,8 @@
     "Met_Temp_F": 59,
     "Met_Dewp_F": 44,
     "Met_WS_kts": 9.5,
-    "Met_WD_deg": 323
+    "Met_WD_deg": 323,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-05",
@@ -5233,7 +5606,8 @@
     "Met_Temp_F": 72,
     "Met_Dewp_F": 71,
     "Met_WS_kts": 9,
-    "Met_WD_deg": 203
+    "Met_WD_deg": 203,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-04",
@@ -5247,7 +5621,8 @@
     "Met_Temp_F": 75,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 15,
-    "Met_WD_deg": 144
+    "Met_WD_deg": 144,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-03",
@@ -5261,7 +5636,8 @@
     "Met_Temp_F": 73,
     "Met_Dewp_F": 70,
     "Met_WS_kts": 13.9,
-    "Met_WD_deg": 128
+    "Met_WD_deg": 128,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-02",
@@ -5275,7 +5651,8 @@
     "Met_Temp_F": 78,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 13.8,
-    "Met_WD_deg": 140
+    "Met_WD_deg": 140,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-04-01",
@@ -5289,7 +5666,8 @@
     "Met_Temp_F": 77,
     "Met_Dewp_F": 71,
     "Met_WS_kts": 15,
-    "Met_WD_deg": 142
+    "Met_WD_deg": 142,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-03-31",
@@ -5303,7 +5681,8 @@
     "Met_Temp_F": 73,
     "Met_Dewp_F": 62,
     "Met_WS_kts": 9.6,
-    "Met_WD_deg": 113
+    "Met_WD_deg": 113,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-03-30",
@@ -5317,7 +5696,8 @@
     "Met_Temp_F": 79,
     "Met_Dewp_F": 61,
     "Met_WS_kts": 5,
-    "Met_WD_deg": 224
+    "Met_WD_deg": 224,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-03-29",
@@ -5331,7 +5711,8 @@
     "Met_Temp_F": 74,
     "Met_Dewp_F": 68,
     "Met_WS_kts": 7.4,
-    "Met_WD_deg": 154
+    "Met_WD_deg": 154,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-03-28",
@@ -5345,7 +5726,8 @@
     "Met_Temp_F": 77,
     "Met_Dewp_F": 66,
     "Met_WS_kts": 14.2,
-    "Met_WD_deg": 130
+    "Met_WD_deg": 130,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-03-27",
@@ -5359,7 +5741,8 @@
     "Met_Temp_F": 76,
     "Met_Dewp_F": 62,
     "Met_WS_kts": 13.8,
-    "Met_WD_deg": 120
+    "Met_WD_deg": 120,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-03-23",
@@ -5373,7 +5756,8 @@
     "Met_Temp_F": 69,
     "Met_Dewp_F": 56,
     "Met_WS_kts": 3.8,
-    "Met_WD_deg": 136
+    "Met_WD_deg": 136,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-03-22",
@@ -5387,7 +5771,8 @@
     "Met_Temp_F": 74,
     "Met_Dewp_F": 53,
     "Met_WS_kts": 7.2,
-    "Met_WD_deg": 154
+    "Met_WD_deg": 154,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-03-21",
@@ -5401,7 +5786,8 @@
     "Met_Temp_F": 73,
     "Met_Dewp_F": 45,
     "Met_WS_kts": 4.2,
-    "Met_WD_deg": 179
+    "Met_WD_deg": 179,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-03-20",
@@ -5415,7 +5801,8 @@
     "Met_Temp_F": 62,
     "Met_Dewp_F": 25,
     "Met_WS_kts": 3.7,
-    "Met_WD_deg": 158
+    "Met_WD_deg": 158,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-03-19",
@@ -5429,7 +5816,8 @@
     "Met_Temp_F": 69,
     "Met_Dewp_F": 30,
     "Met_WS_kts": 12.1,
-    "Met_WD_deg": 314
+    "Met_WD_deg": 314,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-03-18",
@@ -5443,7 +5831,8 @@
     "Met_Temp_F": 77,
     "Met_Dewp_F": 57,
     "Met_WS_kts": 8.7,
-    "Met_WD_deg": 180
+    "Met_WD_deg": 180,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-03-17",
@@ -5457,7 +5846,8 @@
     "Met_Temp_F": 70,
     "Met_Dewp_F": 41,
     "Met_WS_kts": 5,
-    "Met_WD_deg": 159
+    "Met_WD_deg": 159,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-03-16",
@@ -5471,7 +5861,8 @@
     "Met_Temp_F": 74,
     "Met_Dewp_F": 22,
     "Met_WS_kts": 3.9,
-    "Met_WD_deg": 323
+    "Met_WD_deg": 323,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-03-15",
@@ -5485,7 +5876,8 @@
     "Met_Temp_F": 73,
     "Met_Dewp_F": 28,
     "Met_WS_kts": 10.3,
-    "Met_WD_deg": 298
+    "Met_WD_deg": 298,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-03-14",
@@ -5499,7 +5891,8 @@
     "Met_Temp_F": 77,
     "Met_Dewp_F": 67,
     "Met_WS_kts": 13.5,
-    "Met_WD_deg": 157
+    "Met_WD_deg": 157,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-03-13",
@@ -5513,7 +5906,8 @@
     "Met_Temp_F": 76,
     "Met_Dewp_F": 66,
     "Met_WS_kts": 11,
-    "Met_WD_deg": 139
+    "Met_WD_deg": 139,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-03-12",
@@ -5527,7 +5921,8 @@
     "Met_Temp_F": 76,
     "Met_Dewp_F": 62,
     "Met_WS_kts": 6.7,
-    "Met_WD_deg": 176
+    "Met_WD_deg": 176,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-03-11",
@@ -5541,7 +5936,8 @@
     "Met_Temp_F": 72,
     "Met_Dewp_F": 47,
     "Met_WS_kts": 5.1,
-    "Met_WD_deg": 170
+    "Met_WD_deg": 170,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-03-10",
@@ -5555,7 +5951,8 @@
     "Met_Temp_F": 72,
     "Met_Dewp_F": 37,
     "Met_WS_kts": 3.9,
-    "Met_WD_deg": 193
+    "Met_WD_deg": 193,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-03-09",
@@ -5569,7 +5966,8 @@
     "Met_Temp_F": 73,
     "Met_Dewp_F": 43,
     "Met_WS_kts": 8.1,
-    "Met_WD_deg": 313
+    "Met_WD_deg": 313,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-03-08",
@@ -5583,7 +5981,8 @@
     "Met_Temp_F": 69,
     "Met_Dewp_F": 54,
     "Met_WS_kts": 6.3,
-    "Met_WD_deg": 1
+    "Met_WD_deg": 1,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-03-07",
@@ -5597,7 +5996,8 @@
     "Met_Temp_F": 77,
     "Met_Dewp_F": 63,
     "Met_WS_kts": 6.9,
-    "Met_WD_deg": 100
+    "Met_WD_deg": 100,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-03-06",
@@ -5611,7 +6011,8 @@
     "Met_Temp_F": 69,
     "Met_Dewp_F": 43,
     "Met_WS_kts": 5,
-    "Met_WD_deg": 143
+    "Met_WD_deg": 143,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-03-05",
@@ -5625,7 +6026,8 @@
     "Met_Temp_F": 67,
     "Met_Dewp_F": 24,
     "Met_WS_kts": 4.5,
-    "Met_WD_deg": 300
+    "Met_WD_deg": 300,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-03-04",
@@ -5639,7 +6041,8 @@
     "Met_Temp_F": 69,
     "Met_Dewp_F": 28,
     "Met_WS_kts": 10.3,
-    "Met_WD_deg": 288
+    "Met_WD_deg": 288,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-03-03",
@@ -5653,7 +6056,8 @@
     "Met_Temp_F": 72,
     "Met_Dewp_F": 54,
     "Met_WS_kts": 12.5,
-    "Met_WD_deg": 137
+    "Met_WD_deg": 137,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-03-02",
@@ -5667,7 +6071,8 @@
     "Met_Temp_F": 68,
     "Met_Dewp_F": 28,
     "Met_WS_kts": 9,
-    "Met_WD_deg": 107
+    "Met_WD_deg": 107,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-03-01",
@@ -5681,7 +6086,8 @@
     "Met_Temp_F": 70,
     "Met_Dewp_F": 24,
     "Met_WS_kts": 5,
-    "Met_WD_deg": 19
+    "Met_WD_deg": 19,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2025-02-28",
@@ -5695,7 +6101,8 @@
     "Met_Temp_F": 81,
     "Met_Dewp_F": 28,
     "Met_WS_kts": 5.1,
-    "Met_WD_deg": 309
+    "Met_WD_deg": 309,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-30",
@@ -5709,7 +6116,8 @@
     "Met_Temp_F": 84,
     "Met_Dewp_F": 72,
     "Met_WS_kts": 10.7,
-    "Met_WD_deg": 131
+    "Met_WD_deg": 131,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-29",
@@ -5723,7 +6131,8 @@
     "Met_Temp_F": 84,
     "Met_Dewp_F": 61,
     "Met_WS_kts": 10.1,
-    "Met_WD_deg": 107
+    "Met_WD_deg": 107,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-28",
@@ -5737,7 +6146,8 @@
     "Met_Temp_F": 82,
     "Met_Dewp_F": 66,
     "Met_WS_kts": 8.9,
-    "Met_WD_deg": 112
+    "Met_WD_deg": 112,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-27",
@@ -5751,7 +6161,8 @@
     "Met_Temp_F": 85,
     "Met_Dewp_F": 57,
     "Met_WS_kts": 3.7,
-    "Met_WD_deg": 125
+    "Met_WD_deg": 125,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-26",
@@ -5765,7 +6176,8 @@
     "Met_Temp_F": 85,
     "Met_Dewp_F": 55,
     "Met_WS_kts": 2.8,
-    "Met_WD_deg": 179
+    "Met_WD_deg": 179,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-25",
@@ -5779,7 +6191,8 @@
     "Met_Temp_F": 87,
     "Met_Dewp_F": 57,
     "Met_WS_kts": 2.3,
-    "Met_WD_deg": 137
+    "Met_WD_deg": 137,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-24",
@@ -5793,7 +6206,8 @@
     "Met_Temp_F": 84,
     "Met_Dewp_F": 57,
     "Met_WS_kts": 1.7,
-    "Met_WD_deg": 158
+    "Met_WD_deg": 158,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-23",
@@ -5807,7 +6221,8 @@
     "Met_Temp_F": 87,
     "Met_Dewp_F": 56,
     "Met_WS_kts": 3.2,
-    "Met_WD_deg": 280
+    "Met_WD_deg": 280,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-22",
@@ -5821,7 +6236,8 @@
     "Met_Temp_F": 85,
     "Met_Dewp_F": 56,
     "Met_WS_kts": 2,
-    "Met_WD_deg": 63
+    "Met_WD_deg": 63,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-21",
@@ -5835,7 +6251,8 @@
     "Met_Temp_F": 81,
     "Met_Dewp_F": 49,
     "Met_WS_kts": 2.2,
-    "Met_WD_deg": 138
+    "Met_WD_deg": 138,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-20",
@@ -5849,7 +6266,8 @@
     "Met_Temp_F": 80,
     "Met_Dewp_F": 44,
     "Met_WS_kts": 2.5,
-    "Met_WD_deg": 103
+    "Met_WD_deg": 103,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-19",
@@ -5863,7 +6281,8 @@
     "Met_Temp_F": 83,
     "Met_Dewp_F": 47,
     "Met_WS_kts": 3.1,
-    "Met_WD_deg": 35
+    "Met_WD_deg": 35,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-18",
@@ -5877,7 +6296,8 @@
     "Met_Temp_F": 79,
     "Met_Dewp_F": 45,
     "Met_WS_kts": 5,
-    "Met_WD_deg": 71
+    "Met_WD_deg": 71,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-17",
@@ -5891,7 +6311,8 @@
     "Met_Temp_F": 75,
     "Met_Dewp_F": 40,
     "Met_WS_kts": 4.2,
-    "Met_WD_deg": 84
+    "Met_WD_deg": 84,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-16",
@@ -5905,7 +6326,8 @@
     "Met_Temp_F": 73,
     "Met_Dewp_F": 35,
     "Met_WS_kts": 3.8,
-    "Met_WD_deg": 53
+    "Met_WD_deg": 53,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-15",
@@ -5919,7 +6341,8 @@
     "Met_Temp_F": 70,
     "Met_Dewp_F": 29,
     "Met_WS_kts": 10,
-    "Met_WD_deg": 21
+    "Met_WD_deg": 21,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-14",
@@ -5933,7 +6356,8 @@
     "Met_Temp_F": 82,
     "Met_Dewp_F": 44,
     "Met_WS_kts": 5.6,
-    "Met_WD_deg": 49
+    "Met_WD_deg": 49,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-13",
@@ -5947,7 +6371,8 @@
     "Met_Temp_F": 87,
     "Met_Dewp_F": 53,
     "Met_WS_kts": 4,
-    "Met_WD_deg": 320
+    "Met_WD_deg": 320,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-12",
@@ -5961,7 +6386,8 @@
     "Met_Temp_F": 82,
     "Met_Dewp_F": 57,
     "Met_WS_kts": 2.3,
-    "Met_WD_deg": 209
+    "Met_WD_deg": 209,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-11",
@@ -5975,7 +6401,8 @@
     "Met_Temp_F": 83,
     "Met_Dewp_F": 55,
     "Met_WS_kts": 1.7,
-    "Met_WD_deg": 154
+    "Met_WD_deg": 154,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-10",
@@ -5989,7 +6416,8 @@
     "Met_Temp_F": 84,
     "Met_Dewp_F": 53,
     "Met_WS_kts": 2.9,
-    "Met_WD_deg": 114
+    "Met_WD_deg": 114,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-09",
@@ -6003,7 +6431,8 @@
     "Met_Temp_F": 88,
     "Met_Dewp_F": 52,
     "Met_WS_kts": 4.4,
-    "Met_WD_deg": 1
+    "Met_WD_deg": 1,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-08",
@@ -6017,7 +6446,8 @@
     "Met_Temp_F": 90,
     "Met_Dewp_F": 53,
     "Met_WS_kts": 7,
-    "Met_WD_deg": 8
+    "Met_WD_deg": 8,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-07",
@@ -6031,7 +6461,8 @@
     "Met_Temp_F": 86,
     "Met_Dewp_F": 53,
     "Met_WS_kts": 6.7,
-    "Met_WD_deg": 358
+    "Met_WD_deg": 358,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-06",
@@ -6045,7 +6476,8 @@
     "Met_Temp_F": 91,
     "Met_Dewp_F": 59,
     "Met_WS_kts": 5.9,
-    "Met_WD_deg": 26
+    "Met_WD_deg": 26,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-05",
@@ -6059,7 +6491,8 @@
     "Met_Temp_F": 88,
     "Met_Dewp_F": 68,
     "Met_WS_kts": 7,
-    "Met_WD_deg": 34
+    "Met_WD_deg": 34,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-04",
@@ -6073,7 +6506,8 @@
     "Met_Temp_F": 85,
     "Met_Dewp_F": 68,
     "Met_WS_kts": 7.1,
-    "Met_WD_deg": 46
+    "Met_WD_deg": 46,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-03",
@@ -6087,7 +6521,8 @@
     "Met_Temp_F": 80,
     "Met_Dewp_F": 71,
     "Met_WS_kts": 7.1,
-    "Met_WD_deg": 84
+    "Met_WD_deg": 84,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-02",
@@ -6101,7 +6536,8 @@
     "Met_Temp_F": 88,
     "Met_Dewp_F": 68,
     "Met_WS_kts": 6.6,
-    "Met_WD_deg": 121
+    "Met_WD_deg": 121,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-10-01",
@@ -6115,7 +6551,8 @@
     "Met_Temp_F": 89,
     "Met_Dewp_F": 66,
     "Met_WS_kts": 3.8,
-    "Met_WD_deg": 44
+    "Met_WD_deg": 44,
+    "Forecast_Type": null
   },
   {
     "Run_Date": "2024-09-30",
@@ -6129,6 +6566,7 @@
     "Met_Temp_F": 90,
     "Met_Dewp_F": 66,
     "Met_WS_kts": 4.8,
-    "Met_WD_deg": 0
+    "Met_WD_deg": 0,
+    "Forecast_Type": null
   }
 ]

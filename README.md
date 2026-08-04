@@ -200,6 +200,13 @@ produce identical files. Expect several minutes — it downloads GRIB2 model out
 for each site. It writes into `r-pipeline/` and `data/`; commit and push to
 deploy.
 
+> **The trained models are not in the repository.** `model_<site>.rds` files are
+> build artifacts — training is stochastic, so every run produced a byte-different
+> multi-megabyte file, and committing them twice a day grew the repo to 1.75 GB
+> against a 35 MB working tree. They are gitignored; the command above builds them
+> on its first run. Nothing else needs them: the dashboard reads the committed
+> JSON in `data/`, `importance.json` included.
+
 **Run the Shiny app**
 
 ```bash
@@ -280,7 +287,7 @@ ms-ozone-forecast/      # repo root — this is what you get from git clone
 │   ├── sites_config.R      # Site metadata (the only copy)
 │   ├── Ozone_Data_Manager.R / _Model_Training.R / _Forecaster.R
 │   ├── aq_MetDaily_<site>.csv   # Training data
-│   ├── model_<site>.rds         # Trained RF models
+│   ├── model_<site>.rds         # Trained RF models — NOT in git, built locally
 │   └── history_<site>.csv       # Forecast log (pipeline writes, app reads)
 └── data/               # Pre-exported JSON (one folder per site)
     ├── sites_config.json

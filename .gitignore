@@ -1,3 +1,16 @@
 sync.log
 .DS_Store
 __pycache__/
+
+# Trained random forest models. These are build artifacts, not source: the
+# pipeline regenerates them from r-pipeline/aq_MetDaily_*.csv on every run, and
+# because training is stochastic each run produces a byte-different file.
+#
+# They used to be committed twice a day. At 1-9 MB each x 6 sites that grew the
+# repository to 1.75 GB of pack in two months, against a working tree of ~35 MB.
+# History was rewritten on 2026-08-04 to remove them.
+#
+# Nothing that a clone needs is lost: the dashboard reads the committed JSON in
+# data/ (including importance.json), and anyone running the R pipeline trains
+# the models as step one anyway.
+r-pipeline/*.rds

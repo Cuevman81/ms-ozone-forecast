@@ -189,7 +189,9 @@ get_latest_o3 <- function(aqs_id) {
 
 # AQI Fetcher
 get_aqm <- function(lat, lon, target_date, cycle, is_bc) {
-  run_dates <- c(as.Date(target_date), as.Date(target_date) - 1, as.Date(target_date) - 2)
+  # Kept in step with r-pipeline/Ozone_Forecaster.R: use the run issued the day
+  # before the target, which is what is actually available at forecast time.
+  run_dates <- c(as.Date(target_date) - 1, as.Date(target_date) - 2)
   for (r_date in run_dates) {
     run_str <- format(as.Date(r_date), "%Y%m%d")
     type_str <- if (is_bc) "max_8hr_o3_bc" else "max_8hr_o3"
@@ -207,8 +209,12 @@ get_aqm <- function(lat, lon, target_date, cycle, is_bc) {
           suppressWarnings(download.file(url, tf, mode = "wb", quiet = T))
           if (file.info(tf)$size > 1000) {
             r <- rast(tf)
+            # NAQFC stamps each daily-max band at the END of the ozone day it
+            # covers, so the band for target day D is the one valid at D+1.
+            # Matching D directly returns the previous day's forecast. Same fix
+            # as r-pipeline/Ozone_Forecaster.R -- keep the two in step.
             target_dt <- as.Date(target_date)
-            idx <- which(format(time(r), "%Y-%m-%d", tz = "UTC") == as.character(target_dt))
+            idx <- which(format(time(r), "%Y-%m-%d", tz = "UTC") == as.character(target_dt + 1))
             if (length(idx) > 0) {
               pts <- vect(cbind(lon, lat), crs = "EPSG:4326")
               val <- terra::extract(r[[idx[1]]], pts)[1, 2]

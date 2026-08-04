@@ -131,7 +131,12 @@ get_nws_forecast <- function(lat, lon) {
 
 # Fetch NOAA AQM Forecast
 get_aqm_forecast <- function(lat, lon, target_date, cycle, is_bc) {
-  run_dates <- c(as.Date(target_date), as.Date(target_date) - 1, as.Date(target_date) - 2)
+  # Use the run issued the DAY BEFORE the target, which is what is actually on
+  # hand when the forecast is made. Starting at the target's own run date would
+  # let backfilled rows quietly use a same-day nowcast the operational path
+  # never has, flattering AQM on hindcast rows and making the two kinds of row
+  # non-comparable. Fall back one more day if that run is unavailable.
+  run_dates <- c(as.Date(target_date) - 1, as.Date(target_date) - 2)
   for (r_date in run_dates) {
     run_str <- format(as.Date(r_date), "%Y%m%d")
     type_str <- if (is_bc) "max_8hr_o3_bc" else "max_8hr_o3"
@@ -152,9 +157,18 @@ get_aqm_forecast <- function(lat, lon, target_date, cycle, is_bc) {
           message(paste("    [DEBUG] Size:", sz))
           if (sz > 1000) {
             r <- rast(tf)
+            # NAQFC stamps each daily-max band at the END of the ozone day it
+            # covers, so the band valid at 2026-08-05 12Z is the maximum for
+            # 2026-08-04 local. Matching the band's UTC date straight to the
+            # target date therefore returns the PREVIOUS day's forecast. Verified
+            # two ways: band 1 of the 06z run reproduces AirNowTech's "Today"
+            # column exactly (AQI 80 raw / 64 bias-corrected), and scoring 135
+            # bands from 45 independent runs against observed ozone puts the
+            # correlation at 0.712 for a -1 day offset versus 0.515 for 0.
+            want <- as.character(as.Date(target_date) + 1)
             t_str <- format(time(r), "%Y-%m-%d", tz = "UTC")
-            idx <- which(t_str == as.character(target_date))
-            message(paste("    [DEBUG] Target:", target_date, "Matched time slots:", length(idx)))
+            idx <- which(t_str == want)
+            message(paste("    [DEBUG] Target:", target_date, "(band valid", want, ") Matched time slots:", length(idx)))
             if (length(idx) > 0) {
               pts <- vect(cbind(as.numeric(lon), as.numeric(lat)), crs = "EPSG:4326")
               val <- terra::extract(r[[idx[1]]], pts)[1, 2]

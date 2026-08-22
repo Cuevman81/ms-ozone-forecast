@@ -187,6 +187,24 @@ get_latest_o3 <- function(aqs_id) {
   return(NA)
 }
 
+# Kept identical to r-pipeline/Ozone_Forecaster.R -- if you change one, change
+# both. Prefers the band's own valid time; falls back to position when GDAL
+# returns no time metadata (every band reads back as 1970-01-01, which silently
+# matched nothing and blanked every AQM value). Bands are ordered run_date,
+# run_date+1, run_date+2.
+aqm_band_index <- function(r, target_date, run_date) {
+  n <- terra::nlyr(r)
+  tt <- suppressWarnings(terra::time(r))
+  if (length(tt) == n && !all(is.na(tt)) && !all(as.numeric(tt) == 0, na.rm = TRUE)) {
+    want <- as.character(as.Date(target_date) + 1)
+    idx <- which(format(tt, "%Y-%m-%d", tz = "UTC") == want)
+    if (length(idx) > 0) return(idx)
+  }
+  pos <- as.integer(as.Date(target_date) - as.Date(run_date, origin = "1970-01-01")) + 1L
+  if (is.na(pos) || pos < 1L || pos > n) return(integer(0))
+  pos
+}
+
 # AQI Fetcher
 get_aqm <- function(lat, lon, target_date, cycle, is_bc) {
   # Kept in step with r-pipeline/Ozone_Forecaster.R: use the run issued the day
@@ -214,7 +232,7 @@ get_aqm <- function(lat, lon, target_date, cycle, is_bc) {
             # Matching D directly returns the previous day's forecast. Same fix
             # as r-pipeline/Ozone_Forecaster.R -- keep the two in step.
             target_dt <- as.Date(target_date)
-            idx <- which(format(time(r), "%Y-%m-%d", tz = "UTC") == as.character(target_dt + 1))
+            idx <- aqm_band_index(r, target_dt, r_date)
             if (length(idx) > 0) {
               pts <- vect(cbind(lon, lat), crs = "EPSG:4326")
               val <- terra::extract(r[[idx[1]]], pts)[1, 2]

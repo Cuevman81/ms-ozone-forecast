@@ -129,6 +129,35 @@ get_nws_forecast <- function(lat, lon) {
   )
 }
 
+# Pick the band that holds the daily max for `target_date` out of a NAQFC
+# max_8hr_o3 raster produced by the `run_date` cycle.
+#
+# Preferred path is the band's own valid time. NAQFC stamps each daily-max band
+# at the END of the ozone day it covers, so the band for target day D is the one
+# valid at D + 1 -- matching D directly returns the previous day's forecast.
+#
+# Fallback is positional. Some GDAL builds return no time metadata at all (every
+# band reads back as 1970-01-01), which silently matched zero bands and blanked
+# every AQM column. The bands are always ordered run_date, run_date+1,
+# run_date+2, so the band for target D sits at (D - run_date) + 1. Verified
+# against values extracted while timestamps still worked: exact match to five
+# decimals on every date tested.
+aqm_band_index <- function(r, target_date, run_date) {
+  n <- terra::nlyr(r)
+  tt <- suppressWarnings(terra::time(r))
+  if (length(tt) == n && !all(is.na(tt)) && !all(as.numeric(tt) == 0, na.rm = TRUE)) {
+    want <- as.character(as.Date(target_date) + 1)
+    idx <- which(format(tt, "%Y-%m-%d", tz = "UTC") == want)
+    if (length(idx) > 0) return(idx)
+    message("    [DEBUG] timestamps present but no band matched; trying position")
+  } else {
+    message("    [DEBUG] band timestamps unusable; selecting by position")
+  }
+  pos <- as.integer(as.Date(target_date) - as.Date(run_date, origin = "1970-01-01")) + 1L
+  if (is.na(pos) || pos < 1L || pos > n) return(integer(0))
+  pos
+}
+
 # Fetch NOAA AQM Forecast
 get_aqm_forecast <- function(lat, lon, target_date, cycle, is_bc) {
   # Use the run issued the DAY BEFORE the target, which is what is actually on
@@ -166,9 +195,9 @@ get_aqm_forecast <- function(lat, lon, target_date, cycle, is_bc) {
             # bands from 45 independent runs against observed ozone puts the
             # correlation at 0.712 for a -1 day offset versus 0.515 for 0.
             want <- as.character(as.Date(target_date) + 1)
-            t_str <- format(time(r), "%Y-%m-%d", tz = "UTC")
-            idx <- which(t_str == want)
-            message(paste("    [DEBUG] Target:", target_date, "(band valid", want, ") Matched time slots:", length(idx)))
+            idx <- aqm_band_index(r, target_date, r_date)
+            message(paste("    [DEBUG] Target:", target_date, "(band valid", want,
+                          ") Selected band:", if (length(idx)) idx[1] else "NONE"))
             if (length(idx) > 0) {
               pts <- vect(cbind(as.numeric(lon), as.numeric(lat)), crs = "EPSG:4326")
               val <- terra::extract(r[[idx[1]]], pts)[1, 2]

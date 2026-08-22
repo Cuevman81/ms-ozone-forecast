@@ -408,10 +408,37 @@ run_forecast <- function(site_name) {
           # Built from observed target-day meteorology -- perfect prognosis.
           Forecast_Type = "hindcast"
         )
-        hist_log <- hist_log %>%
-          filter(as.character(Target_Date) != as.character(g_date)) %>%
-          bind_rows(new_row) %>%
-          distinct(Run_Date, Target_Date, .keep_all = T)
+        # An operational row is a real forecast made before the fact and is the
+        # only evidence of live skill this system produces. The gap filler
+        # re-walks the last 14 days on EVERY run, so replacing rows blindly
+        # overwrote each operational forecast with a perfect-prognosis hindcast
+        # as soon as the observation landed -- the operational sample could
+        # never grow past a day or two. Keep the operational RF_Pred and its
+        # provenance; take only the observation (and any AQM value that was
+        # missing when the forecast was issued).
+        prior <- hist_log %>% filter(as.character(Target_Date) == as.character(g_date))
+        keep_operational <- nrow(prior) > 0 &&
+          !is.na(prior$Forecast_Type[1]) &&
+          prior$Forecast_Type[1] == "operational" &&
+          !is.na(prior$RF_Pred[1])
+
+        if (keep_operational) {
+          upd <- prior[1, ]
+          upd$Observed_O3 <- obs_o3_val
+          for (cc in c("AQM_06_Reg", "AQM_06_BC", "AQM_12_Reg", "AQM_12_BC")) {
+            if (is.na(upd[[cc]])) upd[[cc]] <- new_row[[cc]][1]
+          }
+          message(paste("    Preserving operational forecast for", g_date,
+                        "- filling observation only."))
+          hist_log <- hist_log %>%
+            filter(as.character(Target_Date) != as.character(g_date)) %>%
+            bind_rows(upd)
+        } else {
+          hist_log <- hist_log %>%
+            filter(as.character(Target_Date) != as.character(g_date)) %>%
+            bind_rows(new_row)
+        }
+        hist_log <- hist_log %>% distinct(Run_Date, Target_Date, .keep_all = T)
       }
     }
     write_csv(hist_log, log_file)

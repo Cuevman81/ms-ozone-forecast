@@ -172,10 +172,10 @@ def run_sync_pipeline():
     """
     Runs r-pipeline/run_pipeline.R -- the exact entry point GitHub Actions uses
     (data sync + model training + forecasts + JSON export), against the exact
-    same files. Previously this ran Ozone_Master_Sync.R from the project root,
-    which operated on the legacy root copies of the CSVs and models; a local
-    sync and the scheduled sync therefore updated two different sets of files
-    and drifted apart.
+    same files. It used to run a separate Ozone_Master_Sync.R against the old
+    root copies of the CSVs and models, so a local sync and the scheduled sync
+    updated two different file sets and drifted apart. That script has since
+    been deleted; run_pipeline.R is the only entry point.
 
     This is the same as clicking "Sync & Refresh Ecosystem" in the Shiny app.
     """

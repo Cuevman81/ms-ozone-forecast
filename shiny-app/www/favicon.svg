@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="MS Ozone Forecast">
+  <title>MS Ozone Forecast</title>
+  <rect width="64" height="64" rx="13" fill="#222d32"/>
+  <path d="M7 49 C 17 49, 22 19, 32 19 C 42 19, 47 38, 57 35"
+        fill="none" stroke="#3c8dbc" stroke-width="7"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="32" cy="19" r="7" fill="#f39c12"/>
+</svg>

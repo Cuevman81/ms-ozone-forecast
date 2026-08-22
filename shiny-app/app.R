@@ -303,6 +303,12 @@ ui <- dashboardPage(
   dashboardBody(
     # Custom CSS for premium feel
     tags$head(
+      # Shiny serves shiny-app/www/ at the app root, so these resolve without
+      # an addResourcePath(). Same mark as the web dashboard; regenerate both
+      # with web-dashboard/tools/make_favicon.py.
+      tags$link(rel = "icon", href = "favicon.svg", type = "image/svg+xml"),
+      tags$link(rel = "alternate icon", href = "favicon.ico", sizes = "any"),
+      tags$link(rel = "apple-touch-icon", href = "apple-touch-icon.png"),
       tags$style(HTML("
         .content-wrapper { background-color: #f4f6f9; }
         .box { border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }

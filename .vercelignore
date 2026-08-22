@@ -15,3 +15,6 @@ __pycache__/
 
 # JSON exporter — runs in CI, not at request time.
 export_json.R
+
+# Favicon build script -- runs by hand, not at request time.
+tools/

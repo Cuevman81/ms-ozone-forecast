@@ -159,5 +159,577 @@
       "mae": null,
       "r2": null
     }
+  },
+  "by_type": {
+    "all": {
+      "overall": {
+        "RF": {
+          "n": 460,
+          "rmse": 0.0037,
+          "bias": -0.0006,
+          "mae": 0.0028,
+          "nmb": -1.4,
+          "nme": 6.7,
+          "r2": 0.872
+        },
+        "AQM_06R": {
+          "n": 460,
+          "rmse": 0.0107,
+          "bias": 0.0075,
+          "mae": 0.0089,
+          "nmb": 18,
+          "nme": 21.6,
+          "r2": 0.415
+        },
+        "AQM_06BC": {
+          "n": 460,
+          "rmse": 0.007,
+          "bias": -0.0001,
+          "mae": 0.0055,
+          "nmb": -0.3,
+          "nme": 13.3,
+          "r2": 0.515
+        },
+        "AQM_12R": {
+          "n": 460,
+          "rmse": 0.0106,
+          "bias": 0.0076,
+          "mae": 0.0089,
+          "nmb": 18.3,
+          "nme": 21.5,
+          "r2": 0.445
+        },
+        "AQM_12BC": {
+          "n": 460,
+          "rmse": 0.0068,
+          "bias": -0.0002,
+          "mae": 0.0054,
+          "nmb": -0.5,
+          "nme": 13,
+          "r2": 0.537
+        }
+      },
+      "moderate": {
+        "RF": {
+          "n": 48,
+          "rmse": 0.0051,
+          "bias": -0.004,
+          "mae": 0.004,
+          "nmb": -6.7,
+          "nme": 6.7,
+          "r2": 0.295,
+          "hits": 33,
+          "misses": 15,
+          "fas": 1,
+          "pod": 0.69,
+          "far": 0.03,
+          "csi": 0.67
+        },
+        "AQM_06R": {
+          "n": 48,
+          "rmse": 0.0071,
+          "bias": -0.004,
+          "mae": 0.0056,
+          "nmb": -6.7,
+          "nme": 9.5,
+          "r2": 0.048,
+          "hits": 25,
+          "misses": 23,
+          "fas": 37,
+          "pod": 0.52,
+          "far": 0.6,
+          "csi": 0.29
+        },
+        "AQM_06BC": {
+          "n": 48,
+          "rmse": 0.0104,
+          "bias": -0.0088,
+          "mae": 0.009,
+          "nmb": -14.9,
+          "nme": 15.2,
+          "r2": 0.03,
+          "hits": 12,
+          "misses": 36,
+          "fas": 10,
+          "pod": 0.25,
+          "far": 0.45,
+          "csi": 0.21
+        },
+        "AQM_12R": {
+          "n": 48,
+          "rmse": 0.0068,
+          "bias": -0.0037,
+          "mae": 0.0052,
+          "nmb": -6.3,
+          "nme": 8.8,
+          "r2": 0.035,
+          "hits": 26,
+          "misses": 22,
+          "fas": 42,
+          "pod": 0.54,
+          "far": 0.62,
+          "csi": 0.29
+        },
+        "AQM_12BC": {
+          "n": 48,
+          "rmse": 0.0104,
+          "bias": -0.0089,
+          "mae": 0.009,
+          "nmb": -15,
+          "nme": 15.2,
+          "r2": 0.025,
+          "hits": 11,
+          "misses": 37,
+          "fas": 10,
+          "pod": 0.23,
+          "far": 0.48,
+          "csi": 0.19
+        }
+      },
+      "usg": {
+        "RF": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        },
+        "AQM_06R": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        },
+        "AQM_06BC": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        },
+        "AQM_12R": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        },
+        "AQM_12BC": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        }
+      },
+      "n_rows": 463,
+      "n_scorable": 460
+    },
+    "operational": {
+      "overall": {
+        "RF": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        },
+        "AQM_06R": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        },
+        "AQM_06BC": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        },
+        "AQM_12R": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        },
+        "AQM_12BC": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        }
+      },
+      "moderate": {
+        "RF": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        },
+        "AQM_06R": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        },
+        "AQM_06BC": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        },
+        "AQM_12R": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        },
+        "AQM_12BC": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        }
+      },
+      "usg": {
+        "RF": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        },
+        "AQM_06R": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        },
+        "AQM_06BC": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        },
+        "AQM_12R": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        },
+        "AQM_12BC": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        }
+      },
+      "n_rows": 2,
+      "n_scorable": 0
+    },
+    "hindcast": {
+      "overall": {
+        "RF": {
+          "n": 25,
+          "rmse": 0.0027,
+          "bias": -0.0003,
+          "mae": 0.0022,
+          "nmb": -0.7,
+          "nme": 5.7,
+          "r2": 0.798
+        },
+        "AQM_06R": {
+          "n": 25,
+          "rmse": 0.011,
+          "bias": 0.0099,
+          "mae": 0.01,
+          "nmb": 25.6,
+          "nme": 25.9,
+          "r2": 0.415
+        },
+        "AQM_06BC": {
+          "n": 25,
+          "rmse": 0.0058,
+          "bias": -0.0005,
+          "mae": 0.0046,
+          "nmb": -1.2,
+          "nme": 11.9,
+          "r2": 0.298
+        },
+        "AQM_12R": {
+          "n": 25,
+          "rmse": 0.0106,
+          "bias": 0.0095,
+          "mae": 0.0097,
+          "nmb": 24.7,
+          "nme": 25.1,
+          "r2": 0.449
+        },
+        "AQM_12BC": {
+          "n": 25,
+          "rmse": 0.0053,
+          "bias": -0.0002,
+          "mae": 0.0043,
+          "nmb": -0.4,
+          "nme": 11.1,
+          "r2": 0.363
+        }
+      },
+      "moderate": {
+        "RF": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        },
+        "AQM_06R": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        },
+        "AQM_06BC": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        },
+        "AQM_12R": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        },
+        "AQM_12BC": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        }
+      },
+      "usg": {
+        "RF": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        },
+        "AQM_06R": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        },
+        "AQM_06BC": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        },
+        "AQM_12R": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        },
+        "AQM_12BC": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        }
+      },
+      "n_rows": 25,
+      "n_scorable": 25
+    },
+    "untagged": {
+      "overall": {
+        "RF": {
+          "n": 435,
+          "rmse": 0.0038,
+          "bias": -0.0006,
+          "mae": 0.0028,
+          "nmb": -1.4,
+          "nme": 6.8,
+          "r2": 0.873
+        },
+        "AQM_06R": {
+          "n": 435,
+          "rmse": 0.0106,
+          "bias": 0.0073,
+          "mae": 0.0089,
+          "nmb": 17.6,
+          "nme": 21.4,
+          "r2": 0.419
+        },
+        "AQM_06BC": {
+          "n": 435,
+          "rmse": 0.0071,
+          "bias": -0.0001,
+          "mae": 0.0055,
+          "nmb": -0.3,
+          "nme": 13.4,
+          "r2": 0.52
+        },
+        "AQM_12R": {
+          "n": 435,
+          "rmse": 0.0106,
+          "bias": 0.0074,
+          "mae": 0.0089,
+          "nmb": 17.9,
+          "nme": 21.4,
+          "r2": 0.448
+        },
+        "AQM_12BC": {
+          "n": 435,
+          "rmse": 0.0069,
+          "bias": -0.0002,
+          "mae": 0.0054,
+          "nmb": -0.5,
+          "nme": 13.1,
+          "r2": 0.54
+        }
+      },
+      "moderate": {
+        "RF": {
+          "n": 48,
+          "rmse": 0.0051,
+          "bias": -0.004,
+          "mae": 0.004,
+          "nmb": -6.7,
+          "nme": 6.7,
+          "r2": 0.295,
+          "hits": 33,
+          "misses": 15,
+          "fas": 1,
+          "pod": 0.69,
+          "far": 0.03,
+          "csi": 0.67
+        },
+        "AQM_06R": {
+          "n": 48,
+          "rmse": 0.0071,
+          "bias": -0.004,
+          "mae": 0.0056,
+          "nmb": -6.7,
+          "nme": 9.5,
+          "r2": 0.048,
+          "hits": 25,
+          "misses": 23,
+          "fas": 34,
+          "pod": 0.52,
+          "far": 0.58,
+          "csi": 0.3
+        },
+        "AQM_06BC": {
+          "n": 48,
+          "rmse": 0.0104,
+          "bias": -0.0088,
+          "mae": 0.009,
+          "nmb": -14.9,
+          "nme": 15.2,
+          "r2": 0.03,
+          "hits": 12,
+          "misses": 36,
+          "fas": 10,
+          "pod": 0.25,
+          "far": 0.45,
+          "csi": 0.21
+        },
+        "AQM_12R": {
+          "n": 48,
+          "rmse": 0.0068,
+          "bias": -0.0037,
+          "mae": 0.0052,
+          "nmb": -6.3,
+          "nme": 8.8,
+          "r2": 0.035,
+          "hits": 26,
+          "misses": 22,
+          "fas": 39,
+          "pod": 0.54,
+          "far": 0.6,
+          "csi": 0.3
+        },
+        "AQM_12BC": {
+          "n": 48,
+          "rmse": 0.0104,
+          "bias": -0.0089,
+          "mae": 0.009,
+          "nmb": -15,
+          "nme": 15.2,
+          "r2": 0.025,
+          "hits": 11,
+          "misses": 37,
+          "fas": 10,
+          "pod": 0.23,
+          "far": 0.48,
+          "csi": 0.19
+        }
+      },
+      "usg": {
+        "RF": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        },
+        "AQM_06R": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        },
+        "AQM_06BC": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        },
+        "AQM_12R": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        },
+        "AQM_12BC": {
+          "n": 0,
+          "rmse": null,
+          "bias": null,
+          "mae": null,
+          "r2": null
+        }
+      },
+      "n_rows": 436,
+      "n_scorable": 435
+    }
   }
 }

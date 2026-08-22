@@ -391,6 +391,21 @@ ui <- dashboardPage(
                   ),
                   column(
                     width = 4,
+                    # Scores pooled across provenance are misleading: hindcast rows
+                    # were rebuilt with the OBSERVED next-day weather, which is four
+                    # of the model's top six predictors, while every AQM column is a
+                    # genuine forecast. This lets you score like against like.
+                    selectInput(
+                      "perf_type_filter", "Score which forecasts?",
+                      choices = c(
+                        "All rows (pooled)"              = "all",
+                        "Operational only (live skill)"  = "operational",
+                        "Hindcast only (perfect prog)"   = "hindcast",
+                        "Untagged (pre-2026-07-28)"      = "untagged"
+                      ),
+                      selected = "all", width = "100%"
+                    ),
+                    uiOutput("perf_filter_note"),
                     h4("Overall Performance", style = "margin-top:0;"),
                     tableOutput("perf_metrics_table"),
                     hr(),
@@ -1003,19 +1018,52 @@ server <- function(input, output, session) {
     return(stats_df)
   }
 
+  # history_data() filtered to the chosen provenance. Everything in the
+  # Performance panel reads this rather than history_data() directly.
+  perf_data <- reactive({
+    df <- history_data()
+    sel <- input$perf_type_filter
+    if (is.null(sel) || sel == "all") return(df)
+    if (sel == "untagged") return(df %>% filter(is.na(Forecast_Type)))
+    df %>% filter(!is.na(Forecast_Type) & Forecast_Type == sel)
+  })
+
+  # Say plainly when a selection cannot support a number yet, rather than
+  # rendering an empty table that looks like a bug.
+  output$perf_filter_note <- renderUI({
+    sel <- input$perf_type_filter
+    if (is.null(sel) || sel == "all") {
+      return(helpText(
+        HTML("<b>Pooled.</b> Mixes real forecasts with perfect-prognosis hindcasts, so the RF column flatters itself against the AQM columns."),
+        style = "font-size:0.75em; color:#b9770e; margin-top:-8px;"
+      ))
+    }
+    df <- perf_data()
+    scorable <- sum(!is.na(df$Observed_O3) & !is.na(df$RF_Pred))
+    msg <- if (scorable == 0) {
+      sprintf("No scorable rows yet (%d row(s), none with an observation). Operational rows can only be scored once the observed value arrives.", nrow(df))
+    } else {
+      sprintf("%d row(s), %d scorable.%s", nrow(df), scorable,
+              if (scorable < 30) " Small sample -- read with care." else "")
+    }
+    helpText(msg, style = "font-size:0.75em; margin-top:-8px;")
+  })
+
   output$perf_metrics_table <- renderTable({
-    calculate_metrics(history_data())
+    calculate_metrics(perf_data())
   }, striped = TRUE, bordered = TRUE, spacing = "s", align = "lrrrrr")
 
   output$perf_metrics_mod <- renderTable({
-    calculate_metrics(history_data(), threshold = 0.055)
+    calculate_metrics(perf_data(), threshold = 0.055)
   }, striped = TRUE, bordered = TRUE, spacing = "s", align = "lrrrrr")
 
   output$perf_metrics_usg <- renderTable({
-    calculate_metrics(history_data(), threshold = 0.071)
+    calculate_metrics(perf_data(), threshold = 0.071)
   }, striped = TRUE, bordered = TRUE, spacing = "s", align = "lrrrrr")
 
   output$perf_time_series <- renderPlotly({
+    # Deliberately NOT filtered -- this is the full-record view, and filtering
+    # it would punch misleading gaps in the series.
     df <- history_data()
     req(df)
 
@@ -1075,7 +1123,8 @@ server <- function(input, output, session) {
   })
 
   output$perf_scatter <- renderPlotly({
-    df <- history_data() %>% filter(!is.na(RF_Pred) & !is.na(Observed_O3))
+    # follows the provenance selector, same as the tables above it
+    df <- perf_data() %>% filter(!is.na(RF_Pred) & !is.na(Observed_O3))
     req(nrow(df) > 1)
 
     plot_ly(df,
@@ -1095,7 +1144,8 @@ server <- function(input, output, session) {
   })
 
   output$perf_error_dist <- renderPlotly({
-    df <- history_data() %>%
+    # follows the provenance selector, same as the tables above it
+    df <- perf_data() %>%
       filter(!is.na(RF_Pred) & !is.na(Observed_O3)) %>%
       mutate(Error = RF_Pred - Observed_O3)
     req(nrow(df) > 1)

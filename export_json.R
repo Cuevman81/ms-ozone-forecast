@@ -141,10 +141,37 @@ for (site_name in names(SITES_CONFIG)) {
       )
     }
 
+    # Metrics are exported once per provenance as well as pooled. Pooling is
+    # misleading on its own: hindcast rows were rebuilt using the OBSERVED
+    # next-day weather -- four of the model's top six predictors -- while every
+    # AQM column is a genuine forecast. The dashboard's provenance selector
+    # reads these blocks so like can be scored against like.
+    subset_by_type <- function(df, key) {
+      if (key == "all") return(df)
+      if (key == "untagged") return(df %>% filter(is.na(Forecast_Type)))
+      df %>% filter(!is.na(Forecast_Type) & Forecast_Type == key)
+    }
+
+    build_block <- function(df) {
+      list(
+        overall  = calc_metrics(df),
+        moderate = calc_metrics(df, threshold = 0.055),
+        usg      = calc_metrics(df, threshold = 0.071),
+        n_rows   = nrow(df),
+        n_scorable = sum(!is.na(df$Observed_O3) & !is.na(df$RF_Pred))
+      )
+    }
+
     metrics <- list(
-      overall = calc_metrics(hist_df),
+      overall  = calc_metrics(hist_df),
       moderate = calc_metrics(hist_df, threshold = 0.055),
-      usg = calc_metrics(hist_df, threshold = 0.071)
+      usg      = calc_metrics(hist_df, threshold = 0.071),
+      by_type  = list(
+        all         = build_block(hist_df),
+        operational = build_block(subset_by_type(hist_df, "operational")),
+        hindcast    = build_block(subset_by_type(hist_df, "hindcast")),
+        untagged    = build_block(subset_by_type(hist_df, "untagged"))
+      )
     )
     write_json(metrics, file.path(site_dir, "metrics.json"), pretty = TRUE, auto_unbox = TRUE, na = "null")
   }

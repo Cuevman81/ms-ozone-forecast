@@ -659,7 +659,17 @@ function renderPerformancePlots(history) {
   }
 }
 
+// Kept so the provenance selector can re-render without re-fetching.
+let currentMetrics = null;
+
 function renderMetricsTables(metrics) {
+  currentMetrics = metrics;
+  const sel = document.getElementById('perfTypeFilter');
+  if (sel && !sel.dataset.bound) {
+    sel.addEventListener('change', () => renderMetricsTables(currentMetrics));
+    sel.dataset.bound = '1';
+  }
+
   if (!metrics) {
     document.getElementById('metricsOverall').innerHTML = '<p>No metrics available.</p>';
     document.getElementById('metricsModerate').innerHTML = '';
@@ -667,9 +677,32 @@ function renderMetricsTables(metrics) {
     return;
   }
 
-  document.getElementById('metricsOverall').innerHTML = buildMetricsTable(metrics.overall, false);
-  document.getElementById('metricsModerate').innerHTML = buildMetricsTable(metrics.moderate, true);
-  document.getElementById('metricsUSG').innerHTML = buildMetricsTable(metrics.usg, true);
+  // by_type is written by export_json.R. Fall back to the pooled blocks so an
+  // older data/ export still renders instead of blanking the panel.
+  const key = sel ? sel.value : 'all';
+  const block = (metrics.by_type && metrics.by_type[key]) || null;
+  const src = block || metrics;
+
+  const note = document.getElementById('perfTypeNote');
+  if (note) {
+    if (!block) {
+      note.textContent = '';
+    } else if (key === 'all') {
+      note.style.color = '#b9770e';
+      note.innerHTML = '<strong>Pooled.</strong> Mixes real forecasts with perfect-prognosis hindcasts, so the RF column flatters itself against the AQM columns.';
+    } else if (!block.n_scorable) {
+      note.style.color = '#c0392b';
+      note.textContent = `No scorable rows yet (${block.n_rows} row(s), none with an observation). Operational rows can only be scored once the observed value arrives.`;
+    } else {
+      note.style.color = '#777';
+      note.textContent = `${block.n_rows} row(s), ${block.n_scorable} scorable.` +
+        (block.n_scorable < 30 ? ' Small sample — read with care.' : '');
+    }
+  }
+
+  document.getElementById('metricsOverall').innerHTML = buildMetricsTable(src.overall, false);
+  document.getElementById('metricsModerate').innerHTML = buildMetricsTable(src.moderate, true);
+  document.getElementById('metricsUSG').innerHTML = buildMetricsTable(src.usg, true);
 }
 
 function buildMetricsTable(data, showCategorical) {

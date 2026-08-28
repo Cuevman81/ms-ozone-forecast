@@ -2,17 +2,68 @@ name: Ozone Data Sync Pipeline
 
 on:
   schedule:
-    # 5:30 AM Central (10:30 UTC) — after 06z AQM models finish
-    - cron: '30 10 * * *'
-    # 11:30 AM Central (16:30 UTC) — after 12z AQM models finish
-    - cron: '30 16 * * *'
+    # Minute :23 is deliberate. GitHub queues scheduled workflows on shared
+    # capacity and the queue is deepest on the hour and at :00/:15/:30, so a
+    # popular minute is the first to be delayed or dropped. Delays of 20-60 min
+    # are normal and harmless here; whole runs going missing is not.
+    #
+    # 10:23 UTC — after the 06z AQM models finish
+    - cron: '23 10 * * *'
+    # 16:23 UTC — after the 12z AQM models finish. This is the authoritative
+    # run: it is the last one of the day, so its forecast is the one that ends
+    # up logged as the day's operational row.
+    - cron: '23 16 * * *'
+    # 20:23 UTC — backup only. Skips itself unless BOTH runs above went missing,
+    # so it costs nothing on a normal day and never moves the logged forecast to
+    # a later issue time. See the "Decide whether to run" job.
+    - cron: '23 20 * * *'
   workflow_dispatch:
 
 permissions:
   contents: write
 
+# Delayed cron runs arrive in a burst once GitHub catches up, which is exactly
+# when two of them would otherwise overlap and race on the push. Queue them
+# instead. Never cancel in progress: a run that is already training models has
+# done the expensive part and its data is worth keeping.
+concurrency:
+  group: ozone-data-sync
+  cancel-in-progress: false
+
 jobs:
+  # The 20:23 backup exists only to cover a day when the scheduler dropped both
+  # real runs. It must not fire on a normal day: re-forecasting hours later
+  # would overwrite the day's operational row with a forecast issued long after
+  # Rodney actually submits, quietly flattering the live-skill numbers. Every
+  # other trigger runs unconditionally.
+  decide:
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.check.outputs.run }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Decide whether to run
+        id: check
+        run: |
+          if [ "${{ github.event.schedule }}" != "23 20 * * *" ]; then
+            echo "Primary trigger (${{ github.event_name }}) — running."
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          today=$(date -u +%Y-%m-%d)
+          if TZ=UTC git log -50 --date=format-local:'%Y-%m-%d' --format='%cd %s' \
+               | awk -v d="$today" '$1 == d' | grep -q 'Scheduled data sync'; then
+            echo "A sync already landed on $today — backup has nothing to cover."
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::No sync landed on $today; both scheduled runs were dropped. Backup is taking over."
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          fi
+
   sync:
+    needs: decide
+    if: needs.decide.outputs.run == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 30
 

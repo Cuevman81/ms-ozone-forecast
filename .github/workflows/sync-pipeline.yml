@@ -19,6 +19,21 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          # Full history: the push step may need to rebase onto a moved main.
+          fetch-depth: 0
+
+      # A scheduled run checks out the commit that triggered it, and a *re-run*
+      # replays the ORIGINAL commit -- so its data can be hours or days stale.
+      # That is not merely wasteful. The forecaster's gap filler rewalks the last
+      # 14 days, and an operational row it cannot see in the checked-out history
+      # gets rebuilt as a hindcast, silently destroying live-skill evidence.
+      # Always build on the current tip of main.
+      - name: Sync to latest main
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+          echo "Building on $(git rev-parse --short HEAD)"
 
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
@@ -80,7 +95,31 @@ jobs:
           git add data/ r-pipeline/*.csv
           if git diff --staged --quiet; then
             echo "No data changes to commit."
-          else
-            git commit -m "Scheduled data sync $(date -u '+%Y-%m-%d %H:%M UTC')"
-            git push
+            exit 0
           fi
+          git commit -m "Scheduled data sync $(date -u '+%Y-%m-%d %H:%M UTC')"
+
+          # The push loses a race whenever another run pushes while this one is
+          # working, and GitHub bunches delayed cron runs, so overlaps do happen.
+          # All the expensive work is already done by this point, so retry rather
+          # than discard the run.
+          #
+          # Rebase, not merge: this job regenerates data/ and the CSVs in full,
+          # so its output belongs on top of whatever is on main. Keep the
+          # regenerated copy on conflict -- during a rebase that is "theirs",
+          # because git treats the branch being replayed ONTO as "ours".
+          for attempt in 1 2 3; do
+            if git push; then
+              echo "Pushed on attempt $attempt."
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt); rebasing onto origin/main."
+            git fetch origin main
+            if ! git rebase -X theirs origin/main; then
+              git rebase --abort || true
+              echo "::error::Could not rebase onto origin/main; data not pushed."
+              exit 1
+            fi
+          done
+          echo "::error::Push still rejected after 3 attempts."
+          exit 1

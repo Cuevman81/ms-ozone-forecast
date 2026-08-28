@@ -403,7 +403,7 @@
           "csi": 0
         }
       },
-      "n_rows": 468,
+      "n_rows": 469,
       "n_scorable": 452
     },
     "operational": {
@@ -568,7 +568,7 @@
           "r2": null
         }
       },
-      "n_rows": 7,
+      "n_rows": 8,
       "n_scorable": 4
     },
     "hindcast": {

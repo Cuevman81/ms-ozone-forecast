@@ -1,5 +1,20 @@
 [
   {
+    "Run_Date": "2026-09-19",
+    "Target_Date": "2026-09-20",
+    "Observed_O3": null,
+    "RF_Pred": 0.0359,
+    "AQM_06_Reg": 0.0553,
+    "AQM_06_BC": 0.0458,
+    "AQM_12_Reg": 0.0553,
+    "AQM_12_BC": 0.0444,
+    "Met_Temp_F": 92,
+    "Met_Dewp_F": 73,
+    "Met_WS_kts": 4.5,
+    "Met_WD_deg": 246,
+    "Forecast_Type": "operational"
+  },
+  {
     "Run_Date": "2026-09-18",
     "Target_Date": "2026-09-19",
     "Observed_O3": null,
@@ -17,7 +32,7 @@
   {
     "Run_Date": "2026-09-17",
     "Target_Date": "2026-09-18",
-    "Observed_O3": null,
+    "Observed_O3": 0.048,
     "RF_Pred": 0.0452,
     "AQM_06_Reg": 0.0546,
     "AQM_06_BC": 0.0459,

@@ -11,9 +11,11 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <meta name="theme-color" content="#222d32">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- CDN files are pinned by Subresource Integrity (sha384 of the exact file):
+       a modified file is refused instead of run. Changing a version means a new hash. -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" integrity="sha384-cya1SKeBBe5YTpHgx4WoICmzqkoHTxoGqjPySUq2nLksbJ/JiKXX2RmhyLz6jwST" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous">
 </head>
 <body>
 
@@ -41,7 +43,7 @@
       <div class="sidebar-status" id="sidebarStatus"></div>
 
       <div id="syncControls" style="margin-top:12px; display:none;">
-        <button id="syncBtn" onclick="triggerSync()" style="
+        <button id="syncBtn" style="
           width:100%; padding:10px; border:none; border-radius:6px;
           background:#3c8dbc; color:#fff; font-weight:bold; cursor:pointer;
           font-size:0.95em; display:flex; align-items:center; justify-content:center; gap:8px;
@@ -114,7 +116,7 @@
             <div id="modelStatusLabel"></div>
             <br><br>
             <p style="color:#888; font-size:0.9em;">Updating the model uses the latest downloaded historical records.</p>
-            <button id="retrainBtn" onclick="triggerRetrain()" style="
+            <button id="retrainBtn" style="
               width:100%; padding:10px; border:none; border-radius:6px;
               background:#f39c12; color:#fff; font-weight:bold; cursor:pointer;
               font-size:0.95em; display:none; align-items:center; justify-content:center; gap:8px; margin-top:10px;
@@ -256,10 +258,10 @@
     </footer>
   </main>
 
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
+  <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js" integrity="sha384-cjmdOgDzOE22dUheI5E6Gzd3upfmReW8N1y/4jwKQE50KYcvFKZJA9JxWgQOzqwQ" crossorigin="anonymous"></script>
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js" integrity="sha384-Hl48Kq2HifOWdXEjMsKo6qxqvRLTYqIGbvlENBmkHAxZKIGCXv43H6W1jA671RzC" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" crossorigin="anonymous"></script>
   <script src="js/app.js"></script>
   <script defer src="/_vercel/insights/script.js"></script>
 </body>

@@ -13,6 +13,10 @@ let currentTodayEntry = null;
 
 // --- Initialization ---
 document.addEventListener('DOMContentLoaded', async () => {
+  // Wired here rather than with inline onclick="" so the page can run under a
+  // Content-Security-Policy that forbids inline script.
+  document.getElementById('syncBtn').addEventListener('click', () => triggerSync());
+  document.getElementById('retrainBtn').addEventListener('click', () => triggerRetrain());
   setupNavigation();
   setupSubTabs();
   await detectLocalServer();

@@ -119,18 +119,20 @@ update_site_data <- function(site_name) {
   }
 
   if (is.null(start_date)) {
-    # Get Monitor metadata to find open_date if starting fresh
-    tryCatch(
+    # Get Monitor metadata to find open_date if starting fresh. The fallback is
+    # the handler's return value: assigning start_date inside the handler would
+    # only set a local copy, leaving start_date NULL when AQS is down.
+    start_date <- tryCatch(
       {
         monitors <- aqs_monitors_by_site(
           parameter = PARAM, stateFIPS = STATE,
           countycode = COUNTY, sitenum = SITE,
           bdate = as.Date("2010-01-01"), edate = Sys.Date()
         )
-        start_date <- as.Date(monitors$open_date[1])
+        as.Date(monitors$open_date[1])
       },
       error = function(e) {
-        start_date <- as.Date("2020-01-01")
+        as.Date("2020-01-01")
       }
     )
     message(paste("  Starting fresh from monitor open date:", start_date))

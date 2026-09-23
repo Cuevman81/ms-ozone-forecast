@@ -56,6 +56,19 @@ get_latest_hourly_o3 <- function(aqs_id) {
   return(NA)
 }
 
+# Mean of wind directions in degrees, as a unit-vector (circular) mean.
+# Directions are angles, so a plain mean() is wrong: mean(c(350, 10)) is 180, a
+# south wind, for what is a steady north wind. The model is trained on IEM's
+# daily avg_wind_drct, which behaves as a vector mean: over Jul-Aug 2026 at JAN
+# this mean of the non-calm hourly directions matched it to a median 4.7 deg,
+# against 60 deg for the plain mean.
+circ_mean_deg <- function(x, na.rm = TRUE) {
+  x <- x[!is.na(x)]
+  if (length(x) == 0) return(NA_real_)
+  r <- x * pi / 180
+  (atan2(mean(sin(r)), mean(cos(r))) * 180 / pi) %% 360
+}
+
 # Fetch NWS Grid Forecast
 get_nws_forecast <- function(lat, lon) {
   tryCatch(
@@ -115,7 +128,7 @@ get_nws_forecast <- function(lat, lon) {
       min_dp <- safe_day_val(df_dp, target_date, min)
 
       df_wd <- parse_series(grid_res$properties$windDirection)
-      avg_wd <- safe_day_val(df_wd, target_date, mean)
+      avg_wd <- safe_day_val(df_wd, target_date, circ_mean_deg)
 
       return(list(
         max_temp_f = (max_t * 9 / 5) + 32, ws = avg_ws * 0.539957,

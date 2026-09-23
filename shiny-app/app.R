@@ -70,6 +70,20 @@ regions <- unique(sapply(SITES_CONFIG, function(x) x$region))
 
 # --- Helper Functions ---
 
+# Kept identical to r-pipeline/Ozone_Forecaster.R.
+# Mean of wind directions in degrees, as a unit-vector (circular) mean.
+# Directions are angles, so a plain mean() is wrong: mean(c(350, 10)) is 180, a
+# south wind, for what is a steady north wind. The model is trained on IEM's
+# daily avg_wind_drct, which behaves as a vector mean: over Jul-Aug 2026 at JAN
+# this mean of the non-calm hourly directions matched it to a median 4.7 deg,
+# against 60 deg for the plain mean.
+circ_mean_deg <- function(x, na.rm = TRUE) {
+  x <- x[!is.na(x)]
+  if (length(x) == 0) return(NA_real_)
+  r <- x * pi / 180
+  (atan2(mean(sin(r)), mean(cos(r))) * 180 / pi) %% 360
+}
+
 # NWS Weather Fetcher
 get_nws_forecast <- function(lat, lon) {
   tryCatch(
@@ -132,7 +146,7 @@ get_nws_forecast <- function(lat, lon) {
       df_wd <- parse_series(grid_res$properties$windDirection)
       wd_deg <- if (!is.null(df_wd) && nrow(df_wd) > 0) {
         day_vals <- df_wd %>% filter(as.Date(datetime) == target_date)
-        if (nrow(day_vals) > 0) mean(day_vals$value, na.rm = T) else NA
+        if (nrow(day_vals) > 0) circ_mean_deg(day_vals$value) else NA
       } else {
         NA
       }

@@ -43,17 +43,28 @@ The Shiny app in `shiny-app/` is an optional local front end over the same
 
 ## Automated Data Updates
 
-The dashboard data is updated automatically via [GitHub Actions](https://github.com/Cuevman81/ms-ozone-forecast/actions) on two scheduled runs daily:
+The dashboard data is updated automatically via [GitHub Actions](https://github.com/Cuevman81/ms-ozone-forecast/actions) on two scheduled runs daily, plus a backup:
 
 | Run | Cron (UTC) | Time (Central, DST) | Purpose |
 |-----|-----------|--------------------|---------|
-| Morning | `30 10 * * *` | **5:30 AM CT** | Fetch overnight observed data, update models, generate initial forecast — after the 06z AQM run lands |
-| Midday | `30 16 * * *` | **11:30 AM CT** | Capture the completed 12z NOAA AQM run, refresh forecast with latest data |
+| Morning | `23 10 * * *` | **5:23 AM CT** | Fetch overnight observed data, update models, generate initial forecast — after the 06z AQM run lands |
+| Midday | `23 16 * * *` | **11:23 AM CT** | Capture the completed 12z NOAA AQM run, refresh forecast with latest data. The last run of the day, so its forecast is the one logged as the day's operational row |
+| Backup | `23 20 * * *` | 3:23 PM CT | Runs only if no sync has landed yet that day (Central date); otherwise exits in seconds |
 
-Cron is fixed to UTC, so during standard time these land an hour earlier (4:30 AM
-and 10:30 AM CT). GitHub also queues scheduled jobs under load, so actual start
-times routinely run 30–90 minutes late; the pipeline is written to be idempotent,
-so a late or repeated run is harmless.
+Cron is fixed to UTC, so during standard time these land an hour earlier.
+
+### Scheduling
+
+GitHub queues scheduled jobs on shared capacity, and here the delays are long:
+from 2026-08-29 to 2026-09-22 the three crons started a median **4.3, 3.0 and
+2.3 hours late** (range 1.7–7.3 h). The pipeline is idempotent, so a repeated
+run is safe, but a late run is **not** harmless: the time a run starts is the
+forecast's issue time. The forecaster feeds the model the latest *hourly*
+AirNow ozone reading as `O3`, a value that climbs through the morning, so the
+same target day can get a different forecast depending on when GitHub starts
+the job. Once, the backup was delayed
+past midnight UTC (02:50Z on 2026-08-29); the backup's "already synced today?"
+check now uses the Central date, so a delay like that no longer makes it run.
 
 Each pipeline run performs the following steps in order:
 

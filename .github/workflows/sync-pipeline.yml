@@ -4,8 +4,10 @@ on:
   schedule:
     # Minute :23 is deliberate. GitHub queues scheduled workflows on shared
     # capacity and the queue is deepest on the hour and at :00/:15/:30, so a
-    # popular minute is the first to be delayed or dropped. Delays of 20-60 min
-    # are normal and harmless here; whole runs going missing is not.
+    # popular minute is the first to be delayed or dropped. Delays are long:
+    # from 2026-08-29 to 09-22 these crons started a median 4.3, 3.0 and 2.3 h
+    # late (range 1.7-7.3 h). The start time is the forecast's issue time, so a
+    # late run is not harmless -- see "Scheduling" in README.md.
     #
     # 10:23 UTC — after the 06z AQM models finish
     - cron: '23 10 * * *'
@@ -52,8 +54,11 @@ jobs:
             echo "run=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          today=$(date -u +%Y-%m-%d)
-          if TZ=UTC git log -50 --date=format-local:'%Y-%m-%d' --format='%cd %s' \
+          # "Today" is Mississippi's day, not UTC's. A backup delayed past
+          # midnight UTC (it fired at 02:50Z on 2026-08-29, 9:50 PM CDT Aug 28)
+          # would otherwise see a new UTC day with no sync yet and run anyway.
+          today=$(TZ=America/Chicago date +%Y-%m-%d)
+          if TZ=America/Chicago git log -50 --date=format-local:'%Y-%m-%d' --format='%cd %s' \
                | awk -v d="$today" '$1 == d' | grep -q 'Scheduled data sync'; then
             echo "A sync already landed on $today — backup has nothing to cover."
             echo "run=false" >> "$GITHUB_OUTPUT"

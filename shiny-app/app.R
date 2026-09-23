@@ -252,11 +252,28 @@ get_aqm <- function(lat, lon, target_date, cycle, is_bc) {
   return(list(val = NA, date = NA))
 }
 
+# EPA's AQI Technical Assistance Document (EPA-454/B-24-002) truncates ozone to
+# 3 decimal places (ppm) before the category lookup: 0.0546 is 0.054, Good. The
+# 1e-9 keeps floating point from truncating 0.055 down to 0.054.
+truncate_o3_ppm <- function(ppm) floor(ppm * 1000 + 1e-9) / 1000
+
+# DT colour rule for ozone cells with the same truncation: for positive values,
+# "value < next breakpoint" is exactly truncation to 3 decimals (as in js/app.js).
+# DT::styleInterval() can't express it, because it rounds its cut points to 4
+# decimals when it writes them into the page.
+aqi_style_js <- function(clrs) {
+  cuts <- c("0.055", "0.071", "0.086", "0.106", "0.201")
+  js <- "isNaN(parseFloat(value)) ? '' : "
+  for (i in seq_along(cuts)) js <- paste0(js, sprintf("value < %s ? '%s' : ", cuts[i], clrs[i]))
+  DT::JS(paste0(js, "'", clrs[length(cuts) + 1], "'"))
+}
+
 # AQI Info Helper
 get_aqi_info <- function(ppm) {
   if (is.na(ppm) || !is.numeric(ppm)) {
     return(list(color = "blue", status = "Unknown", cat = 0))
   }
+  ppm <- truncate_o3_ppm(ppm)
   if (ppm <= 0.054) {
     return(list(color = "green", status = "Good", cat = 1))
   }
@@ -580,7 +597,6 @@ server <- function(input, output, session) {
     df <- forecast_today()
     req(df)
 
-    brks <- c(0.054, 0.070, 0.085, 0.105, 0.200)
     clrs <- c("#dff0d8", "#fcf8e3", "#f2dede", "#ebcccc", "#f5e79e", "#e0b0ff")
 
     DT::datatable(df,
@@ -588,7 +604,7 @@ server <- function(input, output, session) {
       options = list(dom = "t", paging = FALSE),
       selection = "none", rownames = FALSE
     ) %>%
-      DT::formatStyle("Value_ppm", backgroundColor = DT::styleInterval(brks, clrs)) %>%
+      DT::formatStyle("Value_ppm", backgroundColor = aqi_style_js(clrs)) %>%
       DT::formatRound("Value_ppm", 4)
   })
 
@@ -626,7 +642,6 @@ server <- function(input, output, session) {
     df <- df %>% select(any_of(names(cols_display)))
     names(df) <- cols_display[names(df)]
 
-    brks <- c(0.054, 0.070, 0.085, 0.105, 0.200)
     clrs <- c("#dff0d8", "#fcf8e3", "#f2dede", "#ebcccc", "#f5e79e", "#e0b0ff")
 
     # Column names for formatting
@@ -636,7 +651,7 @@ server <- function(input, output, session) {
       options = list(pageLength = 10, scrollX = TRUE, order = list(list(0, "desc"))),
       selection = "none", rownames = FALSE
     ) %>%
-      DT::formatStyle(o3_cols, backgroundColor = DT::styleInterval(brks, clrs)) %>%
+      DT::formatStyle(o3_cols, backgroundColor = aqi_style_js(clrs)) %>%
       DT::formatStyle("Temp (F)", backgroundColor = DT::styleInterval(c(40, 60, 80, 95), c("#b3cde3", "#decbe4", "#fed9a6", "#fbb4ae", "#e31a1c"))) %>%
       DT::formatStyle("Dewp (F)", backgroundColor = DT::styleInterval(c(30, 50, 65), c("#ffffcc", "#c2e699", "#78c679", "#238443"))) %>%
       DT::formatRound(o3_cols, 4)
@@ -844,7 +859,6 @@ server <- function(input, output, session) {
       return("NWS Sync Delay (Falling back to previous run)")
     }, df$Source, df$Run_Date)
 
-    brks <- c(0.054, 0.070, 0.085, 0.105, 0.200)
     clrs <- c("#c3e6cb", "#ffeeba", "#ffdf7e", "#f5c6cb", "#d6a6e4", "#eda2b6")
 
     DT::datatable(df, 
@@ -852,7 +866,7 @@ server <- function(input, output, session) {
       options = list(dom = "t", paging = FALSE, scrollX = TRUE), 
       selection = "none", rownames = FALSE
     ) %>%
-      DT::formatStyle("Value_ppm", backgroundColor = DT::styleInterval(brks, clrs)) %>%
+      DT::formatStyle("Value_ppm", backgroundColor = aqi_style_js(clrs)) %>%
       DT::formatStyle(
         "Status",
         color = DT::styleEqual(

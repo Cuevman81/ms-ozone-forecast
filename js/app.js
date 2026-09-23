@@ -170,23 +170,27 @@ async function fetchJSON(url) {
 }
 
 // --- AQI Helpers ---
+// EPA's AQI Technical Assistance Document (EPA-454/B-24-002) truncates ozone to
+// 3 decimal places (ppm) before the category lookup, so 0.0546 is 0.054: Good.
+// For positive values, "< next breakpoint" is exactly that truncation, and it
+// matches the >= 0.055 / >= 0.071 hit counts in export_json.R.
 function getAqiInfo(ppm) {
   if (ppm == null || isNaN(ppm)) return { color: 'blue', status: 'Unknown', cssClass: 'vb-blue' };
-  if (ppm <= 0.054) return { color: 'green', status: 'Good', cssClass: 'vb-green' };
-  if (ppm <= 0.070) return { color: 'yellow', status: 'Moderate', cssClass: 'vb-yellow' };
-  if (ppm <= 0.085) return { color: 'orange', status: 'Unhealthy for Sensitive Groups', cssClass: 'vb-orange' };
-  if (ppm <= 0.105) return { color: 'red', status: 'Unhealthy', cssClass: 'vb-red' };
-  if (ppm <= 0.200) return { color: 'purple', status: 'Very Unhealthy', cssClass: 'vb-purple' };
+  if (ppm < 0.055) return { color: 'green', status: 'Good', cssClass: 'vb-green' };
+  if (ppm < 0.071) return { color: 'yellow', status: 'Moderate', cssClass: 'vb-yellow' };
+  if (ppm < 0.086) return { color: 'orange', status: 'Unhealthy for Sensitive Groups', cssClass: 'vb-orange' };
+  if (ppm < 0.106) return { color: 'red', status: 'Unhealthy', cssClass: 'vb-red' };
+  if (ppm < 0.201) return { color: 'purple', status: 'Very Unhealthy', cssClass: 'vb-purple' };
   return { color: 'maroon', status: 'Hazardous', cssClass: 'vb-maroon' };
 }
 
 function aqiCellClass(val) {
   if (val == null || isNaN(val)) return '';
-  if (val <= 0.054) return 'aqi-good';
-  if (val <= 0.070) return 'aqi-moderate';
-  if (val <= 0.085) return 'aqi-usg';
-  if (val <= 0.105) return 'aqi-unhealthy';
-  if (val <= 0.200) return 'aqi-very-unhealthy';
+  if (val < 0.055) return 'aqi-good';
+  if (val < 0.071) return 'aqi-moderate';
+  if (val < 0.086) return 'aqi-usg';
+  if (val < 0.106) return 'aqi-unhealthy';
+  if (val < 0.201) return 'aqi-very-unhealthy';
   return 'aqi-hazardous';
 }
 
@@ -436,9 +440,9 @@ function renderTrendPlot(recent) {
 
   const colors = o3.map(v => {
     if (v == null) return '#ccc';
-    if (v <= 0.054) return '#00a65a';
-    if (v <= 0.070) return '#f0ad4e';
-    if (v <= 0.085) return '#ff851b';
+    if (v < 0.055) return '#00a65a';   // truncated to 3 decimals, as in getAqiInfo()
+    if (v < 0.071) return '#f0ad4e';
+    if (v < 0.086) return '#ff851b';
     return '#dd4b39';
   });
 

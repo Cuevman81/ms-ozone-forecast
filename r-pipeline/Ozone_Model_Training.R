@@ -76,6 +76,12 @@ train_site_model <- function(site_name) {
     "doy", "is_weekend", "td_spread"
   )
 
+  # Seasonal sites train on the forecasts the pipeline issues: rows whose target
+  # day (date + 1) is in the ozone season, Mar 1 - Oct 31 (sites_config.R). The
+  # lags may still reach into the Feb 15 - 28 look-back buffer, as they do at
+  # forecast time.
+  if (cfg$seasonal) data <- data %>% filter(in_ozone_season(date + 1))
+
   model_data <- data %>%
     select(all_of(feature_cols)) %>%
     drop_na()

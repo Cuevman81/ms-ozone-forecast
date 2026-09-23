@@ -15,7 +15,7 @@ A web-based dashboard for Mississippi's ground-level ozone forecasting system op
 | Gulfport | Coast | 28-047-0008 | Seasonal (Mar–Oct) |
 | Pascagoula | Coast | 28-059-0006 | Seasonal (Mar–Oct) |
 
-Seasonal sites are forecast, shown and verified for **March 1 – October 31**, Mississippi's ozone monitoring season ([40 CFR 58 Appendix D, Table D-3](https://www.ecfr.gov/current/title-40/chapter-I/subchapter-C/part-58/appendix-Appendix%20D%20to%20Part%2058)). The pipeline collects their data from February 15, so the model's lag inputs are ready for the first forecast, issued February 28 for March 1. The season is defined once in `r-pipeline/sites_config.R` (mirrored in `js/app.js`).
+Seasonal sites are forecast, shown and verified for **March 1 – October 31**, Mississippi's ozone monitoring season ([40 CFR 58 Appendix D, Table D-3](https://www.ecfr.gov/current/title-40/chapter-I/subchapter-C/part-58/appendix-Appendix%20D%20to%20Part%2058)), and their models train on in-season target days. The pipeline collects their data from February 15, so the model's lag inputs are ready for the first forecast, issued February 28 for March 1. The season is defined once in `r-pipeline/sites_config.R` (mirrored in `js/app.js`).
 
 ## How It Works
 

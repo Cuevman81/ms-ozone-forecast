@@ -80,3 +80,32 @@ SITES_CONFIG <- list(
         seasonal = TRUE
     )
 )
+
+# --- Ozone season (sites with seasonal = TRUE) ---
+# Mississippi's ozone monitoring season is March 1 - October 31, both days
+# included (40 CFR 58 Appendix D, Table D-3). Forecasts are issued, shown and
+# verified only for target dates in this window. Written as "MM-DD".
+OZONE_SEASON_START <- "03-01"
+OZONE_SEASON_END   <- "10-31"
+
+# Look-back buffer. The seasonal monitors start up two weeks before the season,
+# and their readings are kept from then on, so the lag features and the 14-day
+# gap-fill windows already hold real data when the first in-season forecast is
+# issued (on Feb 28, for Mar 1). Any reading before this date (from Nov 1 on) is
+# phantom and is discarded. Counted on a common-year calendar, so it is Feb 15
+# every year (in a leap year, Mar 1 minus 14 days would be Feb 16).
+OZONE_DATA_LEAD_DAYS <- 14
+OZONE_DATA_START <- format(as.Date(paste0("2001-", OZONE_SEASON_START)) - OZONE_DATA_LEAD_DAYS, "%m-%d")
+
+# TRUE for dates in the ozone season (Mar 1 - Oct 31). Vectorised.
+in_ozone_season <- function(d) {
+  md <- format(as.Date(d), "%m-%d")
+  md >= OZONE_SEASON_START & md <= OZONE_SEASON_END
+}
+
+# TRUE for dates a seasonal monitor is running: the look-back buffer plus the
+# season (Feb 15 - Oct 31). Vectorised.
+in_monitor_window <- function(d) {
+  md <- format(as.Date(d), "%m-%d")
+  md >= OZONE_DATA_START & md <= OZONE_SEASON_END
+}

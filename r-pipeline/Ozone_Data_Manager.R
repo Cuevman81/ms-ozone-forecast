@@ -141,15 +141,14 @@ update_site_data <- function(site_name) {
   # Log data up to YESTERDAY to ensure complete daily records
   end_date <- Sys.Date() - days(1)
 
-  if (cfg$seasonal) {
-    # If seasonal, do not try to fetch data between Nov 1st and Feb 14th
-    current_month <- month(Sys.Date())
-    current_day <- day(Sys.Date())
-
-    if (current_month %in% c(11, 12, 1) || (current_month == 2 && current_day < 15)) {
-      message("  Off-season detected for seasonal site. Halting data sync until Feb 15th startup.")
-      return(invisible(NULL))
-    }
+  # Seasonal monitors are off from Nov 1 until the Feb 15 startup
+  # (OZONE_DATA_START, sites_config.R), so there is nothing to fetch. Keyed on
+  # the last day fetched rather than on today, so the Nov 1 run still collects
+  # Oct 31, the season's last day, and its forecast can be verified.
+  if (cfg$seasonal && !in_monitor_window(end_date)) {
+    message(paste0("  Off-season detected for seasonal site. Halting data sync until the ",
+                   OZONE_DATA_START, " monitor startup."))
+    return(invisible(NULL))
   }
 
   if (start_date > end_date) {
@@ -267,10 +266,11 @@ update_site_data <- function(site_name) {
     final_data <- new_merged %>% dplyr::arrange(date)
   }
 
-  # Null out O3 during off-season for seasonal sites — no monitor is running
+  # Null out O3 outside the monitors' operating window for seasonal sites — no
+  # monitor is running. Readings from the Feb 15 - 28 look-back buffer are real
+  # and are kept, so the lag features are ready on Mar 1 (sites_config.R).
   if (cfg$seasonal) {
-    off <- month(final_data$date) %in% c(11, 12, 1) |
-           (month(final_data$date) == 2 & day(final_data$date) < 15)
+    off <- !in_monitor_window(final_data$date)
     final_data$O3[off] <- NA
   }
 

@@ -81,6 +81,10 @@ for (site_name in names(SITES_CONFIG)) {
     hist_df <- read_csv(hist_path, show_col_types = FALSE)
     hist_df$Target_Date <- as.Date(hist_df$Target_Date)
     hist_df$Run_Date <- as.Date(hist_df$Run_Date)
+    # Seasonal sites: the dashboard shows and verifies the ozone season only
+    # (Mar 1 - Oct 31, sites_config.R). The CSV can still hold older rows from
+    # the Feb 15 - 28 look-back buffer.
+    if (cfg$seasonal) hist_df <- hist_df %>% filter(in_ozone_season(Target_Date))
     hist_df <- hist_df %>% arrange(desc(Target_Date))
     write_json(hist_df, file.path(site_dir, "history.json"), pretty = TRUE, na = "null")
 

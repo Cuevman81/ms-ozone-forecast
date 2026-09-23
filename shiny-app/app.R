@@ -646,16 +646,8 @@ server <- function(input, output, session) {
       "Forecast_Type" = "Type"
     )
 
-    # For seasonal sites, only display Mid-February through October 31st
-    cfg <- site_cfg()
-    if (cfg$seasonal) {
-      df <- df %>%
-        filter(
-          (month(as.Date(Target_Date)) > 2 & month(as.Date(Target_Date)) <= 10) |
-            (month(as.Date(Target_Date)) == 2 & day(as.Date(Target_Date)) >= 15)
-        )
-    }
-
+    # Seasonal sites: history_data() already holds only the ozone season
+    # (Mar 1 - Oct 31).
     df <- df %>% select(any_of(names(cols_display)))
     names(df) <- cols_display[names(df)]
 
@@ -957,8 +949,12 @@ server <- function(input, output, session) {
     if (file.exists(log_file)) {
       mtime <- file.info(log_file)$mtime
       # This dummy reference to `mtime` makes the reactive depend on the file state
-      read_csv(log_file, show_col_types = FALSE) %>%
+      df <- read_csv(log_file, show_col_types = FALSE) %>%
         mutate(Target_Date = as.Date(Target_Date))
+      # Seasonal sites: show and verify the ozone season only (Mar 1 - Oct 31,
+      # sites_config.R), the same rows the web dashboard gets from export_json.R.
+      if (site_cfg()$seasonal) df <- df %>% filter(in_ozone_season(Target_Date))
+      df
     } else {
       tibble()
     }

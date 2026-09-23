@@ -308,10 +308,12 @@ run_forecast <- function(site_name) {
   if (file.exists(log_file)) {
     hist_log <- read_csv(log_file, show_col_types = FALSE) %>% mutate(Target_Date = as.Date(Target_Date), Run_Date = as.Date(Run_Date))
 
-    # Purge any off-season rows for seasonal sites (no monitor running)
+    # Purge rows from outside the monitors' operating window for seasonal sites
+    # (no monitor running). Older rows from the Feb 15 - 28 look-back buffer are
+    # kept in the file; no new ones are made, and export_json.R and app.R leave
+    # them out of the season they show and verify (sites_config.R).
     if (cfg$seasonal) {
-      off <- month(hist_log$Target_Date) %in% c(11, 12, 1) |
-             (month(hist_log$Target_Date) == 2 & day(hist_log$Target_Date) < 15)
+      off <- !in_monitor_window(hist_log$Target_Date)
       if (any(off)) {
         hist_log <- hist_log[!off, ]
         message(paste("  Purged", sum(off), "off-season rows from history."))
@@ -337,13 +339,9 @@ run_forecast <- function(site_name) {
         }
       }
 
-      if (cfg$seasonal) {
-        g_month <- month(g_date)
-        g_day <- day(g_date)
-        if (g_month %in% c(11, 12, 1) || (g_month == 2 && g_day < 15)) {
-          # Skip this specific target date because it's in the offseason
-          needs_fill <- FALSE
-        }
+      if (cfg$seasonal && !in_ozone_season(g_date)) {
+        # Skip this target date: it is outside the ozone season (Mar 1 - Oct 31)
+        needs_fill <- FALSE
       }
 
       if (needs_fill) {
@@ -458,13 +456,11 @@ run_forecast <- function(site_name) {
   }
 
   # Part B: Tomorrow's Forecast (issued Today)
-  if (cfg$seasonal) {
-    t_month <- month(target_dt)
-    t_day <- day(target_dt)
-    if (t_month %in% c(11, 12, 1) || (t_month == 2 && t_day < 15)) {
-      message("  Off-season tomorrow. Skipping real-time prediction.")
-      return(NULL)
-    }
+  # Forecasts are issued only for target dates in the ozone season (Mar 1 -
+  # Oct 31): the first on Feb 28, the last on Oct 30.
+  if (cfg$seasonal && !in_ozone_season(target_dt)) {
+    message("  Off-season tomorrow. Skipping real-time prediction.")
+    return(NULL)
   }
 
   aqm06_reg <- get_aqm_forecast(cfg$lat, cfg$lon, target_dt, "06", FALSE)

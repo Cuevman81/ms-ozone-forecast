@@ -98,12 +98,8 @@ backfill_socket <- function(site_name, cores = 4) {
   }
   has_gap <- rowSums(is.na(as.data.frame(df[aqm_cols]))) > 0
 
-  is_offseason <- function(d) {
-    m <- month(d); dy <- day(d)
-    m %in% c(11, 12, 1) || (m == 2 && dy < 15)
-  }
-
-  in_season <- if (config$seasonal) !sapply(df$Target_Date, is_offseason) else rep(TRUE, nrow(df))
+  # Ozone season (Mar 1 - Oct 31) from sites_config.R.
+  in_season <- if (config$seasonal) in_ozone_season(df$Target_Date) else rep(TRUE, nrow(df))
   rows_to_fill <- which(year(df$Target_Date) %in% c(2024, 2025, 2026) & in_season & has_gap)
 
   if (length(rows_to_fill) == 0) {

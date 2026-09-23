@@ -416,6 +416,19 @@ function localDateStr(d = new Date()) {
     String(d.getDate()).padStart(2, '0');
 }
 
+// Ozone season for seasonal sites: Mar 1 - Oct 31, both days included
+// (40 CFR 58 Appendix D, Table D-3). Same window as OZONE_SEASON_START/END in
+// r-pipeline/sites_config.R. 'MM-DD'.
+const OZONE_SEASON = { start: '03-01', end: '10-31' };
+
+// dateStr is a local 'YYYY-MM-DD'. Compared as text: new Date('YYYY-MM-DD') is
+// UTC midnight, the previous evening in Mississippi, which used to hide the
+// season's first day and show the day after its last.
+function inOzoneSeason(dateStr) {
+  const md = String(dateStr).slice(5, 10);
+  return md >= OZONE_SEASON.start && md <= OZONE_SEASON.end;
+}
+
 function today() {
   return localDateStr();
 }
@@ -571,7 +584,7 @@ function renderImportancePlot(importance) {
 function renderPerformancePlots(history) {
   if (!history || history.length === 0) return;
 
-  // For seasonal sites: pad all dates in range and null out off-season (Nov 1 – Feb 14)
+  // For seasonal sites: pad all dates in range and null out off-season (Nov 1 – Feb 28/29)
   let df = history;
   if (currentSite.seasonal && df.length > 1) {
     const allDates = df.map(r => r.Target_Date).sort();
@@ -583,11 +596,8 @@ function renderPerformancePlots(history) {
     const padded = [];
     for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
       const key = localDateStr(d);
-      const m = d.getMonth() + 1;
-      const day = d.getDate();
-      const offSeason = m >= 11 || m === 1 || (m === 2 && day < 15);
 
-      if (offSeason) {
+      if (!inOzoneSeason(key)) {
         padded.push({ Target_Date: key, Observed_O3: null, RF_Pred: null, AQM_06_Reg: null, AQM_06_BC: null, AQM_12_Reg: null, AQM_12_BC: null });
       } else if (dateMap[key]) {
         padded.push(dateMap[key]);
@@ -791,12 +801,7 @@ function renderHistoryTable(history) {
   // Filter seasonal if needed
   let filtered = history;
   if (currentSite.seasonal) {
-    filtered = history.filter(row => {
-      const d = new Date(row.Target_Date);
-      const m = d.getMonth() + 1;
-      const day = d.getDate();
-      return (m > 2 && m <= 10) || (m === 2 && day >= 15);
-    });
+    filtered = history.filter(row => inOzoneSeason(row.Target_Date));
   }
 
   // Build DataTables using columns API for proper alignment

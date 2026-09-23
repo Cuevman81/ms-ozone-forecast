@@ -69,7 +69,7 @@ check now uses the Central date, so a delay like that no longer makes it run.
 Each pipeline run performs the following steps in order:
 
 1. **Data Sync** — Fetches the latest daily ozone observations from EPA AQS (with AirNow fallback) and meteorological data from Iowa State ASOS for all 6 sites
-2. **Model Training** — Retrains the Random Forest model for any site that has new data since its last training (smart retrain — skips sites with no changes)
+2. **Model Training** — Retrains the Random Forest model for any site that has new data since its last training (smart retrain — skips sites with no changes). Scheduled runs start from a fresh checkout with no saved models, so they retrain all six
 3. **Forecasting** — Generates tomorrow's ozone prediction using real-time O3, NWS weather forecasts, and NOAA AQM model outputs. Backfills observed values into past forecast entries for verification
 4. **JSON Export** — Converts all CSVs and model outputs to JSON for the web dashboard
 5. **Deploy** — Commits updated data to GitHub, which triggers an automatic Vercel redeploy
@@ -215,7 +215,7 @@ deploy.
 > build artifacts — training is stochastic, so every run produced a byte-different
 > multi-megabyte file, and committing them twice a day grew the repo to 1.75 GB
 > against a 35 MB working tree. They are gitignored; the command above builds them
-> on its first run. Nothing else needs them: the dashboard reads the committed
+> on its first run. The web dashboard doesn't need them: it reads the committed
 > JSON in `data/`, `importance.json` included.
 
 **Run the Shiny app**
@@ -226,7 +226,9 @@ Rscript -e 'shiny::runApp("shiny-app")'
 
 Or open `shiny-app/app.R` in RStudio and click **Run App**. It reads the
 committed data, so it works without credentials — you only need those if you use
-its Sync or Retrain buttons.
+its Sync buttons. Its live RF forecast and variable-importance plot need the
+trained models, so on a fresh clone run the pipeline first or click **Retrain
+Model**, which needs no credentials.
 
 > If you cloned into an existing project that keeps this repo in a
 > `web-dashboard/` subfolder, use `shiny::runApp("web-dashboard/shiny-app")`
@@ -236,7 +238,7 @@ its Sync or Retrain buttons.
 
 The site is static plus one serverless function, so importing the fork into
 Vercel works with no build step and no configuration. `vercel.json` sets the
-cache and security headers; `.vercelignore` keeps the 32 MB of training data and
+cache and security headers; `.vercelignore` keeps the ~6 MB of training data and
 the Shiny source out of the deployment.
 
 ## Single source of truth

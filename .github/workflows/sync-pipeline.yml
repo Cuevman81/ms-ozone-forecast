@@ -19,8 +19,9 @@ on:
     - cron: '23 20 * * *'
   workflow_dispatch:
 
+# Read-only by default; only the sync job, which pushes data, gets write.
 permissions:
-  contents: write
+  contents: read
 
 # Delayed cron runs arrive in a burst once GitHub catches up, which is exactly
 # when two of them would otherwise overlap and race on the push. Queue them
@@ -66,6 +67,8 @@ jobs:
     if: needs.decide.outputs.run == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repository
@@ -87,7 +90,10 @@ jobs:
           echo "Building on $(git rev-parse --short HEAD)"
 
       - name: Set up R
-        uses: r-lib/actions/setup-r@v2
+        # Third-party action in a job holding a write token and the AQS
+        # secrets, so it is pinned to a commit (the v2 tag as of 2026-09-21,
+        # the exact commit the 2026-09-22 runs used) rather than a movable tag.
+        uses: r-lib/actions/setup-r@f9a764fea8d5c63df6ef9a5c7795bf7deb5d7e05 # v2
         with:
           r-version: '4.4.0'
 

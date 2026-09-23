@@ -17,11 +17,16 @@ import re
 import subprocess
 import tempfile
 import threading
+import urllib.parse
 import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 PORT = 8080
+# Loopback only. The server can start the full pipeline with your AQS
+# credentials, so it must not be reachable from the rest of the network.
+BIND_HOST = "127.0.0.1"
+LOCAL_HOSTNAMES = {"localhost", "127.0.0.1"}
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 WEB_DIR = Path(__file__).resolve().parent
 # The pipeline scripts and data that GitHub Actions maintains. Everything runs
@@ -57,7 +62,29 @@ class DashboardHandler(http.server.SimpleHTTPRequestHandler):
         self.send_header("Cache-Control", "no-store, must-revalidate")
         super().end_headers()
 
+    def request_is_local(self):
+        """Refuse anything that is not this machine's own dashboard.
+
+        Host must name the loopback address, which blocks DNS-rebinding pages
+        (evil.example resolving to 127.0.0.1 still sends Host: evil.example).
+        Origin, which browsers attach to every POST, must be this same server,
+        so a page open in another tab cannot start pipeline runs. A request
+        with no Origin (curl on this machine) is allowed.
+        """
+        host = self.headers.get("Host", "")
+        hostname, _, port = host.rpartition(":") if ":" in host else (host, "", "")
+        if hostname not in LOCAL_HOSTNAMES or port != str(self.server.server_port):
+            self.send_error(403, "Host not allowed")
+            return False
+        origin = self.headers.get("Origin")
+        if origin is not None and origin != f"http://{host}":
+            self.send_error(403, "Cross-origin request refused")
+            return False
+        return True
+
     def do_POST(self):
+        if not self.request_is_local():
+            return
         if self.path == "/api/sync":
             self.handle_sync()
         elif self.path.startswith("/api/retrain/"):
@@ -66,6 +93,14 @@ class DashboardHandler(http.server.SimpleHTTPRequestHandler):
             self.send_error(404)
 
     def do_GET(self):
+        if not self.request_is_local():
+            return
+        # Never serve dotfiles or dot-directories (.git/, .github/, ...).
+        # Checked on the decoded path, because that is what gets served.
+        path = urllib.parse.unquote(self.path.split("?", 1)[0].split("#", 1)[0])
+        if any(part.startswith(".") for part in path.split("/")):
+            self.send_error(404)
+            return
         if self.path == "/api/sync/status":
             self.handle_sync_status()
         elif self.path.startswith("/api/realtime/"):
@@ -107,20 +142,22 @@ class DashboardHandler(http.server.SimpleHTTPRequestHandler):
         site_name = self.path.split("/api/retrain/")[1].replace("%20", " ")
         log_file = WEB_DIR / "sync.log"
 
-        # site_name comes straight off the URL and is interpolated into an R
-        # expression below, so accept only names that actually exist in the
-        # config rather than passing arbitrary text to Rscript -e.
+        # site_name comes straight off the URL, so accept only names that exist
+        # in the config. Fail closed: if the config can't be read, nothing is
+        # accepted.
         allowed = valid_site_names()
-        if allowed and site_name not in allowed:
+        if site_name not in allowed:
             self.send_json(400, {"status": "error", "message": f"Unknown site: {site_name}"})
             return
 
         try:
             with open(log_file, "a") as lf:
                 lf.write(f"\n--- Retrain: {site_name} ---\n")
+                # The name is passed to R as an argument, never pasted into code.
                 proc = subprocess.Popen(
                     ["Rscript", "-e",
-                     f'source("Ozone_Model_Training.R"); train_site_model("{site_name}")'],
+                     'source("Ozone_Model_Training.R"); train_site_model(commandArgs(TRUE)[1])',
+                     site_name],
                     stdout=lf, stderr=subprocess.STDOUT,
                     cwd=str(PIPELINE_DIR),
                 )
@@ -225,7 +262,7 @@ if __name__ == "__main__":
         try:
             test_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             test_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            test_sock.bind(("", attempt_port))
+            test_sock.bind((BIND_HOST, attempt_port))
             test_sock.close()
             port = attempt_port
             break
@@ -239,7 +276,7 @@ if __name__ == "__main__":
     print(f"  Sync API:     POST http://localhost:{port}/api/sync")
     print()
 
-    server = http.server.HTTPServer(("", port), DashboardHandler)
+    server = http.server.HTTPServer((BIND_HOST, port), DashboardHandler)
     try:
         server.serve_forever()
     except KeyboardInterrupt:

@@ -68,6 +68,9 @@ resolve_site_paths <- function(cfg, site_name) {
 # Group sites by region for UI
 regions <- unique(sapply(SITES_CONFIG, function(x) x$region))
 
+# Label overlay for the Esri basemaps (keyless; replaces CARTO, which now needs a key).
+ESRI_GRAY_LABELS <- "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}"
+
 # --- Helper Functions ---
 
 # Kept identical to r-pipeline/Ozone_Forecaster.R.
@@ -1240,8 +1243,11 @@ server <- function(input, output, session) {
 
   output$sidebar_map <- renderLeaflet({
     cfg <- site_cfg()
+    # Esri Light Gray Canvas plus its label overlay, in one group (CARTO's
+    # basemaps now require an API key).
     leaflet() %>%
-      addProviderTiles(providers$CartoDB.Positron) %>%
+      addProviderTiles(providers$Esri.WorldGrayCanvas, group = "basemap") %>%
+      addTiles(urlTemplate = ESRI_GRAY_LABELS, group = "basemap", options = tileOptions(maxZoom = 16)) %>%
       setView(lng = cfg$lon, lat = cfg$lat, zoom = 10) %>%
       addMarkers(lng = cfg$lon, lat = cfg$lat, popup = paste(input$site_select, "\n(AQS:", cfg$aqs_id, ")"))
   })
@@ -1270,8 +1276,8 @@ server <- function(input, output, session) {
   output$about_map <- renderLeaflet({
     cfg <- site_cfg()
     leaflet() %>%
-      addProviderTiles(providers$Esri.WorldImagery) %>%
-      addProviderTiles(providers$CartoDB.PositronOnlyLabels) %>%
+      addProviderTiles(providers$Esri.WorldImagery, group = "basemap") %>%
+      addTiles(urlTemplate = ESRI_GRAY_LABELS, group = "basemap", options = tileOptions(maxZoom = 16)) %>%
       setView(lng = cfg$lon, lat = cfg$lat, zoom = 15) %>%
       addMarkers(lng = cfg$lon, lat = cfg$lat, popup = paste("<b>", input$site_select, "</b><br>AQS:", cfg$aqs_id))
   })

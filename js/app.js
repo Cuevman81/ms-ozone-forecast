@@ -2,6 +2,8 @@
 // Reads pre-exported JSON from data/ directory
 
 const DATA_BASE = 'data';
+// Keyless basemap tiles (Esri ArcGIS Online). Attribution text follows leaflet-providers.
+const ESRI_TILES = 'https://server.arcgisonline.com/ArcGIS/rest/services';
 
 let sitesConfig = [];
 let currentSite = null;
@@ -239,10 +241,17 @@ function renderSidebarMap() {
   if (!currentSite) return;
   if (sidebarMap) sidebarMap.remove();
   sidebarMap = L.map('sidebarMap').setView([currentSite.lat, currentSite.lon], 10);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-    maxZoom: 19
-  }).addTo(sidebarMap);
+  // Esri Light Gray Canvas: base plus its label overlay, kept in one group.
+  // (CARTO's basemaps, used until 2026-09, now require an API key.)
+  L.layerGroup([
+    L.tileLayer(`${ESRI_TILES}/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}`, {
+      attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+      maxZoom: 16
+    }),
+    L.tileLayer(`${ESRI_TILES}/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}`, {
+      maxZoom: 16
+    })
+  ]).addTo(sidebarMap);
   L.marker([currentSite.lat, currentSite.lon])
     .bindPopup(`${currentSite.name}<br>AQS: ${currentSite.aqs_id}`)
     .addTo(sidebarMap);
@@ -954,13 +963,17 @@ function renderAboutMap() {
   if (aboutMapInstance) aboutMapInstance.remove();
 
   aboutMapInstance = L.map('aboutMap').setView([currentSite.lat, currentSite.lon], 15);
-  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-    attribution: 'Esri World Imagery',
-    maxZoom: 18
-  }).addTo(aboutMapInstance);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png', {
-    maxZoom: 18
-  }).addTo(aboutMapInstance);
+  // Esri imagery with Esri's light label overlay (replaces CARTO's
+  // light_only_labels, which now needs an API key), kept in one group.
+  L.layerGroup([
+    L.tileLayer(`${ESRI_TILES}/World_Imagery/MapServer/tile/{z}/{y}/{x}`, {
+      attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+      maxZoom: 18
+    }),
+    L.tileLayer(`${ESRI_TILES}/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}`, {
+      maxZoom: 16
+    })
+  ]).addTo(aboutMapInstance);
   L.marker([currentSite.lat, currentSite.lon])
     .bindPopup(`<b>${currentSite.name}</b><br>AQS: ${currentSite.aqs_id}`)
     .addTo(aboutMapInstance);

@@ -1,4 +1,16 @@
 # ---------------------------------------------------------------------------
+# Fills EMPTY NOAA AQM cells in history_<site>.csv. It never overwrites a value
+# that is already there, so the corrected AQM history (CRS fix 2026-05-30, day
+# alignment 2026-08-04) is left exactly as it is.
+#
+# Until 2026-09-22 this tool blanked every AQM column in all six history files
+# and re-extracted them with the pre-Aug-4 band match (band UTC date == target),
+# which is the PREVIOUS day's forecast. It now picks the band with the
+# pipeline's own aqm_band_index() (Ozone_Forecaster.R), so there is one copy of
+# that rule instead of three.
+# ---------------------------------------------------------------------------
+
+# ---------------------------------------------------------------------------
 # This script lives in r-pipeline/tools/ but operates on the data files one
 # level up, and its body uses bare filenames ("history_Hernando.csv"). Resolve
 # the pipeline directory regardless of where R was started from, then work from
@@ -25,8 +37,11 @@ library(lubridate)
 library(parallel)
 
 source("sites_config.R")
+# aqm_band_index() -- the single definition of which band holds day D. Sourcing
+# only defines functions; the forecaster's own main block does not run.
+source("Ozone_Forecaster.R")
 
-fetch_aqm_value <- function(url, lat, lon, target_date) {
+fetch_aqm_value <- function(url, lat, lon, target_date, run_date) {
   tf <- tempfile(fileext = ".grib2")
   on.exit(if (file.exists(tf)) unlink(tf))
 
@@ -36,8 +51,9 @@ fetch_aqm_value <- function(url, lat, lon, target_date) {
         r <- terra::rast(tf)
         pts <- terra::vect(cbind(lon, lat), crs = "EPSG:4326")
 
-        t_str <- format(terra::time(r), "%Y-%m-%d", tz = "UTC")
-        idx <- which(t_str == as.character(target_date))
+        # NAQFC stamps each daily-max band at the END of the ozone day, so the
+        # band for target D is the one valid at D + 1 (see aqm_band_index()).
+        idx <- aqm_band_index(r, target_date, run_date)
         if (length(idx) == 0) return(NA)
 
         val <- terra::extract(r[[idx[1]]], pts)[1, 2]
@@ -59,7 +75,7 @@ fetch_aqm_with_fallback <- function(lat, lon, target_date, cycle, type_str) {
       run_str, "/", cycle, "/aqm.t", cycle, "z.", type_str, ".",
       run_str, ".227.grib2"
     )
-    val <- fetch_aqm_value(url, lat, lon, target_date)
+    val <- fetch_aqm_value(url, lat, lon, target_date, run_dt)
     if (!is.na(val)) return(val)
   }
   return(NA)
@@ -74,13 +90,13 @@ backfill_socket <- function(site_name, cores = 4) {
   df <- read_csv(log_file, show_col_types = FALSE) %>%
     mutate(Target_Date = as.Date(Target_Date))
 
-  # Blank all AQM columns so no old wrong-CRS data survives
+  # Only empty cells are filled. Existing values are the corrected history and
+  # are never blanked or overwritten.
   aqm_cols <- c("AQM_06_Reg", "AQM_06_BC", "AQM_12_Reg", "AQM_12_BC")
   for (col in aqm_cols) {
-    if (col %in% names(df)) df[[col]] <- NA_real_
+    if (!(col %in% names(df))) df[[col]] <- NA_real_
   }
-  write_csv(df, log_file)
-  message("   Blanked all AQM columns for clean re-extraction.")
+  has_gap <- rowSums(is.na(as.data.frame(df[aqm_cols]))) > 0
 
   is_offseason <- function(d) {
     m <- month(d); dy <- day(d)
@@ -88,18 +104,18 @@ backfill_socket <- function(site_name, cores = 4) {
   }
 
   in_season <- if (config$seasonal) !sapply(df$Target_Date, is_offseason) else rep(TRUE, nrow(df))
-  rows_to_fill <- which(year(df$Target_Date) %in% c(2024, 2025, 2026) & in_season)
+  rows_to_fill <- which(year(df$Target_Date) %in% c(2024, 2025, 2026) & in_season & has_gap)
 
   if (length(rows_to_fill) == 0) {
-    message("   No rows to process for: ", site_name)
+    message("   No empty AQM cells to fill for: ", site_name)
     return()
   }
 
-  message("   Re-extracting AQM for ", length(rows_to_fill), " dates for ", site_name,
+  message("   Filling empty AQM cells on ", length(rows_to_fill), " dates for ", site_name,
           " using ", cores, " socket workers...")
 
   cl <- makePSOCKcluster(cores)
-  clusterExport(cl, c("fetch_aqm_value", "fetch_aqm_with_fallback", "config"),
+  clusterExport(cl, c("fetch_aqm_value", "fetch_aqm_with_fallback", "aqm_band_index", "config"),
                 envir = environment())
   clusterEvalQ(cl, library(terra))
 
@@ -125,10 +141,10 @@ backfill_socket <- function(site_name, cores = 4) {
     batch_df <- bind_rows(results)
     for (i in 1:nrow(batch_df)) {
       r <- batch_df$row[i]
-      if (!is.na(batch_df$reg06[i])) df$AQM_06_Reg[r] <- round(batch_df$reg06[i], 4)
-      if (!is.na(batch_df$bc06[i]))  df$AQM_06_BC[r]  <- round(batch_df$bc06[i], 4)
-      if (!is.na(batch_df$reg12[i])) df$AQM_12_Reg[r] <- round(batch_df$reg12[i], 4)
-      if (!is.na(batch_df$bc12[i]))  df$AQM_12_BC[r]  <- round(batch_df$bc12[i], 4)
+      if (is.na(df$AQM_06_Reg[r]) && !is.na(batch_df$reg06[i])) df$AQM_06_Reg[r] <- round(batch_df$reg06[i], 4)
+      if (is.na(df$AQM_06_BC[r])  && !is.na(batch_df$bc06[i]))  df$AQM_06_BC[r]  <- round(batch_df$bc06[i], 4)
+      if (is.na(df$AQM_12_Reg[r]) && !is.na(batch_df$reg12[i])) df$AQM_12_Reg[r] <- round(batch_df$reg12[i], 4)
+      if (is.na(df$AQM_12_BC[r])  && !is.na(batch_df$bc12[i]))  df$AQM_12_BC[r]  <- round(batch_df$bc12[i], 4)
     }
 
     message("      Progress: Batch ", b, "/", total_batches,

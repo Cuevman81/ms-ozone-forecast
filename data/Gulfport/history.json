@@ -7,11 +7,11 @@
     "AQM_06_Reg": 0.0385,
     "AQM_06_BC": 0.0295,
     "AQM_12_Reg": 0.0382,
-    "AQM_12_BC": 0.0311,
-    "Met_Temp_F": 85,
+    "AQM_12_BC": 0.027,
+    "Met_Temp_F": 86,
     "Met_Dewp_F": 74,
-    "Met_WS_kts": 11.5,
-    "Met_WD_deg": 129,
+    "Met_WS_kts": 11.2,
+    "Met_WD_deg": 133,
     "Forecast_Type": "operational"
   },
   {

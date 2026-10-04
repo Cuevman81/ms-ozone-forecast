@@ -1,31 +1,5 @@
 [
   {
-    "date": "2026-09-27",
-    "O3": 0.045,
-    "station": "GPT",
-    "max_temp_f": 90,
-    "min_temp_f": 69,
-    "max_dewpoint_f": 71,
-    "min_dewpoint_f": 62,
-    "precip_in": 0,
-    "ws": 3.4212,
-    "wd": 310.2927,
-    "min_rh": 40.8453,
-    "avg_rh": 68.0794,
-    "max_rh": 93.357,
-    "snow_in": 0,
-    "snowd_in": null,
-    "min_feel": 69,
-    "avg_feel": 80.4461,
-    "max_feel": 90.9658,
-    "max_wind_speed_kts": 9,
-    "max_wind_gust_kts": 16.5105,
-    "srad_mj": null,
-    "climo_high_f": 85.7,
-    "climo_low_f": 67.8,
-    "climo_precip_in": 0.15
-  },
-  {
     "date": "2026-09-28",
     "O3": 0.059,
     "station": "GPT",
@@ -49,7 +23,8 @@
     "srad_mj": null,
     "climo_high_f": 85.5,
     "climo_low_f": 67.4,
-    "climo_precip_in": 0.15
+    "climo_precip_in": 0.15,
+    "network": null
   },
   {
     "date": "2026-09-29",
@@ -75,7 +50,8 @@
     "srad_mj": null,
     "climo_high_f": null,
     "climo_low_f": null,
-    "climo_precip_in": null
+    "climo_precip_in": null,
+    "network": null
   },
   {
     "date": "2026-09-30",
@@ -101,7 +77,8 @@
     "srad_mj": null,
     "climo_high_f": 85,
     "climo_low_f": 66.8,
-    "climo_precip_in": 0.15
+    "climo_precip_in": 0.15,
+    "network": null
   },
   {
     "date": "2026-10-01",
@@ -127,7 +104,8 @@
     "srad_mj": null,
     "climo_high_f": 84.7,
     "climo_low_f": 66.4,
-    "climo_precip_in": 0.14
+    "climo_precip_in": 0.14,
+    "network": null
   },
   {
     "date": "2026-10-02",
@@ -153,6 +131,34 @@
     "srad_mj": null,
     "climo_high_f": null,
     "climo_low_f": null,
-    "climo_precip_in": null
+    "climo_precip_in": null,
+    "network": null
+  },
+  {
+    "date": "2026-10-03",
+    "O3": 0.024,
+    "station": "GPT",
+    "max_temp_f": 83,
+    "min_temp_f": 75,
+    "max_dewpoint_f": 77,
+    "min_dewpoint_f": 73,
+    "precip_in": 0.82,
+    "ws": 5.1331,
+    "wd": 65.5366,
+    "min_rh": 79.5306,
+    "avg_rh": 92.8125,
+    "max_rh": 96.7406,
+    "snow_in": 0,
+    "snowd_in": null,
+    "min_feel": 75,
+    "avg_feel": 78.5507,
+    "max_feel": 91.1598,
+    "max_wind_speed_kts": 14,
+    "max_wind_gust_kts": 20,
+    "srad_mj": null,
+    "climo_high_f": 84.2,
+    "climo_low_f": 65.7,
+    "climo_precip_in": 0.14,
+    "network": "MS_ASOS"
   }
 ]

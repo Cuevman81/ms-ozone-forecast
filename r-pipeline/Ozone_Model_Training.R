@@ -19,6 +19,15 @@ train_site_model <- function(site_name) {
 
   message(paste("\n--- Training Model for Site:", site_name, "---"))
 
+  # Nothing will use a shut-down seasonal monitor's model until Feb 28, and its
+  # data does not change while it is off, so retraining it twice a day all
+  # winter only burns CI time. Training resumes by itself when the site is
+  # active again, in time for the first forecast.
+  if (!site_active(cfg)) {
+    message(paste0("  Off-season (monitor runs ", OZONE_SEASON_LABEL, "). Skipping training."))
+    return(invisible(NULL))
+  }
+
   DATA_FILE <- cfg$data_file
   MODEL_FILE <- cfg$model_file
 

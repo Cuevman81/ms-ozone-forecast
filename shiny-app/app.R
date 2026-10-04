@@ -576,6 +576,10 @@ server <- function(input, output, session) {
     cfg <- site_cfg()
     v$sync_trigger
 
+    # A seasonal monitor that is off has no live reading and no forecast to
+    # show; do not pull phantom AirNow values or NOAA GRIBs for it.
+    if (isTRUE(cfg$seasonal) && !in_ozone_season(Sys.Date())) return(NULL)
+
     withProgress(message = paste("Fetching Today's Data for", input$site_select, "..."), value = 0.5, {
       target_dt <- Sys.Date()
 
@@ -610,7 +614,25 @@ server <- function(input, output, session) {
     })
   })
 
+  # One-row table carrying the off-season notice. A validate() message would be
+  # simpler, but DT hides the widget on a validation error without showing the
+  # text, so the panel just went blank.
+  off_season_table <- function(when) {
+    DT::datatable(
+      data.frame(Status = paste0(
+        "Off-season: the ", input$site_select, " ozone monitor runs ",
+        OZONE_SEASON_LABEL, ". ", when
+      )),
+      colnames = "", options = list(dom = "t", ordering = FALSE),
+      selection = "none", rownames = FALSE
+    )
+  }
+
   output$forecast_table_today <- DT::renderDT({
+    cfg <- site_cfg()
+    if (isTRUE(cfg$seasonal) && !in_ozone_season(Sys.Date())) {
+      return(off_season_table("No live reading or forecast until then."))
+    }
     df <- forecast_today()
     req(df)
 
@@ -673,6 +695,18 @@ server <- function(input, output, session) {
 
     # Add dependency on buttons to trigger re-calculation
     v$sync_trigger
+
+    # Same rule as the pipeline (issues_forecast(), sites_config.R): no forecast,
+    # and no downloads, for a seasonal monitor whose tomorrow is off-season.
+    if (!issues_forecast(cfg)) {
+      na_aqm <- list(val = NA, date = NA)
+      return(list(
+        pred = NA, aqm06_bc = na_aqm, aqm06_reg = na_aqm,
+        aqm12_bc = na_aqm, aqm12_reg = na_aqm,
+        met = list(max_temp_f = NA), date = Sys.Date() + days(1),
+        log_entry = NULL, off_season = TRUE
+      ))
+    }
 
     withProgress(message = paste("Calculating Tomorrow's Forecast for", input$site_select, "..."), value = 0.5, {
       target_dt <- Sys.Date() + days(1)
@@ -802,8 +836,18 @@ server <- function(input, output, session) {
   # it just no longer overwrites the logged record.
 
   # UI Outputs
+  # Shown in all three value boxes while a seasonal monitor is off.
+  off_season_box <- function(icon_name) {
+    valueBox(
+      value = "Off-season",
+      subtitle = paste("Monitor runs", OZONE_SEASON_LABEL),
+      icon = icon(icon_name), color = "black"
+    )
+  }
+
   output$rf_box <- renderValueBox({
     f <- forecast_res()
+    if (isTRUE(f$off_season)) return(off_season_box("robot"))
     info <- get_aqi_info(f$pred)
     valueBox(
       value = if (!is.na(f$pred)) paste(round(f$pred, 4), "ppm") else "N/A",
@@ -815,6 +859,7 @@ server <- function(input, output, session) {
 
   output$aqm_box <- renderValueBox({
     f <- forecast_res()
+    if (isTRUE(f$off_season)) return(off_season_box("cloud-sun"))
     val <- f$aqm12_bc$val
     info <- get_aqi_info(val)
     valueBox(
@@ -827,6 +872,7 @@ server <- function(input, output, session) {
 
   output$met_box <- renderValueBox({
     f <- forecast_res()
+    if (isTRUE(f$off_season)) return(off_season_box("thermometer-half"))
     val <- f$met$max_temp_f
     valueBox(
       value = if (!is.na(val)) paste(round(val, 1), "F") else "N/A",
@@ -839,6 +885,9 @@ server <- function(input, output, session) {
   output$forecast_table <- DT::renderDT({
     f <- forecast_res()
     req(f)
+    if (isTRUE(f$off_season)) {
+      return(off_season_table("Forecasts resume the day before the season opens."))
+    }
 
     get_date <- function(d) if (!is.null(d) && !is.na(d)) as.character(as.Date(d)) else "N/A"
 

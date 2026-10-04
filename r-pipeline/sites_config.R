@@ -109,3 +109,35 @@ in_monitor_window <- function(d) {
   md <- format(as.Date(d), "%m-%d")
   md >= OZONE_DATA_START & md <= OZONE_SEASON_END
 }
+
+# Season as readable text for the app and logs, e.g. "Mar 1 - Oct 31".
+OZONE_SEASON_LABEL <- paste(
+  sub(" 0", " ", format(as.Date(paste0("2001-", OZONE_SEASON_START)), "%b %d")), "-",
+  sub(" 0", " ", format(as.Date(paste0("2001-", OZONE_SEASON_END)), "%b %d"))
+)
+
+# How far back the forecaster re-walks to fill gaps and attach observations
+# (Ozone_Forecaster.R, Part A). site_active() below must use the same window.
+GAP_FILL_DAYS <- 14
+
+# --- What a site does on a given day -------------------------------------
+# The two tests every layer uses to decide whether to touch a site at all, so
+# the pipeline, the Shiny app and the dashboard cannot disagree. A year-round
+# monitor (seasonal = FALSE, i.e. Jackson NCORE) is always on.
+
+# TRUE when tomorrow's forecast should be issued on `date`. For a seasonal site
+# that is Feb 28 (for Mar 1) through Oct 30 (for Oct 31).
+issues_forecast <- function(cfg, date = Sys.Date()) {
+  !isTRUE(cfg$seasonal) || in_ozone_season(as.Date(date) + 1)
+}
+
+# TRUE when the pipeline has any work for the site on `date`: issuing a
+# forecast, or verifying an in-season forecast still inside the gap-fill window.
+# For a seasonal site this stays TRUE until mid-November, so the season's last
+# forecasts collect their observations, then goes FALSE until Feb 28: no live
+# ozone, no weather, no NOAA downloads, no retraining.
+site_active <- function(cfg, date = Sys.Date()) {
+  if (!isTRUE(cfg$seasonal)) return(TRUE)
+  d <- as.Date(date)
+  any(in_ozone_season(seq(d - GAP_FILL_DAYS, d + 1, by = "day")))
+}

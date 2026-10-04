@@ -240,6 +240,15 @@ run_forecast <- function(site_name) {
 
   message(paste("\n--- Running Forecast for:", site_name, "---"))
 
+  # A seasonal monitor that is shut down has nothing to forecast and nothing
+  # left to verify, so do not load its model or call AirNow, NWS or NOAA for it.
+  if (!site_active(cfg)) {
+    message(paste0("  Off-season: the monitor runs ", OZONE_SEASON_LABEL,
+                   " and the last forecasts are verified. Nothing to do."))
+    return(NULL)
+  }
+  issuing <- issues_forecast(cfg)
+
   # 1. Load Model and Data
   if (!file.exists(cfg$model_file)) {
     message("  Error: Model file not found. Skipping.")
@@ -256,7 +265,10 @@ run_forecast <- function(site_name) {
     arrange(date)
 
   # 2. Persistence / Real-time O3
-  realtime_o3 <- get_latest_hourly_o3(cfg$aqs_id)
+  # Steps 2-3 feed only tomorrow's forecast (Part B). In the weeks after the
+  # season ends the site is still verifying October (Part A) but issues
+  # nothing, and a shut-down monitor's live feed is phantom anyway.
+  realtime_o3 <- if (issuing) get_latest_hourly_o3(cfg$aqs_id) else NA
   if (!is.na(realtime_o3)) {
     today_o3 <- realtime_o3
     message(paste("  Real-time Ozone:", round(today_o3, 4)))
@@ -266,7 +278,7 @@ run_forecast <- function(site_name) {
   }
 
   # 3. Weather Forecast
-  met <- get_nws_forecast(cfg$lat, cfg$lon)
+  met <- if (issuing) get_nws_forecast(cfg$lat, cfg$lon) else list()
 
   # Safe extraction helper with historic persistence
   get_weather_val <- function(met_obj, key, fallback_val) {
@@ -322,7 +334,7 @@ run_forecast <- function(site_name) {
 
     # Re-enable checking up to Sys.Date() since the `needs_fill` boolean guarantees we never overwrite healthy `RF_Pred` data now.
     # Window is 14 days: NOAA's S3 cache only holds recent runs, so older gaps can't be filled retroactively anyway.
-    gap_dates <- seq(Sys.Date() - 14, Sys.Date(), by = "day")
+    gap_dates <- seq(Sys.Date() - GAP_FILL_DAYS, Sys.Date(), by = "day")
     for (g_date in gap_dates) {
       g_date <- as.Date(g_date, origin = "1970-01-01")
 
@@ -458,7 +470,7 @@ run_forecast <- function(site_name) {
   # Part B: Tomorrow's Forecast (issued Today)
   # Forecasts are issued only for target dates in the ozone season (Mar 1 -
   # Oct 31): the first on Feb 28, the last on Oct 30.
-  if (cfg$seasonal && !in_ozone_season(target_dt)) {
+  if (!issuing) {
     message("  Off-season tomorrow. Skipping real-time prediction.")
     return(NULL)
   }

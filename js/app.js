@@ -130,11 +130,15 @@ async function onSiteChange() {
   // the entire dashboard blank on that call — for a value that fills exactly one
   // table cell. Render from local JSON first, then patch that cell in when it
   // lands. A rejected promise must not surface as an unhandled rejection.
-  const realtimePromise = fetchJSON(
-    isLocalServer
-      ? `/api/realtime/${currentSite.aqs_id}`
-      : `/api/realtime?aqs=${currentSite.aqs_id}`
-  ).catch(() => null);
+  // A shut-down seasonal monitor has no real reading; AirNow can still carry
+  // phantom values for it, so do not ask.
+  const realtimePromise = siteOffSeason(today())
+    ? Promise.resolve(null)
+    : fetchJSON(
+        isLocalServer
+          ? `/api/realtime/${currentSite.aqs_id}`
+          : `/api/realtime?aqs=${currentSite.aqs_id}`
+      ).catch(() => null);
 
   // Load all data in parallel
   const [history, dataSummary, importance, metrics, recent] = await Promise.all([
@@ -287,6 +291,14 @@ function renderValueBoxes(history, tomorrowEntry) {
   const vbAQM = document.getElementById('vbAQM');
   const vbTemp = document.getElementById('vbTemp');
 
+  if (siteOffSeason(tomorrow())) {
+    const sub = `Monitor runs ${OZONE_SEASON_LABEL}`;
+    setValueBox(vbRF, 'Off-season', sub, 'vb-offseason');
+    setValueBox(vbAQM, 'Off-season', sub, 'vb-offseason');
+    setValueBox(vbTemp, 'Off-season', sub, 'vb-offseason');
+    return;
+  }
+
   if (!history || history.length === 0) {
     setValueBox(vbRF, 'N/A', "Tomorrow's RF Forecast", 'vb-blue');
     setValueBox(vbAQM, 'N/A', "Tomorrow's AQM Bias-Corr", 'vb-blue');
@@ -354,6 +366,12 @@ function renderTodayTable(entry, realtimeO3) {
     table.innerHTML = '';
   }
 
+  if (siteOffSeason(today())) {
+    table.innerHTML = '<thead><tr><th>Source</th><th>Value (ppm)</th><th>Issued Date</th></tr></thead>' +
+      `<tbody><tr><td colspan="3">${offSeasonMessage()}</td></tr></tbody>`;
+    return;
+  }
+
   // Build rows matching app.R: Real-time O3, RF Prediction, AQM 12z Reg/BC, AQM 06z Reg/BC
   const rows = [
     ['Real-time O3 (Latest Hourly)', realtimeO3, today()],
@@ -379,6 +397,12 @@ function renderTomorrowTable(entry) {
   if ($.fn.DataTable.isDataTable('#' + tableId)) {
     $('#' + tableId).DataTable().destroy();
     table.innerHTML = '';
+  }
+
+  if (siteOffSeason(tomorrow())) {
+    table.innerHTML = '<thead><tr><th>Source</th><th>Value (ppm)</th><th>Run Date</th><th>Sync Status</th></tr></thead>' +
+      `<tbody><tr><td colspan="4">${offSeasonMessage()}</td></tr></tbody>`;
+    return;
   }
 
   if (!entry) {
@@ -427,6 +451,27 @@ const OZONE_SEASON = { start: '03-01', end: '10-31' };
 function inOzoneSeason(dateStr) {
   const md = String(dateStr).slice(5, 10);
   return md >= OZONE_SEASON.start && md <= OZONE_SEASON.end;
+}
+
+// "Mar 1 – Oct 31", built from OZONE_SEASON so it cannot drift from it.
+const OZONE_SEASON_LABEL = (() => {
+  const mon = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const part = md => `${mon[+md.slice(0, 2) - 1]} ${+md.slice(3, 5)}`;
+  return `${part(OZONE_SEASON.start)} – ${part(OZONE_SEASON.end)}`;
+})();
+
+// TRUE when the current site is a seasonal monitor that is not running on
+// dateStr. Mirrors issues_forecast() in r-pipeline/sites_config.R: a seasonal
+// site has no live reading and no forecast outside the season, so the
+// dashboard must not fetch or show one. Year-round sites (Jackson NCORE) are
+// never off-season.
+function siteOffSeason(dateStr) {
+  return !!(currentSite && currentSite.seasonal && !inOzoneSeason(dateStr));
+}
+
+function offSeasonMessage() {
+  return `Off-season: this ozone monitor runs ${OZONE_SEASON_LABEL}. ` +
+    'No live reading or forecast until then.';
 }
 
 function today() {

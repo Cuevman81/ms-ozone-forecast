@@ -184,6 +184,7 @@ body {
 .vb-purple { background: #605ca8; }
 .vb-blue { background: var(--primary); }
 .vb-maroon { background: #800000; }
+.vb-offseason { background: #4a5459; }   /* seasonal monitor shut down */
 .vb-navy { background: #001f3f; }
 .vb-light-blue { background: var(--info); }
 

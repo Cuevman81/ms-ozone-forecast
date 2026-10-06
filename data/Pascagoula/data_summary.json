@@ -1,37 +1,11 @@
 {
-  "total_records": 8450,
-  "latest_date": "2026-10-04",
+  "total_records": 8451,
+  "latest_date": "2026-10-05",
   "earliest_date": "1992-08-14",
   "completeness_pct": 97,
   "years_span": 34.2,
   "days_behind": 1,
   "last_5_rows": [
-    {
-      "date": "2026-09-30",
-      "O3": 0.037,
-      "station": "GPT",
-      "max_temp_f": 88,
-      "min_temp_f": 69,
-      "max_dewpoint_f": 74,
-      "min_dewpoint_f": 66,
-      "precip_in": 0,
-      "ws": 7.6592,
-      "wd": 117.9776,
-      "min_rh": 61.2098,
-      "avg_rh": 75.1475,
-      "max_rh": 90.2229,
-      "snow_in": 0,
-      "snowd_in": null,
-      "min_feel": 69,
-      "avg_feel": 83.9942,
-      "max_feel": 96.7792,
-      "max_wind_speed_kts": 16,
-      "max_wind_gust_kts": 21.7244,
-      "srad_mj": null,
-      "climo_high_f": 85,
-      "climo_low_f": 66.8,
-      "climo_precip_in": 0.15
-    },
     {
       "date": "2026-10-01",
       "O3": 0.031,
@@ -56,7 +30,8 @@
       "srad_mj": null,
       "climo_high_f": 84.7,
       "climo_low_f": 66.4,
-      "climo_precip_in": 0.14
+      "climo_precip_in": 0.14,
+      "network": null
     },
     {
       "date": "2026-10-02",
@@ -82,7 +57,8 @@
       "srad_mj": null,
       "climo_high_f": null,
       "climo_low_f": null,
-      "climo_precip_in": null
+      "climo_precip_in": null,
+      "network": null
     },
     {
       "date": "2026-10-03",
@@ -108,7 +84,8 @@
       "srad_mj": null,
       "climo_high_f": null,
       "climo_low_f": null,
-      "climo_precip_in": null
+      "climo_precip_in": null,
+      "network": null
     },
     {
       "date": "2026-10-04",
@@ -134,7 +111,35 @@
       "srad_mj": null,
       "climo_high_f": null,
       "climo_low_f": null,
-      "climo_precip_in": null
+      "climo_precip_in": null,
+      "network": null
+    },
+    {
+      "date": "2026-10-05",
+      "O3": 0.016,
+      "station": "GPT",
+      "max_temp_f": 80,
+      "min_temp_f": 74,
+      "max_dewpoint_f": 74,
+      "min_dewpoint_f": 72,
+      "precip_in": 0,
+      "ws": 5.5922,
+      "wd": 18.9216,
+      "min_rh": 79.2969,
+      "avg_rh": 90.0144,
+      "max_rh": 96.7131,
+      "snow_in": 0,
+      "snowd_in": null,
+      "min_feel": 74,
+      "avg_feel": 76.6427,
+      "max_feel": 84.5024,
+      "max_wind_speed_kts": 11,
+      "max_wind_gust_kts": 16.5105,
+      "srad_mj": null,
+      "climo_high_f": 83.6,
+      "climo_low_f": 64.9,
+      "climo_precip_in": 0.13,
+      "network": "MS_ASOS"
     }
   ]
 }

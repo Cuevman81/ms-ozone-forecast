@@ -8,10 +8,10 @@
     "AQM_06_BC": 0.0443,
     "AQM_12_Reg": 0.0594,
     "AQM_12_BC": 0.0475,
-    "Met_Temp_F": 79,
+    "Met_Temp_F": 80,
     "Met_Dewp_F": 64,
-    "Met_WS_kts": 13.9,
-    "Met_WD_deg": 322,
+    "Met_WS_kts": 15,
+    "Met_WD_deg": 323,
     "Forecast_Type": "operational"
   },
   {

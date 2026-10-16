@@ -577,9 +577,18 @@ function renderModelStatus(dataSummary, metrics) {
     labelEl.innerHTML = '<span class="status-badge warning" style="font-size:1.1em;">Action: Retrain Recommended (New Data)</span>';
   }
 
-  if (metrics && metrics.overall && metrics.overall.RF) {
-    const rf = metrics.overall.RF;
-    metricsEl.innerHTML = `<strong>RF Model:</strong> RMSE = ${fmt(rf.rmse)}, R² = ${rf.r2 != null ? rf.r2.toFixed(3) : 'N/A'}, N = ${rf.n}`;
+  // Headline = operational forecasts only. metrics.overall pools in the
+  // perfect-prognosis hindcasts and untagged rows, which score far better than
+  // the model does live (Hernando, Oct 2026: R² 0.76 pooled, 0.29 operational).
+  // The Performance tab still offers the pooled view, with its warning.
+  const op = metrics && metrics.by_type && metrics.by_type.operational;
+  const rf = op && op.overall && op.overall.RF;
+  if (rf && rf.n) {
+    metricsEl.innerHTML = `<strong>RF Model (operational forecasts only):</strong> ` +
+      `RMSE = ${fmt(rf.rmse)}, R² = ${rf.r2 != null ? rf.r2.toFixed(3) : 'N/A'}, N = ${rf.n}` +
+      (rf.n < 30 ? ' <em>(small sample)</em>' : '');
+  } else if (metrics) {
+    metricsEl.innerHTML = '<strong>RF Model (operational forecasts only):</strong> none scored yet.';
   }
 }
 

@@ -1,32 +1,5 @@
 [
   {
-    "date": "2026-10-10",
-    "O3": 0.048,
-    "station": "JAN",
-    "max_temp_f": 78,
-    "min_temp_f": 63,
-    "max_dewpoint_f": 62,
-    "min_dewpoint_f": 55,
-    "precip_in": 0.0001,
-    "ws": 7.7218,
-    "wd": 17.748,
-    "min_rh": 45.1086,
-    "avg_rh": 66.296,
-    "max_rh": 90.0196,
-    "snow_in": 0,
-    "snowd_in": null,
-    "min_feel": 63,
-    "avg_feel": 70.1667,
-    "max_feel": 78,
-    "max_wind_speed_kts": 20,
-    "max_wind_gust_kts": 32,
-    "srad_mj": null,
-    "climo_high_f": 80.6,
-    "climo_low_f": 56.8,
-    "climo_precip_in": 0.1,
-    "network": null
-  },
-  {
     "date": "2026-10-11",
     "O3": 0.054,
     "station": null,
@@ -78,7 +51,7 @@
     "climo_high_f": 79.9,
     "climo_low_f": 55.9,
     "climo_precip_in": 0.11,
-    "network": "MS_ASOS"
+    "network": null
   },
   {
     "date": "2026-10-13",
@@ -105,7 +78,7 @@
     "climo_high_f": 79.5,
     "climo_low_f": 55.5,
     "climo_precip_in": 0.11,
-    "network": "MS_ASOS"
+    "network": null
   },
   {
     "date": "2026-10-14",
@@ -132,7 +105,7 @@
     "climo_high_f": 79.2,
     "climo_low_f": 55,
     "climo_precip_in": 0.11,
-    "network": "MS_ASOS"
+    "network": null
   },
   {
     "date": "2026-10-15",
@@ -159,6 +132,33 @@
     "climo_high_f": 78.8,
     "climo_low_f": 54.6,
     "climo_precip_in": 0.11,
-    "network": "MS_ASOS"
+    "network": null
+  },
+  {
+    "date": "2026-10-16",
+    "O3": 0.03,
+    "station": null,
+    "max_temp_f": null,
+    "min_temp_f": null,
+    "max_dewpoint_f": null,
+    "min_dewpoint_f": null,
+    "precip_in": null,
+    "ws": null,
+    "wd": null,
+    "min_rh": null,
+    "avg_rh": null,
+    "max_rh": null,
+    "snow_in": null,
+    "snowd_in": null,
+    "min_feel": null,
+    "avg_feel": null,
+    "max_feel": null,
+    "max_wind_speed_kts": null,
+    "max_wind_gust_kts": null,
+    "srad_mj": null,
+    "climo_high_f": null,
+    "climo_low_f": null,
+    "climo_precip_in": null,
+    "network": null
   }
 ]

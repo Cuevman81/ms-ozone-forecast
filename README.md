@@ -4,6 +4,8 @@ A web-based dashboard for Mississippi's ground-level ozone forecasting system op
 
 **Live Dashboard:** [ms-ozone-forecast.vercel.app](https://ms-ozone-forecast.vercel.app)
 
+![MS Ozone Forecast dashboard: today's Random Forest and NOAA AQM forecasts for Hernando, with the 7-day ozone trend](docs/screenshot.png)
+
 ## Monitoring Sites
 
 | Site | Region | AQS ID | Schedule |

@@ -70,8 +70,83 @@ get_airnow_s3_historical_o3 <- function(aqs_id, start_date, end_date) {
   return(dplyr::bind_rows(results))
 }
 
-# Function to update data for a specific site
+# --- ASOS daily weather (Iowa Environmental Mesonet) ---
+# IEM rejects bursts of requests with HTTP 429. A rejected request used to be
+# saved as a day of blank weather that nothing ever retried, and blank days
+# are dropped from training. So: retry with backoff, and fetch each URL once
+# per run -- GPT serves three sites and JAN two, which made the bursts worse.
+.asos_cache <- new.env()
+
+fetch_asos_daily <- function(station, start_date, end_date) {
+  network <- if (station == "MEM") "TN_ASOS" else "MS_ASOS"
+  url <- paste0(
+    "https://mesonet.agron.iastate.edu/cgi-bin/request/daily.py?network=", network,
+    "&stations=", station, "&year1=", year(start_date), "&month1=", month(start_date), "&day1=", day(start_date),
+    "&year2=", year(end_date), "&month2=", month(end_date), "&day2=", day(end_date)
+  )
+  if (!is.null(.asos_cache[[url]])) return(.asos_cache[[url]])
+
+  body <- httr2::request(url) |>
+    httr2::req_retry(max_tries = 5, backoff = function(i) 5 * 2^(i - 1)) |>
+    httr2::req_perform() |>
+    httr2::resp_body_string()
+
+  met <- read_csv(I(body), na = c("", "NA", "M", "None"), show_col_types = FALSE) %>%
+    dplyr::rename(date = day, ws = avg_wind_speed_kts, wd = avg_wind_drct) %>%
+    dplyr::mutate(date = as.Date(date)) %>%
+    dplyr::mutate(across(c(max_temp_f, min_temp_f, max_dewpoint_f, min_dewpoint_f, ws, wd), as.numeric))
+  assign(url, met, envir = .asos_cache)
+  met
+}
+
+# Re-fetch weather for days already on file with none (max_temp_f NA) since
+# `since`. Only the weather columns of those days are written; O3 is never
+# touched, so a flaky AQS/AirNow response cannot erase a good reading.
+fill_met_gaps <- function(site_name, since = Sys.Date() - GAP_FILL_DAYS) {
+  cfg <- SITES_CONFIG[[site_name]]
+  if (is.null(cfg) || !file.exists(cfg$data_file)) return(invisible(0L))
+  # Same dormancy rule as the sync: nothing is pulled for a shut-down monitor.
+  if (cfg$seasonal && !in_monitor_window(Sys.Date() - days(1))) return(invisible(0L))
+
+  dat <- read_csv(cfg$data_file, show_col_types = FALSE, guess_max = 100000) %>%
+    mutate(date = as.Date(date))
+  holes <- dat$date[dat$date >= as.Date(since) & is.na(dat$max_temp_f)]
+  if (length(holes) == 0) return(invisible(0L))
+
+  message(paste("  [MET GAP-FILL]", length(holes), "day(s) without weather since", min(holes),
+                "- re-fetching from ASOS (", cfg$asos, ")..."))
+  met <- tryCatch(
+    fetch_asos_daily(cfg$asos, min(holes), max(holes)),
+    error = function(e) {
+      message("    Still unavailable: ", conditionMessage(e))
+      NULL
+    }
+  )
+  if (is.null(met)) return(invisible(0L))
+
+  met <- met %>% filter(date %in% holes, !is.na(max_temp_f))
+  if (nrow(met) == 0) {
+    message("    ASOS has no weather for those days yet.")
+    return(invisible(0L))
+  }
+  cols <- setdiff(intersect(names(met), names(dat)), c("date", "O3"))
+  idx <- match(met$date, dat$date)
+  for (col in cols) dat[[col]][idx] <- met[[col]]
+
+  write_csv(dat, cfg$data_file)
+  message(paste("    Filled weather for", nrow(met), "of", length(holes), "day(s)."))
+  invisible(nrow(met))
+}
+
+# Sync a site, then repair any recent days saved without weather.
 update_site_data <- function(site_name) {
+  result <- sync_site_data(site_name)
+  fill_met_gaps(site_name)
+  invisible(result)
+}
+
+# Function to update data for a specific site
+sync_site_data <- function(site_name) {
   cfg <- SITES_CONFIG[[site_name]]
   if (is.null(cfg)) stop(paste("Site", site_name, "not found in config."))
 
@@ -233,23 +308,11 @@ update_site_data <- function(site_name) {
 
   # --- ASOS Meteorological Data ---
   message(paste("  Fetching NEW Meteorological data from ASOS (", ASOS_STATION, ")..."))
-  network <- if (ASOS_STATION == "MEM") "TN_ASOS" else "MS_ASOS"
-
-  met_url <- paste0(
-    "https://mesonet.agron.iastate.edu/cgi-bin/request/daily.py?network=", network,
-    "&stations=", ASOS_STATION, "&year1=", year(start_date), "&month1=", month(start_date), "&day1=", day(start_date),
-    "&year2=", year(end_date), "&month2=", month(end_date), "&day2=", day(end_date)
-  )
-
   met_data <- tryCatch(
-    {
-      read_csv(met_url, na = c("", "NA", "M", "None"), show_col_types = FALSE) %>%
-        dplyr::rename(date = day, ws = avg_wind_speed_kts, wd = avg_wind_drct) %>%
-        dplyr::mutate(date = as.Date(date)) %>%
-        dplyr::mutate(across(c(max_temp_f, min_temp_f, max_dewpoint_f, min_dewpoint_f, ws, wd), as.numeric))
-    },
+    fetch_asos_daily(ASOS_STATION, start_date, end_date),
     error = function(e) {
-      message("    Error fetching meteorology. Proceeding with NA values.")
+      message("    Error fetching meteorology (", conditionMessage(e), "). Proceeding with NA values; ",
+              "the met gap-fill will retry these days on later runs.")
       return(data.frame(date = merged_o3$date, max_temp_f = NA, min_temp_f = NA, max_dewpoint_f = NA, min_dewpoint_f = NA, ws = NA, wd = NA))
     }
   )

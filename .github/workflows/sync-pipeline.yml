@@ -70,7 +70,13 @@ jobs:
   sync:
     needs: decide
     if: needs.decide.outputs.run == 'true'
-    runs-on: ubuntu-latest
+    # Pinned, not ubuntu-latest. The R package cache below holds compiled
+    # binaries linked against this OS's system libraries; when ubuntu-latest
+    # moved to 26.04 (2026-10-21) the restored 24.04 cache could not load
+    # stringi (libicui18n.so.74 missing) and every run failed. If you change
+    # this image, also change the cache key prefix so a stale cache is not
+    # restored onto the new OS.
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     permissions:
       contents: write

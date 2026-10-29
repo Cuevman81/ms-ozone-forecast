@@ -3,7 +3,7 @@
     "Run_Date": "2026-10-29",
     "Target_Date": "2026-10-30",
     "Observed_O3": null,
-    "RF_Pred": 0.0447,
+    "RF_Pred": 0.0482,
     "AQM_06_Reg": 0.0461,
     "AQM_06_BC": 0.0473,
     "AQM_12_Reg": 0.0467,
@@ -11,7 +11,7 @@
     "Met_Temp_F": 83,
     "Met_Dewp_F": 50,
     "Met_WS_kts": 5.1,
-    "Met_WD_deg": 85,
+    "Met_WD_deg": 94,
     "Forecast_Type": "operational"
   },
   {

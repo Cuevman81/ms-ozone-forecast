@@ -2,7 +2,7 @@
   {
     "Run_Date": "2026-10-30",
     "Target_Date": "2026-10-31",
-    "Observed_O3": null,
+    "Observed_O3": 0.035,
     "RF_Pred": 0.0475,
     "AQM_06_Reg": 0.0346,
     "AQM_06_BC": 0.0329,

@@ -287,6 +287,20 @@ It pairs all the models on identical rows, adds persistence as a baseline, and
 puts an interval on each RF-versus-reference gap by resampling whole target days.
 The header of the script lists the rules.
 
+Operational rows start on 2026-08-22 because that is when the gap filler stopped
+overwriting them. Until then it rewrote each real forecast as a hindcast as soon
+as its observation arrived. The forecasts for Jul 29 - Aug 21 survive in the git
+history of the logs, and this reads them back and scores them, including against
+the hindcasts on the same days:
+
+```bash
+Rscript r-pipeline/tools/Recover_Overwritten_Forecasts.R             # needs a full clone
+Rscript r-pipeline/tools/Recover_Overwritten_Forecasts.R out.csv     # also saves the rows
+```
+
+The recovered forecasts are not in the history logs or on the dashboard, so the
+dashboard's operational scores still start on Aug 22.
+
 Similarly, in the **Moderate+** and **USG+** tables the continuous statistics
 (RMSE, Bias, NMB, NME, R²) are computed only on days where the *observed* value
 cleared the threshold. Conditioning on the observation narrows the remaining
@@ -317,6 +331,7 @@ ms-ozone-forecast/      # repo root — this is what you get from git clone
 │   ├── sites_config.R      # Site metadata (the only copy)
 │   ├── Ozone_Data_Manager.R / _Model_Training.R / _Forecaster.R
 │   ├── tools/Operational_Audit.R   # Scores the operational forecasts
+│   ├── tools/Recover_Overwritten_Forecasts.R   # Reads them back from git history
 │   ├── aq_MetDaily_<site>.csv   # Training data
 │   ├── model_<site>.rds         # Trained RF models — NOT in git, built locally
 │   └── history_<site>.csv       # Forecast log (pipeline writes, app reads)

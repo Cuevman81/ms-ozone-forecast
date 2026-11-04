@@ -98,7 +98,7 @@ The Random Forest regression model predicts next-day maximum 8-hour ozone concen
 
 - **Dashboard** — Value boxes for RF prediction, AQM bias-corrected forecast, and forecasted high temp. Today and tomorrow forecast comparison tables with AQI color coding and sync status. 7-day ozone trend chart.
 - **Trends & Analysis** — Variable importance plot, model control with status and retrain capability, historical time series comparing RF vs observed vs NOAA AQM models (with the 0.070 ppm NAAQS marked), scatter plot, error distribution, and a verification table at overall, Moderate+ and USG+ thresholds:
-  - **Continuous:** RMSE, Mean Bias, MAE, NMB %, NME %, R². NMB and NME are the EPA photochemical model evaluation statistics (Emery et al. 2017); the ozone benchmarks are NMB within ±15% and NME under 25%.
+  - **Continuous:** RMSE, Mean Bias, MAE, NMB %, NME %, R². NMB and NME are the standard photochemical model evaluation statistics (Emery et al. 2017); the ozone criteria are NMB within ±15% and NME under 25%.
   - **Categorical** (threshold tables): raw Hits / Misses / False Alarms, plus POD, FAR and CSI. The counts are shown so the rates can be judged in context — a POD of 1.00 built on 2 events is not the same as one built on 40.
 - **Data Management** — Data completeness stats, sync status, and raw data preview.
 - **About Station** — Site profile, coordinates, and satellite imagery map.
@@ -274,6 +274,19 @@ Do not pool the two. Most historical RF rows are hindcasts, while every NOAA AQM
 value is a genuine forecast, so a combined RF-versus-AQM comparison flatters the
 RF considerably.
 
+To score the operational rows on their own, run the audit. It needs no
+credentials or trained models, reads every site in `sites_config.R`, and prints
+to the console:
+
+```bash
+Rscript r-pipeline/tools/Operational_Audit.R              # everything so far
+Rscript r-pipeline/tools/Operational_Audit.R 2026-10-31   # through a target date
+```
+
+It pairs all the models on identical rows, adds persistence as a baseline, and
+puts an interval on each RF-versus-reference gap by resampling whole target days.
+The header of the script lists the rules.
+
 Similarly, in the **Moderate+** and **USG+** tables the continuous statistics
 (RMSE, Bias, NMB, NME, R²) are computed only on days where the *observed* value
 cleared the threshold. Conditioning on the observation narrows the remaining
@@ -303,6 +316,7 @@ ms-ozone-forecast/      # repo root — this is what you get from git clone
 │   ├── run_pipeline.R      # Entry point used by GitHub Actions
 │   ├── sites_config.R      # Site metadata (the only copy)
 │   ├── Ozone_Data_Manager.R / _Model_Training.R / _Forecaster.R
+│   ├── tools/Operational_Audit.R   # Scores the operational forecasts
 │   ├── aq_MetDaily_<site>.csv   # Training data
 │   ├── model_<site>.rds         # Trained RF models — NOT in git, built locally
 │   └── history_<site>.csv       # Forecast log (pipeline writes, app reads)

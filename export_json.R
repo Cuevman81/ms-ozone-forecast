@@ -108,8 +108,8 @@ for (site_name in names(SITES_CONFIG)) {
           rmse = round(sqrt(mean((obs - pred)^2)), 4),
           bias = round(mean(pred - obs), 4),
           mae = round(mean(abs(obs - pred)), 4),
-          # Normalized Mean Bias / Error (%) — the EPA photochemical model
-          # evaluation statistics (Emery et al. 2017). Ozone benchmarks:
+          # Normalized Mean Bias / Error (%) — the standard photochemical model
+          # evaluation statistics (Emery et al. 2017). Ozone criteria:
           # NMB within +/-15%, NME under 25%.
           nmb = if (obs_sum > 0) round(sum(pred - obs) / obs_sum * 100, 1) else NA,
           nme = if (obs_sum > 0) round(sum(abs(pred - obs)) / obs_sum * 100, 1) else NA,

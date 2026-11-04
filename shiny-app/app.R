@@ -466,8 +466,8 @@ ui <- dashboardPage(
                         "verification, not evidence the model failed. Judge event performance on ",
                         "POD / FAR / CSI (computed on the full record) and use the Overall table ",
                         "for correlation.<br><br>",
-                        "<b>NMB / NME</b> are the EPA photochemical benchmarks ",
-                        "(ozone: NMB within &plusmn;15%, NME under 25%)."
+                        "<b>NMB / NME</b> are the standard photochemical model benchmarks ",
+                        "(Emery et al. 2017; ozone criteria: NMB within &plusmn;15%, NME under 25%)."
                       )
                     )
                   )
@@ -1042,9 +1042,9 @@ server <- function(input, output, session) {
       rmse_val <- sprintf("%.4f", Metrics::rmse(obs, pred))
       bias_val <- sprintf("%.4f", mean(pred - obs))
       mae_val <- sprintf("%.4f", Metrics::mae(obs, pred))
-      # Normalized Mean Bias / Error (%) — the EPA photochemical model evaluation
-      # statistics (Emery et al. 2017). Ozone benchmarks: NMB within +/-15%,
-      # NME under 25%. These make bias comparable across sites and seasons.
+      # Normalized Mean Bias / Error (%) — the standard photochemical model
+      # evaluation statistics (Emery et al. 2017). Ozone criteria: NMB within
+      # +/-15%, NME under 25%. These make bias comparable across sites and seasons.
       nmb_val <- if (obs_sum > 0) sprintf("%.1f", sum(pred - obs) / obs_sum * 100) else "N/A"
       nme_val <- if (obs_sum > 0) sprintf("%.1f", sum(abs(pred - obs)) / obs_sum * 100) else "N/A"
       # cor() is undefined (and warns) when either series is constant.

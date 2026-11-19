@@ -635,11 +635,46 @@ function renderImportancePlot(importance) {
   }, { responsive: true });
 }
 
+// Rows matching the "Score which forecasts?" selector. Same rule as
+// subset_by_type() in export_json.R, so the plots and the tables always
+// describe the same rows. Untagged = no Forecast_Type (pre-2026-07-28).
+function filterByProvenance(history, key) {
+  if (!history || key === 'all') return history;
+  if (key === 'untagged') return history.filter(r => r.Forecast_Type == null);
+  return history.filter(r => r.Forecast_Type === key);
+}
+
+const PROVENANCE_LABELS = {
+  all: 'All rows (pooled)',
+  operational: 'Operational only',
+  hindcast: 'Hindcast only',
+  untagged: 'Untagged only',
+};
+
+// Kept so the provenance selector can re-render without re-fetching.
+let currentHistory = null;
+
 function renderPerformancePlots(history) {
+  currentHistory = history;
   if (!history || history.length === 0) return;
 
+  const sel = document.getElementById('perfTypeFilter');
+  const key = sel ? sel.value : 'all';
+  const label = PROVENANCE_LABELS[key] || PROVENANCE_LABELS.all;
+  const titleSuffix = key === 'all' ? '' : ` — ${label}`;
+
+  // Plots show the same rows the metrics tables score.
+  let df = filterByProvenance(history, key);
+  if (df.length === 0) {
+    ['perfTimeSeries', 'perfScatter', 'perfErrorDist'].forEach(id => Plotly.purge(id));
+    document.getElementById('perfTimeSeries').innerHTML =
+      `<p style="padding:40px 20px; color:#777; text-align:center;">No ${label.toLowerCase()} rows for this site.</p>`;
+    document.getElementById('perfScatter').innerHTML = '';
+    document.getElementById('perfErrorDist').innerHTML = '';
+    return;
+  }
+
   // For seasonal sites: pad all dates in range and null out off-season (Nov 1 – Feb 28/29)
-  let df = history;
   if (currentSite.seasonal && df.length > 1) {
     const allDates = df.map(r => r.Target_Date).sort();
     const startDate = new Date(allDates[0] + 'T00:00:00');
@@ -680,8 +715,10 @@ function renderPerformancePlots(history) {
 
   traces.forEach(t => { t.type = 'scatter'; t.mode = 'lines'; t.connectgaps = false; });
 
+  Plotly.purge('perfTimeSeries');
+  document.getElementById('perfTimeSeries').innerHTML = '';
   Plotly.newPlot('perfTimeSeries', traces, {
-    title: 'Historical Comparison',
+    title: 'Historical Comparison' + titleSuffix,
     yaxis: { title: 'Ozone (ppm)' },
     hovermode: 'x unified',
     legend: { orientation: 'h', y: -0.25 },
@@ -700,7 +737,14 @@ function renderPerformancePlots(history) {
 
   // Scatter: RF vs Observed
   const paired = df.filter(r => r.RF_Pred != null && r.Observed_O3 != null);
-  if (paired.length > 1) {
+  ['perfScatter', 'perfErrorDist'].forEach(id => {
+    Plotly.purge(id);
+    document.getElementById(id).innerHTML = '';
+  });
+  if (paired.length <= 1) {
+    document.getElementById('perfScatter').innerHTML =
+      `<p style="padding:40px 20px; color:#777; text-align:center;">Not enough scored rows (${paired.length}) to plot RF against observed.</p>`;
+  } else {
     const maxVal = Math.max(...paired.map(r => Math.max(r.RF_Pred, r.Observed_O3)));
     Plotly.newPlot('perfScatter', [
       {
@@ -717,7 +761,7 @@ function renderPerformancePlots(history) {
         showlegend: false, name: '1:1'
       }
     ], {
-      title: 'RF Prediction vs Observed',
+      title: `RF Prediction vs Observed${titleSuffix} (n=${paired.length})`,
       xaxis: { title: 'Observed O3 (ppm)' },
       yaxis: { title: 'RF Predicted O3 (ppm)' },
       height: 350, showlegend: false,
@@ -731,7 +775,7 @@ function renderPerformancePlots(history) {
       marker: { color: '#3c8dbc', opacity: 0.7 },
       name: 'RF Error'
     }], {
-      title: 'Model Error Distribution (Bias)',
+      title: 'Model Error Distribution (Bias)' + titleSuffix,
       xaxis: { title: 'Prediction Error (ppm)' },
       yaxis: { title: 'Frequency' },
       bargap: 0.1, height: 350,
@@ -740,14 +784,16 @@ function renderPerformancePlots(history) {
   }
 }
 
-// Kept so the provenance selector can re-render without re-fetching.
 let currentMetrics = null;
 
 function renderMetricsTables(metrics) {
   currentMetrics = metrics;
   const sel = document.getElementById('perfTypeFilter');
   if (sel && !sel.dataset.bound) {
-    sel.addEventListener('change', () => renderMetricsTables(currentMetrics));
+    sel.addEventListener('change', () => {
+      renderPerformancePlots(currentHistory);
+      renderMetricsTables(currentMetrics);
+    });
     sel.dataset.bound = '1';
   }
 

@@ -1,5 +1,20 @@
 [
   {
+    "Run_Date": "2026-11-26",
+    "Target_Date": "2026-11-27",
+    "Observed_O3": null,
+    "RF_Pred": 0.0235,
+    "AQM_06_Reg": 0.04,
+    "AQM_06_BC": 0.0332,
+    "AQM_12_Reg": 0.0403,
+    "AQM_12_BC": 0.0324,
+    "Met_Temp_F": 57,
+    "Met_Dewp_F": 29,
+    "Met_WS_kts": 5.7,
+    "Met_WD_deg": 268,
+    "Forecast_Type": "operational"
+  },
+  {
     "Run_Date": "2026-11-25",
     "Target_Date": "2026-11-26",
     "Observed_O3": null,

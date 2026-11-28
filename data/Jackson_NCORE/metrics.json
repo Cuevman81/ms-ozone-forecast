@@ -323,7 +323,7 @@
           "r2": null
         }
       },
-      "n_rows": 789,
+      "n_rows": 790,
       "n_scorable": 778
     },
     "operational": {
@@ -488,7 +488,7 @@
           "r2": null
         }
       },
-      "n_rows": 99,
+      "n_rows": 100,
       "n_scorable": 97
     },
     "hindcast": {
